@@ -24,7 +24,7 @@ function mod_qualification_kontingente_kopieren($vars, $settings, $event) {
 	if (empty($parameter['kontingent'])) return false;
 	
 	$page['dont_show_h1'] = true;
-	$page['breadcrumbs'][] = '<a href="../kontingente">Kontingente</a>';
+	$page['breadcrumbs'][] = '<a href="../kontingente/">Kontingente</a>';
 	$page['breadcrumbs'][] = 'Kopieren';
 
 	$sql = 'SELECT main_events.event_id, main_events.identifier
