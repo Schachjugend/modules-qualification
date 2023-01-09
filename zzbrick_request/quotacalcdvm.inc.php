@@ -46,7 +46,6 @@ function mod_qualification_quotacalcdvm($vars, $settings, $event) {
 	if (!$data) return false;
 	parse_str($data['parameters'], $parameter);
 	$data += $parameter;
-	if (empty($parameter['kontingent'])) return false;
 
 	$data['year'] = $vars[0];
 
@@ -86,7 +85,7 @@ function cms_kontingent_termine($data) {
 			ON events.series_category_id = series.category_id
 		WHERE (series.main_category_id = %d OR series.category_id = %d)
 		AND IFNULL(event_year, YEAR(date_begin)) IN (%s)
-		AND series.parameters LIKE "%%&kontingent=1%%"
+		AND series.parameters LIKE "%%&quotadvm=1%%"
 		AND NOT ISNULL(tournament_id)
 		HAVING veroeffentlicht > 0
 		ORDER BY series.sequence, IFNULL(event_year, YEAR(date_begin))';
@@ -191,10 +190,11 @@ function cms_kontingent_mannschaft($data, $events) {
 				} else {
 					$verbandsdaten[$key]['teams'] = $teams[$event['event_id']][$verband['contact_id']]['teams'];
 				}
-				$verbandsdaten[$key]['punkte'] = array_merge(
-					$verbandsdaten[$key]['punkte'],
-					explode(',', $teams[$event['event_id']][$verband['contact_id']]['wertungen'])
-				);
+				if ($teams[$event['event_id']][$verband['contact_id']]['wertungen'])
+					$verbandsdaten[$key]['punkte'] = array_merge(
+						$verbandsdaten[$key]['punkte'],
+						explode(',', $teams[$event['event_id']][$verband['contact_id']]['wertungen'])
+					);
 				$verbandsdaten[$key]['team_ids'] = array_merge(
 					$verbandsdaten[$key]['team_ids'],
 					explode(',', $teams[$event['event_id']][$verband['contact_id']]['team_ids'])
