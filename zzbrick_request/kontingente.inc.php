@@ -20,8 +20,6 @@
  */
 function mod_qualification_kontingente_kopieren($vars, $settings, $event) {
 	if (count($vars) !== 2) return false;
-	parse_str($event['series_parameter'], $parameter);
-	if (empty($parameter['kontingent'])) return false;
 	
 	$page['dont_show_h1'] = true;
 	$page['breadcrumbs'][] = '<a href="../kontingente/">Kontingente</a>';

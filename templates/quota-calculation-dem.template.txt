@@ -10,7 +10,7 @@
 # @copyright Copyright © 2016 Falco Nogatz
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
-<h1>Übersicht Kontingent
+<h1>Übersicht Landsverbands-Kontingente
 <br>%%% condition if tournament %%%<a href="../">%%% condition endif %%%%%% item series %%% (%%% item series_short %%%) %%% item year %%%%%% condition if tournament %%%</a>%%% condition endif %%%</h1>
 
 %%% condition if distribution_missing %%%

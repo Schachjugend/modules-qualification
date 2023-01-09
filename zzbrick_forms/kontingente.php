@@ -81,7 +81,7 @@ $zz['filter'][3]['sql'] = sprintf('SELECT federation_contact_id
 $zz_conf['dont_show_title_as_breadcrumb'] = true;
 $zz_conf['breadcrumbs'][] = ['linktext' => $zz['title']];
 
-$zz['title'] .= '<br><a href="../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['turnierort'].'</em>';
+$zz['title'] = 'Vergabe von Kontingenten<br><a href="../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['turnierort'].'</em>';
 
 $zz['explanation'] = '<p>Hinweis zur 2. Freiplatzrunde: erst hier Kontingent eintragen mit Namen, dann können Bewerberinnen und Bewerber in Spielerinnen und Spieler geändert werden.</p>';
 
