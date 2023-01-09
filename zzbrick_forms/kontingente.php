@@ -30,7 +30,7 @@ if (empty($event_ids)) {
 
 $zz = zzform_include_table('kontingente');
 
-if (!brick_access_rights(['Webmaster', 'AK Spielbetrieb'])) $zz['access'] = 'none';
+if (!wrap_access('qualification_quota_edit')) $zz['access'] = 'none';
 
 $zz['sql'] .= sprintf(' WHERE event_id IN (%s)', implode(',', $event_ids));
 
