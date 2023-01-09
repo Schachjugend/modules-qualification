@@ -1,0 +1,511 @@
+# qualification module
+# HTML-Ausgabe: Meldung durch den Landesverband
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2017-2023 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<h1>Landesverband %%% item landesverband %%%
+<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item turnierort %%%</em></h1>
+
+<div class="noprint">
+<p>Die Meldung erfolgt in drei Schritten:</p>
+
+<ol>
+<li><strong>Anmelden</strong> mit Namen und Geburtsdatum</li>
+<li><strong>Kontaktdaten</strong> ggf. ergänzen</li>
+<li><strong>Buchung</strong> (Zimmer etc.) inkl. Anmerkungen</li>
+</ol>
+
+<p>Übersicht:</p>
+
+<ul>
+<li><a href="#spieler">Meldungen: Spieler der geschlossenen Meisterschaften</a></li>
+<li><a href="#betreuer">Meldungen: Betreuer und Mitreisende</a></li>
+%%% condition if opens %%%
+<li><a href="#opens">Meldungen zu den offenen Turnieren</a></li>
+%%% condition endif %%%
+<li><a href="#summe">Zusammenfassung aller Meldungen</a></li>
+<li><a href="../bewerber/%%% item landesverband_kennung %%%/">Freiplatzanträge der 2. Runde</a></li>
+</ul>
+</div>
+
+<h2 id="spieler">Meldungen: Spieler der geschlossenen Meisterschaften</h2>
+
+<p class="noprint">Hier könnt Ihr alle Spielerinnen und Spieler für Euren Landesverband anmelden.
+Verein und Wertungen werden bei korrekter Schreibweise des Namens (wie in der
+DSB-DWZ-Datenbank) direkt übernommen.</p>
+
+%%% loop turniere %%%
+<h3 id="%%% item identifier_short %%%">%%% item event %%%</h3>
+
+<div class="results">
+%%% condition if spieler %%%
+<form method="POST" action="./#%%% item identifier_short %%%">
+<input type="submit" value="dummy" class="hidden">%%% comment Damit bei RETURN kein Teilnehmer abgemeldet wird %%%
+<table class="anmeldung">
+<thead>
+<tr><th><abbr title="Qualifikation">Q</abbr></th><th>Vor- und Nachname</th>
+<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+<th>Wtg.</th> <th>Kontakt</th>
+%%% condition if access %%%
+<th class="noprint">Aktion</th>
+%%% condition endif %%%
+<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+</thead>
+<tfoot>
+<tr>
+%%% condition if access %%%
+<td colspan="7">
+%%% condition else %%%
+<td colspan="6">
+%%% condition endif %%%
+%%% item teilnehmer "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
+<td class="number">%%% item buchungen wrap_money %%%&nbsp;€</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop spieler %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td><abbr title="%%% item kontingent %%%">%%% item kontingent_abk %%%</abbr></td>
+%%% condition if person %%%
+<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item geschlecht %%%</td>
+<td>%%% item date_of_birth wrap_date %%%</td>
+<td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
+%%% condition if t_elo %%%
+<br><abbr title="Elo">%%% item t_elo %%%</abbr>
+%%% condition endif %%%
+</td>
+<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
+%%% item telefon "Tel. %s<br>" %%%
+%%% item adresse %%%
+</td>
+%%% condition if access %%%
+<td class="noprint">
+<a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
+<br><input type="submit" value="Abmelden" name="%%% item id %%%[melden]">
+</td>
+%%% condition endif %%%
+<td class="number">
+%%% condition if access %%%
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+%%% condition endif %%%
+%%% condition if buchung %%%
+%%% item buchung wrap_money %%%&nbsp;€
+%%% condition else %%%
+<em>– fehlt –</em>
+%%% condition endif %%%
+</td>
+%%% condition else %%%
+<td><input type="text" name="%%% item id %%%[person]" size="32" value="%%% condition if fp %%%%%% item fp %%%%%% condition else %%%%%% item name %%%%%% condition endif %%%">
+%%% item error "<p class='error'>%s</p>" %%%</td>
+<td>
+%%% condition if geschlecht_nur_w %%%
+W<input type="hidden" name="%%% item id %%%[geschlecht]" value="w">
+%%% condition elseif geschlecht_nur_m %%%
+M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
+%%% condition else %%%
+<select name="%%% item id %%%[geschlecht]">
+<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+</select>
+%%% condition endif %%%
+</td>
+<td><input type="text" name="%%% item id %%%[date_of_birth]" size="8" value="%%% item date_of_birth %%%"></td>
+<td colspan="4" class="tm"><input type="submit" value="Anmelden" name="%%% item id %%%[melden]">
+<em>– noch nicht gemeldet –</em></td>
+%%% condition endif %%%
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</form>
+
+%%% condition elseif kein_kontingent %%%
+<p>Für dieses Turnier hat der Landesverband kein Kontingent.</p>
+
+%%% condition endif %%%
+</div>
+%%% loop end %%%
+
+<h2>Meldungen: Betreuer und Mitreisende</h2>
+
+<h3 id="betreuer">Offizielle Betreuer</h3>
+
+<p class="noprint">Falls <strong>Delegationsleiter</strong> bitte unter »Rolle« eintragen.</p>
+
+<div class="results">
+<form method="POST" action="./#betreuer">
+<table class="anmeldung">
+<thead>
+<tr>
+<th>Vor- und Nachname</th>
+<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+<th>Rolle</th>
+<th>Kontakt</th>
+%%% condition if access %%%
+<th class="noprint">Aktion</th>
+%%% condition endif %%%
+<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+</thead>
+<tfoot>
+%%% condition if access %%%
+<tr class="even noprint">
+<td><input type="text" name="betreuer[person]" size="32" value="%%% item betreuer_person %%%">
+%%% item betreuer_error "<p class='error'>%s</p>" %%%</td>
+<td>
+<select name="betreuer[geschlecht]">
+<option value="m"%%% item betreuer_geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item betreuer_geschlecht_w " selected='selected'"%%%>W</option>
+</select>
+</td>
+<td><input type="text" name="betreuer[date_of_birth]" size="8" value="%%% item betreuer_date_of_birth %%%"></td>
+<td><input type="text" name="betreuer[role]" size="16" value="%%% item betreuer_role %%%"></td>
+<td><input type="submit" value="Anmelden" name="betreuer[melden]"></td>
+<td colspan="2" class="tm"></td>
+</tr>
+%%% condition endif %%%
+<tr>
+%%% condition if access %%%
+<td colspan="6">
+%%% condition else %%%
+<td colspan="5">
+%%% condition endif %%%
+%%% item betreuer_teilnehmer %%% Betreuer</td>
+<td class="number">%%% item betreuer_buchungen wrap_money %%%&nbsp;€</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop betreuer %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item geschlecht %%%</td>
+<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% item role %%%</td>
+<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
+%%% item telefon "Tel. %s<br>" %%%
+%%% item adresse %%%
+</td>
+%%% condition if access %%%
+<td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
+<br><input type="submit" value="Abmelden" name="betreuer_%%% item participation_id %%%[melden]"></td>
+%%% condition endif %%%
+<td class="number">
+%%% condition if access %%%
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+%%% condition endif %%%
+%%% condition if buchung %%%
+%%% item buchung wrap_money %%%&nbsp;€
+%%% condition else %%%
+<em>– fehlt –</em>
+%%% condition endif %%%
+</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</form>
+</div>
+
+<h3 id="mitreisende">Mitreisende</h3>
+
+%%% comment <p class="noprint">Bei Mitreisenden müssen keine Kontaktdetails angegeben werden. Falls Daten bereits bei uns vorhanden sind, werden sie aber angezeigt.</p> %%%
+
+<div class="results">
+<form method="POST" action="./#mitreisende">
+<table class="anmeldung">
+<thead>
+<tr>
+<th>Vor- und Nachname</th>
+<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+<th>Kontakt</th> 
+%%% condition if access %%%
+<th class="noprint">Aktion</th>
+%%% condition endif %%%
+<th><abbr title="Buchung?">Bu.</abbr></th>
+</tr>
+</thead>
+<tfoot>
+%%% condition if access %%%
+<tr class="even noprint">
+<td><input type="text" name="mitreisende[person]" size="32" value="%%% item mitreisende_person %%%">
+%%% item mitreisende_error "<p class='error'>%s</p>" %%%</td>
+<td>
+<select name="mitreisende[geschlecht]">
+<option value="m"%%% item mitreisende_geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item mitreisende_geschlecht_w " selected='selected'"%%%>W</option>
+</select>
+</td>
+<td><input type="text" name="mitreisende[date_of_birth]" size="8" value="%%% item mitreisende_date_of_birth %%%"></td>
+<td class="tm"></td>
+<td><input type="submit" value="Anmelden" name="mitreisende[melden]"></td>
+<td class="tm"></td>
+</tr>
+%%% condition endif %%%
+<tr>
+%%% condition if access %%%
+<td colspan="5">
+%%% condition else %%%
+<td colspan="4">
+%%% condition endif %%%
+%%% item mitreisende_teilnehmer %%% Mitreisende</td>
+<td class="number">%%% item mitreisende_buchungen wrap_money %%%&nbsp;€</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop mitreisende %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item geschlecht %%%</td>
+<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
+%%% item telefon "Tel. %s<br>" %%%
+%%% item adresse %%%
+</td>
+%%% condition if access %%%
+<td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
+<br><input type="submit" value="Abmelden" name="mitreisende_%%% item participation_id %%%[melden]"></td>
+%%% condition endif %%%
+<td class="number">
+%%% condition if access %%%
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+%%% condition endif %%%
+%%% condition if buchung %%%
+%%% item buchung wrap_money %%%&nbsp;€
+%%% condition else %%%
+<em>– fehlt –</em>
+%%% condition endif %%%
+</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</form>
+</div>
+
+%%% condition if opens %%%
+<h2 id="opens">Meldungen zu den offenen Turnieren</h2>
+
+<p>Hier können Spielerinnen und Spieler, die Vereinsmitglied sind, zu den
+offenen Turnieren direkt angemeldet werden. <strong>Vereinslose Spieler</strong>
+können allerdings weiterhin nur über die jeweilige Turnierseite angemeldet
+werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
+Übersicht.</p>
+
+%%% loop opens %%%
+%%% condition if spieler_offen %%%
+<h3 id="%%% item identifier_short %%%">%%% item event %%%</h3>
+
+<div class="results">
+<form method="POST" action="./#%%% item identifier_short %%%">
+<table class="anmeldung">
+<thead>
+<tr><th>Vor- und Nachname</th>
+<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+<th>Wtg.</th> <th>Kontakt</th>
+%%% condition if access %%%
+<th class="noprint">Aktion</th>
+%%% condition endif %%%
+<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+</thead>
+
+<tfoot>
+%%% condition if access %%%
+<tr class="even noprint">
+<td><input type="text" name="%%% item event_id %%%[person]" size="32" value="%%% item name %%%">
+%%% item error "<p class='error'>%s</p>" %%%</td>
+<td>
+<select name="%%% item event_id %%%[geschlecht]">
+<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+</select>
+</td>
+<td><input type="text" name="%%% item event_id %%%[date_of_birth]" size="8" value="%%% item date_of_birth %%%"></td>
+<td class="tm"></td>
+<td class="tm"></td>
+<td><input type="submit" value="Anmelden" name="%%% item event_id %%%[melden]"></td>
+<td class="tm"></td>
+</tr>
+%%% condition endif %%%
+<tr>
+%%% condition if access %%%
+<td colspan="6">
+%%% condition else %%%
+<td colspan="5">
+%%% condition endif %%%
+%%% item teilnehmer "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
+<td class="number">%%% item buchungen wrap_money %%%&nbsp;€</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop spieler_offen %%%
+<tr class="%%% loopposition uneven un %%%even">
+%%% condition if person %%%
+<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item geschlecht %%%</td>
+<td>%%% item date_of_birth wrap_date %%%</td>
+<td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
+%%% condition if t_elo %%%
+<br><abbr title="Elo">%%% item t_elo %%%</abbr>
+%%% condition endif %%%
+</td>
+<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
+%%% item telefon "Tel. %s<br>" %%%
+%%% item adresse %%%
+</td>
+%%% condition if access %%%
+<td class="noprint">
+<a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
+<br><input type="submit" value="Abmelden" name="%%% item participation_id %%%[melden]">
+</td>
+%%% condition endif %%%
+<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+%%% condition if buchung %%%
+%%% item buchung wrap_money %%%&nbsp;€
+%%% condition else %%%
+<em>– fehlt –</em>
+%%% condition endif %%%
+</td>
+%%% condition else %%%
+<td><input type="text" name="%%% item id %%%[person]" size="32" value="%%% condition if fp %%%%%% item fp %%%%%% condition else %%%%%% item name %%%%%% condition endif %%%">
+%%% item error "<p class='error'>%s</p>" %%%</td>
+<td>
+%%% condition if geschlecht_nur_w %%%
+W<input type="hidden" name="%%% item id %%%[geschlecht]" value="w">
+%%% condition elseif geschlecht_nur_m %%%
+M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
+%%% condition else %%%
+<select name="%%% item id %%%[geschlecht]">
+<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+</select>
+%%% condition endif %%%
+</td>
+<td><input type="text" name="%%% item id %%%[date_of_birth]" size="8" value="%%% item date_of_birth %%%"></td>
+<td colspan="4" class="tm"><input type="submit" value="Anmelden" name="%%% item id %%%[melden]">
+<em>– noch nicht gemeldet –</em></td>
+%%% condition endif %%%
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</form>
+</div>
+
+%%% condition endif %%%
+%%% loop end %%%
+
+%%% loop opens %%%
+%%% condition if mitreisende_offen %%%
+
+<h3 id="%%% item identifier_short %%%_mitreisende">%%% item event %%% Mitreisende</h3>
+
+<div class="results">
+<form method="POST" action="./#mitreisende-offen">
+<table class="anmeldung">
+<thead>
+<tr>
+<th>Vor- und Nachname</th>
+<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+<th>Kontakt</th> <th class="noprint">Aktion</th> <th><abbr title="Buchung?">Bu.</abbr></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="5">%%% item mitreisende_teilnehmer %%% Mitreisende</td>
+<td class="number">%%% item mitreisende_buchungen wrap_money %%%&nbsp;€</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop mitreisende_offen %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item geschlecht %%%</td>
+<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
+%%% item telefon "Tel. %s<br>" %%%
+%%% item adresse %%%
+</td>
+<td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a></td>
+<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+%%% condition if buchung %%%
+%%% item buchung wrap_money %%%&nbsp;€
+%%% condition else %%%
+<em>– fehlt –</em>
+%%% condition endif %%%
+</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</form>
+</div>
+
+
+%%% condition endif %%%
+%%% loop end %%%
+%%% condition endif %%%
+
+
+<div class="noprint">
+<h2 id="summe">Zusammenfassung aller Meldungen</h2>
+
+<div class="results">
+<table>
+<thead>
+<tr>
+<th><abbr title="Teilnehmer">TN</abbr></th> <th>Gruppe</th>  <th>Buchung</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="number">%%% item teilnehmer %%%</td>
+<td>Teilnehmer gesamt</td>
+<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop turniere %%%
+<tr class="even">
+<td class="number">%%% item teilnehmer %%%</td>
+<td>Spieler %%% item event %%%</td>
+<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+%%% loop end %%%
+</tbody>
+<tbody>
+<tr class="uneven">
+<td class="number">%%% item betreuer_teilnehmer %%%</td>
+<td>Betreuer</td>
+<td class="number">%%% item betreuer_buchungen wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+</tbody>
+<tbody>
+<tr class="even">
+<td class="number">%%% item mitreisende_teilnehmer %%%</td>
+<td>Mitreisende</td>
+<td class="number">%%% item mitreisende_buchungen wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+</tbody>
+<tbody>
+%%% loop opens %%%
+<tr class="uneven">
+<td class="number">%%% item teilnehmer %%%</td>
+<td>Spieler %%% item event %%%</td>
+<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</div>
+
+<ul>
+<li><a href="anmeldungen/">Alle Buchungen im Überblick</a></li>
+<li><a href="adressen/">Alle Adressen im Überblick</a></li>
+</ul>
+</div>
+

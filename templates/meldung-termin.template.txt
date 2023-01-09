@@ -1,0 +1,110 @@
+# qualification module
+# HTML-Ausgabe: Meldung für ein Turnier
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2012, 2016, 2018-2019, 2021, 2023 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+%%% condition if login_versendet %%%
+<p>Wir haben Dir ein Login zugesendet. Bitte prüfe Deinen E-Mail-Eingang.</p>
+
+%%% condition elseif meldefrist_abgelaufen %%%
+<h1>Keine Meldung möglich
+<br>%%% item event %%%, <em>%%% item duration wrap_date %%%</em></h1>
+
+<p markdown="1" class="error">Es tut uns leid, aber die Meldefrist ist
+bereits am %%% item frist_ende wrap_date %%% abgelaufen.</p>
+
+%%% condition elseif meldefrist_noch_nicht %%%
+<h1>Keine Meldung möglich
+<br>%%% item event %%%, <em>%%% item duration wrap_date %%%</em></h1>
+
+<p markdown="1" class="error">Die Meldefrist läuft noch nicht. Sie können erst ab dem
+%%% item frist_beginn wrap_date %%% melden.</p>
+
+%%% condition elseif meldeliste_voll %%%
+<h1>Keine Meldung möglich
+<br>%%% item event %%%, <em>%%% item duration wrap_date %%%</em></h1>
+
+<p markdown="1" class="error">Es ist leider keine Meldung mehr möglich.
+Die Meldeliste ist voll. Die Organisatoren können Auskunft geben, ob noch 
+Plätze frei sind oder eine Warteliste existiert.</p>
+
+%%% condition else %%%
+<h1>Meldung für Veranstaltungen
+<br>%%% item event %%%, <em>%%% item duration wrap_date %%%</em></h1>
+
+<p>Für Ihre Meldung brauchen wir ein paar Daten von Ihnen. Sie bekommen dann
+eine E-Mail mit Anmeldedaten für die DSJ-Website zugeschickt. Wenn Sie bereits
+einen Zugang haben, können Sie diesen weiter nutzen.</p>
+
+<fieldset class="application">
+<legend>Anmeldedaten</legend>
+
+<form method="POST" action="">
+<p><label for="verein"><strong>Ihr Verein:</strong><br>
+%%% condition if vereine %%%
+<select name="verein_id">
+<option value="">Nichts ausgewählt</option>
+%%% loop vereine %%%
+<option value="%%% item contact_id %%%">%%% item contact htmlspecialchars %%%</option>
+%%% loop end %%%
+</select>
+%%% condition elseif verein_id %%%
+<input type="hidden" name="verein_id" value="%%% item verein_id %%%">
+%%% item contact htmlspecialchars %%%
+%%% condition else %%%
+<input type="text" id="verein" name="verein" size="30" value="%%% item verein htmlspecialchars %%%">
+<br><small>(Teil des Vereinsnamens oder exakt so wie in der DWZ-Datenbank)</small>
+%%% condition endif %%%</label></p>
+%%% condition if angaben_unvollstaendig_verein %%%
+<p class="error">Bitte geben Sie einen Verein an.</p>
+%%% condition elseif angaben_falsch_verein %%%
+<p class="error">Bitte geben Sie einen Verein an. Unter dem oben eingetragenen Begriff konnte kein Verein gefunden werden.</p>
+%%% condition endif %%%
+
+<p><label for="first_name"><strong>Ihr Vorname:</strong><br>
+<input type="text" id="first_name" name="first_name" size="30" value="%%% item first_name htmlspecialchars %%%"></label></p>
+%%% condition if angaben_unvollstaendig_vorname %%%
+<p class="error">Bitte geben Sie Ihren Vornamen an.</p>
+%%% condition endif %%%
+
+<p><label for="last_name"><strong>Ihr Nachname:</strong><br>
+<input type="text" id="last_name" name="last_name" size="30" value="%%% item last_name htmlspecialchars %%%"></label></p>
+%%% condition if angaben_unvollstaendig_nachname %%%
+<p class="error">Bitte geben Sie Ihren Nachnamen an.</p>
+%%% condition endif %%%
+
+<p><label for="e_mail"><strong>Ihre E-Mail-Adresse:</strong><br>
+<input type="text" id="e_mail" name="e_mail" size="30" value="%%% item e_mail htmlspecialchars %%%"></label></p>
+%%% condition if angaben_unvollstaendig_e_mail %%%
+<p class="error">Bitte geben Sie eine gültige E-Mail-Adresse an.</p>
+%%% condition elseif angaben_falsch_e_mail %%%
+<p class="error">Bitte geben Sie eine gültige E-Mail-Adresse an.</p>
+%%% condition endif %%%
+
+<p><input type="submit"></p>
+
+</form>
+</fieldset>
+<script type="text/javascript" src="/_behaviour/vxjs/src/core.js"></script>
+<script type="text/javascript" src="/_behaviour/vxjs/src/widget.js"></script>
+<script type="text/javascript" src="/_behaviour/vxjs/src/xhr.js"></script>
+<script type="text/javascript" src="/_behaviour/vxjs/src/widgets/autosuggest.js"></script>
+
+<script type="text/javascript">
+    vxJS.event.addDomReadyListener(function(){
+        var as1 = vxJS.widget.autoSuggest(document.getElementById("verein"),
+            { command: 'clubs', uri: '%%% setting request_uri %%%' },
+            {
+                maxEntries: 30,
+                searchMode: true
+            }
+        );
+    });
+</script>
+
+%%% condition endif %%%

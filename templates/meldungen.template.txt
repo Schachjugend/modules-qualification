@@ -1,0 +1,133 @@
+# qualification module
+# HTML-Ausgabe: Übersicht Meldungen durch den Landesverband
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2017, 2019-2020, 2022-2023 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<h1>Meldungen
+<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item turnierort %%%</em></h1>
+
+<h2>Nach Landesverband</h2>
+
+<div class="results">
+<table>
+<thead>
+<tr>
+<th rowspan="2">Landesverband</th>
+<th colspan="%%% item anzahl_kontingente %%%" class="heading">Kontingente</th>
+<th colspan="%%% item anzahl_participations %%%" class="heading">Meldungen</th>
+<th colspan="%%% item anzahl_buchungen %%%" class="heading">Buchungen</th>
+<th rowspan="2">Weiteres</th>
+</tr>
+<tr>
+%%% loop kontingente %%%
+<th><abbr title="%%% item category %%%">%%% item category_short %%%</abbr></th>
+%%% loop end %%%
+%%% loop participations %%%
+<th><abbr title="%%% item usergroup %%%">%%% item gruppe_abk %%%.</abbr></th>
+%%% loop end %%%
+%%% loop buchungen %%%
+<th>%%% item status %%%</th>
+%%% loop end %%%
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td></td>
+%%% loop kontingente %%%
+<td class="ergebnis">%%% loopposition last "<strong>" %%%%%% item kontingent %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop participations %%%
+<td class="ergebnis">%%% loopposition last "<strong>" %%%%%% item participations %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop buchungen %%%
+<td class="ergebnis">%%% loopposition last "<strong>" %%%%%% item betrag wrap_money "%s €" %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+<td><a href="../buchungen/">Alle Buchungen</a></td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop landesverbaende %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td><a href="../%%% item landesverband_kennung %%%/">%%% item landesverband %%%</a></td>
+%%% loop kontingente %%%
+<td class="ergebnis%%% loopposition first|single " bx" %%%">%%% loopposition last "<strong>" %%%%%% item kontingent %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop participations %%%
+<td class="ergebnis%%% loopposition first|single " bx" %%%"%%% item color " style='background-color: %s'" %%%>%%% loopposition last "<strong>" %%%%%% item participations %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop buchungen %%%
+<td class="ergebnis %%% loopposition first|single " bx" %%%">%%% loopposition last "<strong>" %%%%%% item betrag wrap_money "%s €" %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+<td class="bx"><a href="../%%% item landesverband_kennung %%%/anmeldungen/">Buchungen</a> &middot; <a href="../%%% item landesverband_kennung %%%/adressen/">Adressen</a></td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</div>
+
+<h2>Nach Turnier</h2>
+
+<div class="results">
+<table>
+<thead>
+<tr>
+<th rowspan="2">Turnier</th>
+<th colspan="%%% item anzahl_kontingente %%%" class="heading">Kontingente</th>
+<th colspan="%%% item anzahl_participations %%%" class="heading">Meldungen</th>
+<th colspan="3" class="heading"><abbr title="Spielberechtigung">Spielb.</abbr></th>
+<th rowspan="2">Hinweise</th>
+<th rowspan="2">Weiteres</th>
+</tr>
+<tr>
+%%% loop kontingente %%%
+<th><abbr title="%%% item category %%%">%%% item category_short %%%</abbr></th>
+%%% loop end %%%
+%%% loop participations %%%
+<th><abbr title="%%% item usergroup %%%">%%% item gruppe_abk %%%.</abbr></th>
+%%% loop end %%%
+<th class="ergebnis"><abbr title="ja">j</abbr></th>
+<th class="ergebnis"><abbr title="nein">n</abbr></th>
+<th class="ergebnis"><abbr title="offen">?</abbr></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td></td>
+%%% loop kontingente %%%
+<td class="ergebnis">%%% loopposition last "<strong>" %%%%%% item kontingent %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop participations %%%
+<td class="ergebnis">%%% loopposition last "<strong>" %%%%%% item participations %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop spielberechtigungen %%%
+<td class="number">%%% item anzahl %%%</td>
+%%% loop end %%%
+<td></td>
+<td></td>
+</tr>
+</tfoot>
+<tbody>
+%%% loop turniere %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td><a href="../../../%%% item event_identifier %%%/">%%% item event %%%</a></td>
+%%% loop kontingente %%%
+<td class="ergebnis%%% loopposition first|single " bx" %%%">%%% loopposition last "<strong>" %%%%%% item kontingent %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop participations %%%
+<td class="ergebnis%%% loopposition first|single " bx" %%%"%%% item color " style='background-color: %s'" %%%>%%% loopposition last "<strong>" %%%%%% item participations %%%%%% loopposition last "</strong>" %%%</td>
+%%% loop end %%%
+%%% loop spielberechtigungen %%%
+<td class="ergebnis%%% loopposition first|single " bx" %%%"%%% item color " style='background-color: %s'" %%%>%%% item anzahl %%%</td>
+%%% loop end %%%
+<td class="bx">%%% item hinweise %%%</td>
+<td></td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</div>

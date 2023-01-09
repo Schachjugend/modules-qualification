@@ -1,0 +1,59 @@
+# qualification module
+# quota for single tournament
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @author Falco Nogatz <fnogatz@gmail.com>
+# @copyright Copyright © 2018, 2020, 2022-2023 Gustaf Mossakowski
+# @copyright Copyright © 2016 Falco Nogatz
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<h1>Übersicht Kontingent
+<br>%%% condition if tournament %%%<a href="../">%%% condition endif %%%%%% item series %%% (%%% item series_short %%%) %%% item year %%%%%% condition if tournament %%%</a>%%% condition endif %%%</h1>
+
+%%% condition if distribution_missing %%%
+<p class="error">Bitte gib eine Verteilung der Plätze bei der Altersklasse an! (Parameter distribution=[1, 2, 3, …])</p>
+<p><a href="%%% setting events_internal_path %%%/reihen/">Veranstaltungsreihen</a></p>
+
+%%% condition elseif no_data %%%
+<p>Es liegen nicht genügend Daten aus den beiden Vorjahren vor.</p>
+
+%%% condition else %%%
+<div class="results">
+<table>
+<thead>
+<tr>
+  <th>LV</th>
+  <th class="number">Plätze</th>
+  <th>GP – Gesamtpunkte</th>
+  <th colspan="2">JP – Jahrespunkte</th>
+  <th colspan="2">BP – Bonuspunkte</th>
+  <th>Beste Platzierung</th>
+</tr>
+</thead>
+<tbody>
+%%% loop lines %%%
+<tr>
+<td><abbr title="%%% item landesverband_lang %%%">%%% item landesverband %%%</abbr></td>
+<td class="number">%%% item plaetze %%%</td>
+<td class="number">%%% item gesamtpunkte wrap_number %%%</td>
+<td class="number">%%% item jahrespunkte wrap_number %%%</td>
+<td>%%% condition if jahrespunkte_vorjahr | jahrespunkte_vorjahr %%%<small>= %%% item jahrespunkte_vorjahr wrap_number "2 × %s" %%% %%% condition if jahrespunkte_vorjahr & jahrespunkte_vorvorjahr %%%+%%% condition endif %%% %%% item jahrespunkte_vorvorjahr wrap_number "1 × %s" %%%</small>%%% condition endif %%%</td>
+<td class="number">%%% item bonuspunkte wrap_number %%%</td>
+<td>%%% condition if bonuspunkte_rechnung %%%<small>= %%% loop bonuspunkte_rechnung %%%%%% item bp wrap_number %%%%%% loopposition first|middle "+" %%%%%% loop end %%%</small>%%% condition endif %%%</td>
+<td class="number">%%% item bester_platz %d. %%%</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+
+<ul>
+%%% loop tournaments %%%
+<li><a href="/%%% item identifier %%%/tabelle/%%% item table %s/ %%%">Tabelle %%% item event %%% %%% item jahr %%%</a> (%%% item title %%%)</li>
+%%% loop end %%%
+</ul>
+
+</div>
+%%% condition endif %%%

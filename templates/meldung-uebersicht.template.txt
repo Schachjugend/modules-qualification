@@ -1,0 +1,35 @@
+# qualification module
+# HTML-Ausgabe: Meldung für ein Turnier
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2012, 2020, 2023 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+%%% condition if keine_meldung %%%
+<h1>Keine Meldung möglich</h1>
+
+<p>Zur Zeit laufen keine Meldefristen für Veranstaltungen, zu denen Sie sich
+anmelden können.</p>
+
+%%% condition else %%%
+<h1>Meldung für Veranstaltungen</h1>
+
+<p>Hier können Sie sich für diese Veranstaltungen anmelden:</p>
+
+<ul>
+%%% loop start %%%
+<li><strong>%%% condition if offen %%%<a href="%%% item identifier %%%/">%%% condition endif %%%
+%%% item event %%%%%% condition if offen %%%</a>%%% condition endif %%%</strong>,
+%%% item duration wrap_date %%%
+%%% condition if offen %%%
+%%% condition else %%%
+ <em>(Meldelinks werden direkt an die Teilnehmer versandt)</em>
+%%% condition endif %%%
+</li>
+%%% loop end %%%
+</ul>
+
+%%% condition endif %%%

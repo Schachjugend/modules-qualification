@@ -1,0 +1,64 @@
+# qualification module
+# Kontingent nach Landesverband oder Regionalgruppe
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2013, 2016-2017, 2020, 2023 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<h1>Übersicht Kontingent
+<br><a href="../">%%% item series %%% (%%% item series_short %%%) %%% item year %%%</a></h1>
+
+<div class="results">
+<table>
+<thead>
+<tr>
+<th>Turnier/Verband</th>
+<th>Jahr</th>
+%%% loop verbaende %%%
+<th colspan="2">%%% condition if verband %%%<abbr title="%%% item verband %%%">%%% condition endif %%%
+%%% item verband_kurz %%%
+%%% condition if verband %%%</abbr>%%% condition endif %%%</th>
+%%% loop end %%%
+<th class="number">Teams</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>Summe Teams</th>
+<th> </th>
+%%% loop verbaende %%%
+<th class="number">%%% item summe %%%</th>
+<th> </th>
+%%% loop end %%%
+<th class="number">%%% item summe %%%</th>
+</tr>
+</tfoot>
+<tbody>
+%%% loop turniere %%%
+%%% condition if separator %%%
+</tbody>
+<tbody>
+%%% condition endif %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td><a href="%%% setting events_path %%%/%%% item turnier_kennung %%%/">%%% item turnier %%%</a></td>
+<td>%%% item year %%%</th>
+%%% loop verbaende %%%
+<td class="number">%%% item teams %%%</td>
+<td class="number bxv"><strong>%%% item schnitt %%%</strong>
+<br><small>(%%% loop wertungen %%%
+%%% item streichwertung <del> %%%<span title="%%% item team %%%">%%% item punkte %%%</span>%%% item streichwertung </del> %%%
+%%% loopposition first|middle " &middot; " %%%
+%%% loop end %%%)</small></td>
+%%% loop end %%%
+<td class="number">%%% item summe %%%</td>
+</tr>
+%%% loop end %%%
+</tbody>
+</table>
+</div>
+%%% rights Webmaster %%%
+<p><a href="/intern/db/regionalgruppen">Zuordnung der Landesverbände zu den Regionalgruppen</a></p>
+%%% rights - %%%
