@@ -15,6 +15,7 @@
 
 function mod_qualification_meldungen($vars, $settings, $data) {
 	if (count($vars) !== 2) return false;
+	wrap_package_activate('tournaments'); // for CSS
 	
 	$sql = 'SELECT kontingent_id, kontingent
 			, contact_id, contact_short AS landesverband
