@@ -59,6 +59,5 @@
 </tbody>
 </table>
 </div>
-%%% rights Webmaster %%%
-<p><a href="/intern/db/regionalgruppen">Zuordnung der Landesverbände zu den Regionalgruppen</a></p>
-%%% rights - %%%
+
+<p><a href="%%% setting qualification_regional_groups_path %%%">Zuordnung der Landesverbände zu den Regionalgruppen</a></p>

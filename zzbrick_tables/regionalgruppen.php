@@ -13,7 +13,7 @@
  */
 
 
-$zz['title'] = 'Regionalgruppen für Qualifikationsturniere';
+$zz['title'] = 'Regionalgruppen für DVM-Qualifikationsturniere';
 $zz['table'] = 'regionalgruppen';
 
 $zz['fields'][1]['title'] = 'ID';
@@ -68,3 +68,5 @@ $zz['sql'] = 'SELECT regionalgruppen.*
 		ON regionalgruppen.series_category_id = categories.category_id
 ';
 $zz['sqlorder'] = ' ORDER BY regionalgruppe, contact';
+
+if (!wrap_access('qualification_regional_groups_edit')) $zz['access'] = 'show';
