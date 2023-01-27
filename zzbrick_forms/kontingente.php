@@ -85,4 +85,4 @@ $zz['title'] = 'Vergabe von Kontingenten<br><a href="../">'.$brick['data']['even
 
 $zz['explanation'] = '<p>Hinweis zur 2. Freiplatzrunde: erst hier Kontingent eintragen mit Namen, dann können Bewerberinnen und Bewerber in Spielerinnen und Spieler geändert werden.</p>';
 
-$zz['if']['list_empty']['explanation'] = '<p>Keine Lust auf tippen und klicken? – <a href="../kontingente-kopieren/">Kontingente von vergangenem Termin kopieren</a></p>';
+$zz['if']['list_empty']['explanation'] = '<p>Keine Lust auf tippen und klicken? – <a href="kopie/">Kontingente von vergangenem Termin kopieren</a></p>';
