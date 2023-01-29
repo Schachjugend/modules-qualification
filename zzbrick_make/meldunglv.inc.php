@@ -13,7 +13,7 @@
  */
 
 
-function mod_qualification_meldunglv($vars, $settings, $data) {
+function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	global $zz_setting;
 	global $zz_conf;
 	if (count($vars) !== 3) return false;
