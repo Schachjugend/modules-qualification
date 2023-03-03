@@ -24,7 +24,7 @@ ON tournaments.series_category_id = series.category_id
 WHERE series.main_category_id = events.series_category_id
 AND IFNULL(tournaments.event_year, YEAR(tournaments.date_begin)) = IFNULL(events.event_year, YEAR(events.date_begin)))
 AND participations.usergroup_id = /*_ID usergroups spieler_*/
-AND participations.teilnahme_status = "Teilnehmer"
+AND participations.status_category_id = /*_ID categories participation-status/participant _*/
 AND (ISNULL(team_id) OR teams.meldung = "teiloffen" OR teams.meldung = "komplett")
 ), NULL) AS quota
 FROM events
@@ -43,7 +43,7 @@ ON tournaments.series_category_id = series.category_id
 WHERE series.main_category_id = events.series_category_id
 AND IFNULL(tournaments.event_year, YEAR(tournaments.date_begin)) = IFNULL(events.event_year, YEAR(events.date_begin)))
 AND participations.usergroup_id = /*_ID usergroups spieler_*/
-AND participations.teilnahme_status = "Teilnehmer"
+AND participations.status_category_id = /*_ID categories participation-status/participant _*/
 AND (ISNULL(team_id) OR teams.meldung = "teiloffen" OR teams.meldung = "komplett")
 ), NULL) AS quota
 FROM events

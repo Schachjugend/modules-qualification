@@ -71,7 +71,6 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			, contacts.identifier AS personenkennung
 			, t_verein
 			, t_dwz, t_elo, t_fidetitel
-			, teilnahme_status
 			, qualification, date_of_birth
 			, IF(sex = "female", "W", IF(sex = "male", "M", "")) AS geschlecht
 			, (SELECT identification FROM contactdetails
@@ -97,7 +96,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		WHERE federation_contact_id = %d
 		AND event_id IN (%s, %d)
 		AND usergroup_id != %d
-		AND teilnahme_status IN ("angemeldet (*)", "angemeldet", "Teilnehmer")
+		AND status_category_id IN (%d, %d, %d)
 		GROUP BY participations.participation_id';
 	$sql = sprintf($sql
 		, wrap_category_id('provider/e-mail')
@@ -105,6 +104,9 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		, implode(',', array_keys($data['turniere']))
 		, $data['event_id']
 		, wrap_id('usergroups', 'bewerber')
+		, wrap_category_id('participation-status/subscribed')
+		, wrap_category_id('participation-status/verified')
+		, wrap_category_id('participation-status/participant')
 	);
 	$participations = wrap_db_fetch($sql, ['event_id', 'participation_id']);
 	
@@ -352,7 +354,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			$values['action'] = 'insert';
 			$values['ids'] = [
 				'event_id', 'contact_id', 'club_contact_id', 'federation_contact_id',
-				'usergroup_id'
+				'usergroup_id', 'status_category_id'
 			];
 			$values['POST']['contact_id'] = $person['contact_id'];
 			if ($wertungen) {
@@ -362,7 +364,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			}
 			$values['POST']['club_contact_id'] = $verein ? $verein['contact_id'] : '';
 			$values['POST']['federation_contact_id'] = $lv['contact_id'];
-			$values['POST']['teilnahme_status'] = 'angemeldet';
+			$values['POST']['status_category_id'] = wrap_category_id('participation-status/verified');
 			if ($meldung_id === 'betreuer') {
 				$values['POST']['event_id'] = $data['event_id'];
 				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'betreuer');
