@@ -260,13 +260,13 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if (empty($meldung['melden'])) continue;
 			if ($meldung['melden'] === 'Abmelden') {
 				// Anmeldung löschen
-				$sql = 'SELECT anmeldung_id FROM anmeldungen WHERE participation_id = %d';
+				$sql = 'SELECT registration_id FROM anmeldungen WHERE participation_id = %d';
 				$sql = sprintf($sql, $m_person['participation_id']);
-				$anmeldung_id = wrap_db_fetch($sql, '', 'single value');
-				if ($anmeldung_id) {
+				$registration_id = wrap_db_fetch($sql, '', 'single value');
+				if ($registration_id) {
 					$values = [];
 					$values['action'] = 'delete';
-					$values['POST']['anmeldung_id'] = $anmeldung_id;
+					$values['POST']['registration_id'] = $registration_id;
 					$ops = zzform_multi('anmeldungen', $values);
 				}
 				// Buchungen löschen
