@@ -21,7 +21,6 @@
  * @param array $vars
  */
 function mod_qualification_quotacalcdem($vars, $settings, $event) {
-	global $zz_setting;
 	global $tournaments;
 
 	if (count($vars) !== 2) return false;
@@ -75,7 +74,7 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 	$sql = sprintf($sql
 		, wrap_category_id('contact/federation')
 		, wrap_category_id('identifiers/zps')
-		, $zz_setting['contact_ids']['dsb']
+		, wrap_setting('contact_ids[dsb]')
 	);
 	$landesverbaende = wrap_db_fetch($sql, 'code');
 
@@ -234,7 +233,7 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 		}
 	}
 
-	$zz_setting['number_format'] = 'two-decimal-places';
+	wrap_setting('number_format', 'two-decimal-places');
 	$page['text'] = wrap_template('quota-calculation-dem', $data);
 	return $page;
 }

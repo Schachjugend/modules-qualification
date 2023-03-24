@@ -98,8 +98,6 @@ function cms_kontingent_termine($data) {
 }
 
 function cms_kontingent_mannschaft($data, $events) {
-	global $zz_setting;
-
 	$sql = 'SELECT contact_id, contact, country
 			, contact_abbr, regionalgruppe
 		FROM contacts
@@ -113,7 +111,7 @@ function cms_kontingent_mannschaft($data, $events) {
 		ORDER BY country';
 	$sql = sprintf($sql
 		, $data['category_id']
-		, $zz_setting['contact_ids']['dsb']
+		, wrap_setting('contact_ids[dsb]')
 		, wrap_category_id('contact/federation')
 	);
 	$lv = wrap_db_fetch($sql, 'contact_id');

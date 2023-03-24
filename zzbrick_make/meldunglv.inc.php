@@ -14,14 +14,13 @@
 
 
 function mod_qualification_make_meldunglv($vars, $settings, $data) {
-	global $zz_setting;
 	global $zz_conf;
 	if (count($vars) !== 3) return false;
 	wrap_package_activate('tournaments');
 
 	// Turnierbedinungen prüfen
-	require_once $zz_setting['custom_wrap_dir'].'/anmeldung.inc.php';
-	require_once $zz_setting['custom_wrap_dir'].'/persons.inc.php';
+	require_once wrap_setting('custom_wrap_dir').'/anmeldung.inc.php';
+	require_once wrap_setting('custom_wrap_dir').'/persons.inc.php';
 
 	// Zugriffsrechte
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
