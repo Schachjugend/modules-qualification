@@ -86,4 +86,10 @@ $zz['title'] = 'Vergabe von Kontingenten<br><a href="../">'.$brick['data']['even
 
 $zz['explanation'] = '<p>Hinweis zur 2. Freiplatzrunde: erst hier Kontingent eintragen mit Namen, dann können Bewerberinnen und Bewerber in Spielerinnen und Spieler geändert werden.</p>';
 
-$zz['if']['list_empty']['explanation'] = '<p>Keine Lust auf tippen und klicken? – <a href="kopie/">Kontingente von vergangenem Termin kopieren</a></p>';
+$copy_path = $brick['data']['main_series_path']
+	? wrap_path('qualification_quota_copy', $brick['data']['year'].'/'.$brick['data']['main_series_path'])
+	: wrap_path('qualification_quota_copy', $brick['data']['identifier']);
+
+$zz['if']['list_empty']['explanation'] = sprintf(
+	'<p>Keine Lust auf tippen und klicken? – <a href="%s">Kontingente von vergangenem Termin kopieren</a></p>', $copy_path
+);
