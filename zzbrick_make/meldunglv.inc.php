@@ -209,7 +209,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	}
 
 	if (!empty($_POST) AND $access) {
-		require_once $zz_conf['dir'].'/zzform.php';
+		wrap_include_files('zzform.php', 'zzform');
 		zz_initialize();
 
 		foreach ($_POST AS $meldung_id => $meldung) {
