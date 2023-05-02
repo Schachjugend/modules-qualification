@@ -28,7 +28,7 @@ if (empty($event_ids)) {
 	$event_ids[] = $brick['data']['event_id'];
 }
 
-$zz = zzform_include_table('kontingente');
+$zz = zzform_include('kontingente');
 
 if (!wrap_access('qualification_quota_edit', $brick['data']['event_rights']))
 	$zz['access'] = 'none';
