@@ -213,6 +213,9 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		zz_initialize();
 
 		foreach ($_POST AS $meldung_id => $meldung) {
+			// remove whitespace
+			foreach ($meldung as $key => $value)
+				$meldung[$key] = trim($value);
 			$meldung_offen = false;
 			// Übernahme der Daten
 			if (in_array($meldung_id, ['betreuer', 'mitreisende'])) {
