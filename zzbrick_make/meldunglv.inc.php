@@ -281,7 +281,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				$values = [];
 				$values['action'] = 'delete';
 				$values['POST']['participation_id'] = $m_person['participation_id'];
-				$ops = zzform_multi('teilnahmen', $values);
+				$ops = zzform_multi('participations', $values);
 				if (!empty($ops['id'])) wrap_redirect($_SERVER['REQUEST_URI'], 303, false);
 			}
 			
@@ -379,7 +379,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'spieler');
 				$values['POST']['qualification'] = $meldungen[$meldung_id]['kontingent'].' ['.$meldung_id.']';
 			}
-			$ops = zzform_multi('teilnahmen', $values);
+			$ops = zzform_multi('participations', $values);
 			if (!$ops['id']) {
 				wrap_error('Anmeldung nicht möglich: Spieler %s, Geburtsdatum %s (Landesverband: %s)',
 					$meldung['spieler'], $meldung['date_of_birth'], $lv['landesverband']);
