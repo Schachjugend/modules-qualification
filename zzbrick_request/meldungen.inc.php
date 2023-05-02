@@ -289,7 +289,7 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 					WHERE participations.federation_contact_id = kontingente.federation_contact_id
 					AND SUBSTRING_INDEX(participations.qualification, " [", 1) = categories.category
 					AND participations.event_id = kontingente.event_id) AS plaetze
-				, (SELECT GROUP_CONCAT(CONCAT(t_vorname, IFNULL(CONCAT(t_namenszusatz, " "), ""), " ", t_nachname))
+				, (SELECT GROUP_CONCAT(CONCAT(t_vorname, IFNULL(CONCAT(" ", t_namenszusatz), ""), " ", t_nachname))
 					FROM participations
 					WHERE participations.federation_contact_id = kontingente.federation_contact_id
 					AND SUBSTRING_INDEX(participations.qualification, " [", 1) = categories.category
@@ -309,9 +309,15 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 			foreach ($kontingente as $kontingent) {
 				$fehlend = 0;
 				if ($kontingent['anmerkung'] && $kontingent['category'] != 'Landesverband') {
-					$meldungen = explode(',', $kontingent['meldungen']);
-					$plaetze = explode(', ', $kontingent['anmerkung']);
+					if ($kontingent['meldungen'])
+						$meldungen = explode(',', $kontingent['meldungen']);
+					else
+						$meldungen = [];
+					$plaetze = explode(',', $kontingent['anmerkung']);
+					foreach ($plaetze as $index => $platz)
+						$plaetze[$index] = trim($platz);
 					foreach ($meldungen as $meldung) {
+						$meldung = trim($meldung);
 						$key = array_search($meldung, $plaetze);
 						if ($key !== false) unset($plaetze[$key]);
 					}
