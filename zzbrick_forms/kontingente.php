@@ -79,8 +79,8 @@ $zz['filter'][3]['sql'] = sprintf('SELECT federation_contact_id
 	WHERE event_id IN (%s)
 	ORDER BY contact_abbr', implode(',', $event_ids));
 
-$zz_conf['dont_show_title_as_breadcrumb'] = true;
-$zz_conf['breadcrumbs'][] = ['linktext' => $zz['title']];
+$zz['page']['dont_show_title_as_breadcrumb'] = true;
+$zz['page']['breadcrumbs'][] = ['title' => $zz['title']];
 
 $zz['title'] = 'Vergabe von Kontingenten<br><a href="../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['turnierort'].'</em>';
 
