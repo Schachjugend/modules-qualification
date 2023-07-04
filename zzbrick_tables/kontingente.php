@@ -92,4 +92,4 @@ $zz['subtitle']['event_id']['format'][1] = 'wrap_date';
 $zz['subtitle']['event_id']['link'] = '../';
 $zz['subtitle']['event_id']['link_no_append'] = true;
 
-$zz_conf['copy'] = true;
+$zz['record']['copy'] = true;
