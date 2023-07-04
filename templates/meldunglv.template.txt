@@ -72,7 +72,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 <tr class="%%% loopposition uneven un %%%even">
 <td><abbr title="%%% item kontingent %%%">%%% item kontingent_abk %%%</abbr></td>
 %%% condition if person %%%
-<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
@@ -182,7 +182,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop betreuer %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% item role %%%</td>
@@ -259,7 +259,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop mitreisende %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
@@ -345,7 +345,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% loop spieler_offen %%%
 <tr class="%%% loopposition uneven un %%%even">
 %%% condition if person %%%
-<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
@@ -423,7 +423,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop mitreisende_offen %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% rights Gremien %%%<a href="/intern/personen/%%% item personenkennung %%%/">%%% rights - %%%%%% item person %%%%%% rights Gremien %%%</a>%%% rights - %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
