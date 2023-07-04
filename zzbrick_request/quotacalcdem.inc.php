@@ -57,7 +57,7 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 	$sql = sprintf($sql, $data['year'], $data['category_id']);
 	$data['tournament'] = wrap_db_fetch($sql);
 
-	$page['breadcrumbs'][] = 'Kontingent';
+	$page['breadcrumbs'][]['title'] = 'Kontingent';
 	$page['dont_show_h1'] = true;
 	$page['title'] = $data['series_short'].' '.$data['year'].', Kontingent';
 

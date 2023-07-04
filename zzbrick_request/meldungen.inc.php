@@ -370,7 +370,7 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 
 	$page['dont_show_h1'] = true;
 	$page['text'] = wrap_template('meldungen', $data);
-	$page['breadcrumbs'][] = 'Meldungsübersicht';
+	$page['breadcrumbs'][]['title'] = 'Meldungsübersicht';
 	$page['title'] = 'Meldungen '.$data['event'].' '.wrap_date($data['duration']);
 	return $page;
 }
