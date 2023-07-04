@@ -14,13 +14,12 @@
 
 
 function mod_qualification_make_meldunglv($vars, $settings, $data) {
-	global $zz_conf;
 	if (count($vars) !== 3) return false;
 	wrap_package_activate('tournaments');
 
 	// Turnierbedinungen prüfen
-	require_once wrap_setting('custom_wrap_dir').'/anmeldung.inc.php';
-	require_once wrap_setting('custom_wrap_dir').'/persons.inc.php';
+	wrap_include_files('anmeldung', 'custom');
+	wrap_include_files('persons', 'custom');
 
 	// Zugriffsrechte
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
@@ -285,7 +284,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				$values['action'] = 'delete';
 				$values['POST']['participation_id'] = $m_person['participation_id'];
 				$ops = zzform_multi('participations', $values);
-				if (!empty($ops['id'])) wrap_redirect($_SERVER['REQUEST_URI'], 303, false);
+				if (!empty($ops['id'])) wrap_redirect_change();
 			}
 			
 			if ($meldung['melden'] !== 'Anmelden') continue;
@@ -390,7 +389,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			
 			// ggf. Geburtsdatum aktualisieren
 			my_persons_date_of_birth_update($person);
-			wrap_redirect($_SERVER['REQUEST_URI'], 303, false);
+			wrap_redirect_change();
 		}
 	}
 	if (!empty($data['error'])) {
