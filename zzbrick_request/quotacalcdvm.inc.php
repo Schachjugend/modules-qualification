@@ -9,7 +9,7 @@
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
  * @author Falco Nogatz <fnogatz@gmail.com>
- * @copyright Copyright © 2013, 2016-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2013, 2016-2024 Gustaf Mossakowski
  * @copyright Copyright © 2016 Falco Nogatz
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
@@ -70,8 +70,11 @@ function cms_kontingent_termine($data) {
 					ON CONCAT(SUBSTRING(ok.identifier, 1, 1), "00") = lvk.identifier
 				LEFT JOIN contacts landesverbaende
 					ON landesverbaende.contact_id = lvk.contact_id
+				LEFT JOIN contacts_contacts federation_contacts
+					ON federation_contacts.contact_id = contacts.contact_id
+					AND federation_contacts.relation_category_id = %d
 				LEFT JOIN contacts mutterverbaende
-					ON contacts.mother_contact_id = mutterverbaende.contact_id
+					ON federation_contacts.main_contact_id = mutterverbaende.contact_id
 				WHERE events_contacts.event_id = events.event_id
 				LIMIT 1) AS federation_contact_id
 			, IFNULL(event_year, YEAR(date_begin)) AS year
@@ -91,10 +94,10 @@ function cms_kontingent_termine($data) {
 		ORDER BY series.sequence, IFNULL(event_year, YEAR(date_begin))';
 	$sql = sprintf($sql
 		, wrap_category_id('rollen/ausrichter')
+		, wrap_category_id('relation/member')
 		, $data['category_id'], $data['category_id'], $data['year']
 	);
-	$events = wrap_db_fetch($sql, 'event_id');
-	return $events;
+	return wrap_db_fetch($sql, 'event_id');
 }
 
 function cms_kontingent_mannschaft($data, $events) {
@@ -103,15 +106,19 @@ function cms_kontingent_mannschaft($data, $events) {
 		FROM contacts
 		JOIN contacts_identifiers ok USING (contact_id)
 		JOIN countries USING (country_id)
+		LEFT JOIN contacts_contacts USING (contact_id)
 		LEFT JOIN regionalgruppen
 			ON regionalgruppen.federation_contact_id = contacts.contact_id
 			AND series_category_id = %d
-		WHERE mother_contact_id = %d AND contact_category_id = %d
+		WHERE contacts_contacts.main_contact_id = %d
+		AND contacts_contacts.relation_category_id = %d
+		AND contact_category_id = %d
 		AND ok.current = "yes"
 		ORDER BY country';
 	$sql = sprintf($sql
 		, $data['category_id']
 		, wrap_setting('contact_ids[dsb]')
+		, wrap_category_id('relation/member')
 		, wrap_category_id('contact/federation')
 	);
 	$lv = wrap_db_fetch($sql, 'contact_id');

@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2012-2013, 2016, 2018-2021, 2023 Gustaf Mossakowski
+ * @copyright Copyright © 2012-2013, 2016, 2018-2021, 2023-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -44,9 +44,13 @@ $zz['fields'][3]['sql'] = sprintf('SELECT contacts.contact_id, contact
 	LEFT JOIN contacts_identifiers
 		ON contacts_identifiers.contact_id = contacts.contact_id
 		AND contacts_identifiers.current = "yes"
-	WHERE mother_contact_id = %d
+	LEFT JOIN contacts_contacts
+		ON contacts_contacts.contact_id = contacts.contact_id
+		AND contacts_contacts.relation_category_id = %d
+	WHERE main_contact_id = %d
 	AND contact_category_id = %d
 	ORDER BY contacts_identifiers.identifier'
+	, wrap_category_id('relation/member')
 	, wrap_setting('contact_ids[dsb]')
 	, wrap_category_id('contact/federation')
 );
