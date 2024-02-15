@@ -9,7 +9,7 @@
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
  * @author Falco Nogatz <fnogatz@gmail.com>
- * @copyright Copyright © 2013, 2016-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2013, 2016-2024 Gustaf Mossakowski
  * @copyright Copyright © 2016 Falco Nogatz
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
@@ -61,22 +61,7 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 	$page['dont_show_h1'] = true;
 	$page['title'] = $data['series_short'].' '.$data['year'].', Kontingent';
 
-	// Landesverbände auslesen
-	$sql = 'SELECT SUBSTRING(contacts_identifiers.identifier, 1, 1) AS code
-			, contact_abbr, contact
-		FROM contacts
-		JOIN contacts_identifiers USING (contact_id)
-		WHERE contact_category_id = %d
-		AND contacts_identifiers.identifier_category_id = %d
-		AND mother_contact_id = %d
-		AND SUBSTRING(contacts_identifiers.identifier, 1, 1) < "L"
-		ORDER BY contacts_identifiers.identifier';
-	$sql = sprintf($sql
-		, wrap_category_id('contact/federation')
-		, wrap_category_id('identifiers/zps')
-		, wrap_setting('contact_ids[dsb]')
-	);
-	$landesverbaende = wrap_db_fetch($sql, 'code');
+	$landesverbaende = mf_tournaments_federations('code');
 
 	$parameters = ['younger', 'alternate', 'younger_alternate'];
 	$series = [];
