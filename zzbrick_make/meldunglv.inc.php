@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2017-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -20,6 +20,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	// Turnierbedinungen prüfen
 	wrap_include_files('anmeldung', 'custom');
 	wrap_include_files('persons', 'custom');
+	wrap_include_files('zzform/editing', 'ratings');
 
 	// Zugriffsrechte
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
@@ -322,7 +323,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 					}
 				}
 			}
-			if (empty($person['zps']) AND !in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+			if (empty($person['player_id_dsb']) AND !in_array($meldung_id, ['betreuer', 'mitreisende'])) {
 				$m_person['error'] = 'Person gefunden, aber nicht DSB-Mitglied';
 				continue;
 			}
@@ -337,7 +338,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			}
 
 			// Wertungen
-			$wertungen = my_person_wertungen($person);
+			$wertungen = $person['player_id_dsb'] ? mf_ratings_player_rating_dsb($person['player_id_dsb']) : [];
 
 			if (!in_array($meldung_id, ['betreuer', 'mitreisende'])) {
 				$error = my_pruefe_turnierbedinungen($turnier, $person, $wertungen);
@@ -347,9 +348,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				}
 			}
 			
-			if (empty($person['person_id'])) {
+			if (empty($person['person_id']))
 				list($person['person_id'], $person['contact_id']) = my_person_add($person);
-			}
 
 			$values = [];
 			$values['action'] = 'insert';
