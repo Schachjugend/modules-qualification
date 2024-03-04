@@ -21,6 +21,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	wrap_include_files('anmeldung', 'custom');
 	wrap_include_files('persons', 'custom');
 	wrap_include_files('zzform/editing', 'ratings');
+	wrap_include_files('zzform/batch', 'contacts');
 
 	// Zugriffsrechte
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
@@ -210,6 +211,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 
 	if (!empty($_POST) AND $access) {
 		wrap_include_files('zzform.php', 'zzform');
+		wrap_include_files('zzform/batch', 'contacts');
 		zz_initialize();
 
 		foreach ($_POST AS $meldung_id => $meldung) {
@@ -348,8 +350,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				}
 			}
 			
-			if (empty($person['person_id']))
-				list($person['person_id'], $person['contact_id']) = my_person_add($person);
+			if (empty($person['contact_id']))
+				$person['contact_id'] = mf_contacts_add_person($person);
 
 			$values = [];
 			$values['action'] = 'insert';
