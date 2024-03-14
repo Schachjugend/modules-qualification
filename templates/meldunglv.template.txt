@@ -5,11 +5,11 @@
 # https://www.zugzwang.org/modules/qualification
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2017-2023 Gustaf Mossakowski
+# @copyright Copyright © 2017-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>Landesverband %%% item landesverband %%%
-<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item turnierort %%%</em></h1>
+<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item place %%%</em></h1>
 
 <div class="noprint">
 <p>Die Meldung erfolgt in drei Schritten:</p>

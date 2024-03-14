@@ -5,11 +5,11 @@
 # https://www.zugzwang.org/modules/qualification
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2017, 2019-2020, 2022-2023 Gustaf Mossakowski
+# @copyright Copyright © 2017, 2019-2020, 2022-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>Meldungen
-<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item turnierort %%%</em></h1>
+<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item place %%%</em></h1>
 
 <h2>Nach Landesverband</h2>
 
