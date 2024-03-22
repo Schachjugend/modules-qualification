@@ -115,11 +115,11 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	
 	$data['betreuer'] = [];
 	$data['betreuer_buchungen'] = 0;
-	$data['betreuer_teilnehmer'] = '';
+	$data['betreuer_teilnehmer'] = 0;
 	$data['mitreisende'] = [];
 	$data['mitreisende_buchungen'] = 0;
-	$data['mitreisende_teilnehmer'] = '';
-	$data['gast_teilnehmer'] = '';
+	$data['mitreisende_teilnehmer'] = 0;
+	$data['gast_teilnehmer'] = 0;
 	$data['gast_buchungen'] = 0;
 	if (!empty($participations[$data['event_id']])) {
 		foreach ($participations[$data['event_id']] as $index => $teilnahme) {
