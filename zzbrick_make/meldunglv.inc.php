@@ -267,27 +267,16 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				$sql = 'SELECT registration_id FROM registrations WHERE participation_id = %d';
 				$sql = sprintf($sql, $m_person['participation_id']);
 				$registration_id = wrap_db_fetch($sql, '', 'single value');
-				if ($registration_id) {
-					$values = [];
-					$values['action'] = 'delete';
-					$values['POST']['registration_id'] = $registration_id;
-					$ops = zzform_multi('anmeldungen', $values);
-				}
+				if ($registration_id)
+					zzform_delete('anmeldungen',  $registration_id);
 				// Buchungen löschen
 				$sql = 'SELECT buchung_id FROM buchungen WHERE participation_id = %d';
 				$sql = sprintf($sql, $m_person['participation_id']);
-				$buchung_ids = wrap_db_fetch($sql, '_dummy_', 'single value');
-				foreach ($buchung_ids as $buchung_id) {
-					$values = [];
-					$values['action'] = 'delete';
-					$values['POST']['buchung_id'] = $buchung_id;
-					$ops = zzform_multi('buchungen', $values);
-				}
-				$values = [];
-				$values['action'] = 'delete';
-				$values['POST']['participation_id'] = $m_person['participation_id'];
-				$ops = zzform_multi('participations', $values);
-				if (!empty($ops['id'])) wrap_redirect_change();
+				$booking_ids = wrap_db_fetch($sql, '_dummy_', 'single value');
+				if ($booking_ids)
+					zzform_delete('buchungen',  $booking_ids);
+				$deleted = zzform_delete('participations', $m_person['participation_id']);
+				if ($deleted) wrap_redirect_change();
 			}
 			
 			if ($meldung['melden'] !== 'Anmelden') continue;
