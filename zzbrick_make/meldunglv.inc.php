@@ -314,7 +314,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 					}
 				}
 			}
-			if (empty($person['player_id_dsb']) AND !in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+			if (empty($person['player_pass_dsb']) AND !in_array($meldung_id, ['betreuer', 'mitreisende'])) {
 				$m_person['error'] = 'Person gefunden, aber nicht DSB-Mitglied';
 				continue;
 			}
@@ -329,7 +329,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			}
 
 			// Wertungen
-			$wertungen = $person['player_id_dsb'] ? mf_ratings_player_rating_dsb($person['player_id_dsb']) : [];
+			$wertungen = $person['player_pass_dsb'] ? mf_ratings_player_rating_dsb($person['player_pass_dsb']) : [];
 
 			if (!in_array($meldung_id, ['betreuer', 'mitreisende'])) {
 				$error = my_pruefe_turnierbedinungen($turnier, $person, $wertungen);
