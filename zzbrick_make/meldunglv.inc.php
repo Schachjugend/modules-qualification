@@ -379,7 +379,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			}
 			
 			// ggf. Geburtsdatum aktualisieren
-			my_persons_date_of_birth_update($person);
+			wrap_include_files('batch', 'zzform');
+			zzform_update_date($person, 'persons', 'contact_id', 'date_of_birth');
 			wrap_redirect_change();
 		}
 	}
