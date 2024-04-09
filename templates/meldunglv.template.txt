@@ -29,6 +29,8 @@
 <li><a href="#opens">Meldungen zu den offenen Turnieren</a></li>
 %%% condition endif %%%
 <li><a href="#summe">Zusammenfassung aller Meldungen</a></li>
+<li><a href="belegung/">Belegung der Zimmer</a></li>
+<li><a href="buchungen/">Buchungen und Zahlungen</a></li>
 <li><a href="../bewerber/%%% item landesverband_kennung %%%/">Freiplatzanträge der 2. Runde</a></li>
 </ul>
 </div>
@@ -54,7 +56,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
-<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+<th><abbr title="Anmeldung?">Mldg.</abbr></th></tr>
 </thead>
 <tfoot>
 <tr>
@@ -92,7 +94,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
-<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br>
 %%% condition endif %%%
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
@@ -150,7 +152,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
-<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+<th><abbr title="Anmeldung?">Mldg.</abbr></th></tr>
 </thead>
 <tfoot>
 %%% condition if access %%%
@@ -226,7 +228,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
-<th><abbr title="Buchung?">Bu.</abbr></th>
+<th><abbr title="Anmeldung?">Mldg.</abbr></th>
 </tr>
 </thead>
 <tfoot>
@@ -310,7 +312,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
-<th><abbr title="Buchung?">Bu.</abbr></th></tr>
+<th><abbr title="Anmeldung?">Mldg.</abbr></th></tr>
 </thead>
 
 <tfoot>
@@ -411,7 +413,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr>
 <th>Vor- und Nachname</th>
 <th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
-<th>Kontakt</th> <th class="noprint">Aktion</th> <th><abbr title="Buchung?">Bu.</abbr></th>
+<th>Kontakt</th> <th class="noprint">Aktion</th> <th><abbr title="Anmeldung?">Mldg.</abbr></th>
 </tr>
 </thead>
 <tfoot>
@@ -504,8 +506,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </div>
 
 <ul>
-<li><a href="anmeldungen/">Alle Buchungen im Überblick</a></li>
-<li><a href="adressen/">Alle Adressen im Überblick</a></li>
+<li><a href="anmeldungen/">Alle Anmeldedetails im Überblick</a></li>
 </ul>
 </div>
 
