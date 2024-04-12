@@ -342,41 +342,35 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if (empty($person['contact_id']))
 				$person['contact_id'] = mf_contacts_add_person($person);
 
-			$values = [];
-			$values['action'] = 'insert';
-			$values['ids'] = [
-				'event_id', 'contact_id', 'club_contact_id', 'federation_contact_id',
-				'usergroup_id', 'status_category_id'
+			$line = [
+				'contact_id' => $person['contact_id'],
+				't_dwz' => $wertungen['t_dwz'] ?? NULL,
+				't_elo' => $wertungen['t_elo'] ?? NULL,
+				't_fidetitel' => $wertungen['t_fidetitel'] ?? NULL,
+				'club_contact_id' => $verein ? $verein['contact_id'] : '',
+				'federation_contact_id' => $lv['contact_id'],
+				'status_category_id' => wrap_category_id('participation-status/verified')
 			];
-			$values['POST']['contact_id'] = $person['contact_id'];
-			if ($wertungen) {
-				$values['POST']['t_dwz'] = $wertungen['t_dwz'];
-				$values['POST']['t_elo'] = $wertungen['t_elo'];
-				$values['POST']['t_fidetitel'] = $wertungen['t_fidetitel'];
-			}
-			$values['POST']['club_contact_id'] = $verein ? $verein['contact_id'] : '';
-			$values['POST']['federation_contact_id'] = $lv['contact_id'];
-			$values['POST']['status_category_id'] = wrap_category_id('participation-status/verified');
 			if ($meldung_id === 'betreuer') {
-				$values['POST']['event_id'] = $data['event_id'];
-				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'betreuer');
-				$values['POST']['role'] = $meldung['role'];
+				$line['event_id'] = $data['event_id'];
+				$line['usergroup_id'] = wrap_id('usergroups', 'betreuer');
+				$line['role'] = $meldung['role'];
 			} elseif ($meldung_id === 'mitreisende') {
-				$values['POST']['event_id'] = $data['event_id'];
-				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'mitreisende');
+				$line['event_id'] = $data['event_id'];
+				$line['usergroup_id'] = wrap_id('usergroups', 'mitreisende');
 			} elseif ($meldung_offen) {
-				$values['POST']['event_id'] = $meldung_id;
-				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'spieler');
+				$line['event_id'] = $meldung_id;
+				$line['usergroup_id'] = wrap_id('usergroups', 'spieler');
 			} else {
-				$values['POST']['event_id'] = $meldungen[$meldung_id]['event_id'];
-				$values['POST']['usergroup_id'] = wrap_id('usergroups', 'spieler');
-				$values['POST']['qualification'] = $meldungen[$meldung_id]['kontingent'].' ['.$meldung_id.']';
+				$line['event_id'] = $meldungen[$meldung_id]['event_id'];
+				$line['usergroup_id'] = wrap_id('usergroups', 'spieler');
+				$line['qualification'] = $meldungen[$meldung_id]['kontingent'].' ['.$meldung_id.']';
 			}
-			$ops = zzform_multi('participations', $values);
-			if (!$ops['id']) {
-				wrap_error('Anmeldung nicht möglich: Spieler %s, Geburtsdatum %s (Landesverband: %s)',
-					$meldung['spieler'], $meldung['date_of_birth'], $lv['landesverband']);
+			if (wrap_category_id('participations/registration', 'check')) {
+				$line['participations_categories_'.wrap_category_id('participations/registration')][]['category_id']
+					= wrap_category_id('participations/registration/federation');
 			}
+			zzform_insert('participations', $line);
 			
 			// ggf. Geburtsdatum aktualisieren
 			wrap_include_files('batch', 'zzform');
