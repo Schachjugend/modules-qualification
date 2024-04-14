@@ -28,10 +28,11 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	// @todo Nach Meldeschluss: nur noch Ansicht der Daten
 	
 	// Landesverband
-	$lv = my_landesverband($vars[2]);
+	wrap_include_files('functions', 'clubs');
+	$lv = mf_clubs_federation($vars[2]);
 	if (!$lv) return false;
-	$data['landesverband'] = $lv['landesverband'];
-	$data['landesverband_kennung'] = $lv['identifier'];
+	$data['landesverband'] = $lv['federation_short'];
+	$data['landesverband_kennung'] = $lv['federation_identifier'];
 
 	// Turniere
 	$sql = 'SELECT event_id, event, alter_min, alter_max, geschlecht

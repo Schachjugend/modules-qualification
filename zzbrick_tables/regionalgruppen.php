@@ -51,7 +51,7 @@ $zz['fields'][3]['sql'] = sprintf('SELECT contacts.contact_id, contact
 	AND contact_category_id = %d
 	ORDER BY contacts_identifiers.identifier'
 	, wrap_category_id('relation/member')
-	, wrap_setting('contact_ids[dsb]')
+	, wrap_setting('clubs_confederation_contact_id')
 	, wrap_category_id('contact/federation')
 );
 $zz['fields'][3]['id_field_name'] = 'contacts.contact_id';

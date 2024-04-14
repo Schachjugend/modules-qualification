@@ -117,7 +117,7 @@ function cms_kontingent_mannschaft($data, $events) {
 		ORDER BY country';
 	$sql = sprintf($sql
 		, $data['category_id']
-		, wrap_setting('contact_ids[dsb]')
+		, wrap_setting('clubs_confederation_contact_id')
 		, wrap_category_id('relation/member')
 		, wrap_category_id('contact/federation')
 	);
