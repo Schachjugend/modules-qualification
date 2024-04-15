@@ -18,7 +18,7 @@
  *
  * @param array $vars
  */
-function mod_qualification_kontingente_kopieren($vars, $settings, $event) {
+function mod_qualification_make_kontingente_kopieren($vars, $settings, $event) {
 	if (count($vars) !== 2) return false;
 	
 	$page['dont_show_h1'] = true;
