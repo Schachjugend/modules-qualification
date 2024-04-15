@@ -64,15 +64,17 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$sql = sprintf($sql, $lv['contact_id'], implode(',', array_keys($data['turniere'])));
 	$kontingente = wrap_db_fetch($sql, ['event_id', 'kontingent_id']);
 
-	$sql = 'SELECT event_id, participation_id
+	$sql = 'SELECT event_id, participations.participation_id
 			, contact_id, contact, contacts.identifier AS contact_identifier
 			, t_verein
 			, t_dwz, t_elo, t_fidetitel
 			, qualification, date_of_birth
+			, YEAR(date_of_birth) AS birth_year
 			, IF(sex = "female", "W", IF(sex = "male", "M", "")) AS geschlecht
 			, usergroups.identifier AS group_identifier
 			, role
 			, (SELECT SUM(betrag) FROM buchungen WHERE buchungen.participation_id = participations.participation_id) AS buchung
+			, participations_categories.participation_category_id
 			, SUBSTRING_INDEX(
 				IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(registration.parameters, "&alias=", -1), "&", 1), registration.path), "/", -1
 			) AS registration_path
@@ -110,6 +112,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($participations as $participation_id => $participation) {
 		$participation['addresses'] = $addresses[$participation['contact_id']] ?? [];
 		$participation += $contactdetails[$participation['contact_id']] ?? [];
+		$participation[str_replace('-', '_', $participation['registration_path'])] = true;
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 	}
 
@@ -141,10 +144,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($data['turniere'] as $event_id => $turnier) {
 		$data['turniere'][$event_id]['access'] = $access;
 		if (empty($kontingente[$event_id])) {
-			if (!$turnier['offen']) {
-				$data['turniere'][$event_id]['kein_kontingent'] = true;
-				continue;
-			}
+			if (!$turnier['offen'])
+				$turnier['kein_kontingent'] = true;
 			unset($data['turniere'][$event_id]);
 			if ($turnier['parameters'])
 				parse_str($turnier['parameters'], $parameter);
@@ -216,43 +217,48 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		wrap_include_files('zzform/batch', 'contacts');
 		zz_initialize();
 
-		foreach ($_POST AS $meldung_id => $meldung) {
+		foreach ($_POST AS $participation_id => $meldung) {
+			if (isset($meldung['move'])) {
+				mf_qualification_player_to_federation_quota($participations[$participation_id] ?? []);
+				wrap_redirect_change();
+			}
+
 			// remove whitespace
 			foreach ($meldung as $key => $value)
 				$meldung[$key] = trim($value);
 			$meldung_offen = false;
 			// Übernahme der Daten
-			if (in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+			if (in_array($participation_id, ['betreuer', 'mitreisende'])) {
 				foreach ($meldung as $key => $value) {
-					$data[$meldung_id.'_'.$key] = $value; // für Formular
+					$data[$participation_id.'_'.$key] = $value; // für Formular
 					if ($key === 'geschlecht') {
-						$data[$meldung_id.'_'.$key.'_'.$value] = true;
+						$data[$participation_id.'_'.$key.'_'.$value] = true;
 					}
 				}
 				$m_person = &$data;
-			} elseif (substr($meldung_id, 0, 8) === 'betreuer') {
-				$m_person['participation_id'] = substr($meldung_id, 9);
+			} elseif (substr($participation_id, 0, 8) === 'betreuer') {
+				$m_person['participation_id'] = substr($participation_id, 9);
 				if (!in_array($m_person['participation_id'], array_keys($data['betreuer']))) {
 					$m_person['participation_id'] = false;
 				}
-			} elseif (substr($meldung_id, 0, 11) === 'mitreisende') {
-				$m_person['participation_id'] = substr($meldung_id, 12);
+			} elseif (substr($participation_id, 0, 11) === 'mitreisende') {
+				$m_person['participation_id'] = substr($participation_id, 12);
 				if (!in_array($m_person['participation_id'], array_keys($data['mitreisende']))) {
 					$m_person['participation_id'] = false;
 				} 
 			} else {
-				if (!empty($data['opens']) AND array_key_exists($meldung_id, $data['opens'])) {
-					$turnier = &$data['opens'][$meldung_id];
+				if (!empty($data['opens']) AND array_key_exists($participation_id, $data['opens'])) {
+					$turnier = &$data['opens'][$participation_id];
 					$meldung_offen = true;
-					$m_person = &$data['opens'][$meldung_id];
-				} elseif (array_key_exists($meldung_id, $meldungen)) {
-					$turnier = &$data['turniere'][$meldungen[$meldung_id]['event_id']];
-					$m_person = &$turnier['spieler'][$meldung_id];
+					$m_person = &$data['opens'][$participation_id];
+				} elseif (array_key_exists($participation_id, $meldungen)) {
+					$turnier = &$data['turniere'][$meldungen[$participation_id]['event_id']];
+					$m_person = &$turnier['spieler'][$participation_id];
 				} else {
 					// delete open participant
 					foreach ($data['opens'] as $open_id => $open) {
-						if (!array_key_exists($meldung_id, $open['spieler_offen'])) continue;
-						$m_person = &$data['opens'][$open_id]['spieler_offen'][$meldung_id];
+						if (!array_key_exists($participation_id, $open['spieler_offen'])) continue;
+						$m_person = &$data['opens'][$open_id]['spieler_offen'][$participation_id];
 					}
 				}
 				if (!empty($meldung['person']) or !empty($meldung['date_of_birth'])) {
@@ -265,34 +271,22 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			}
 			if (empty($meldung['melden'])) continue;
 			if ($meldung['melden'] === 'Abmelden') {
-				// Anmeldung löschen
-				$sql = 'SELECT registration_id FROM registrations WHERE participation_id = %d';
-				$sql = sprintf($sql, $m_person['participation_id']);
-				$registration_id = wrap_db_fetch($sql, '', 'single value');
-				if ($registration_id)
-					zzform_delete('anmeldungen',  $registration_id);
-				// Buchungen löschen
-				$sql = 'SELECT buchung_id FROM buchungen WHERE participation_id = %d';
-				$sql = sprintf($sql, $m_person['participation_id']);
-				$booking_ids = wrap_db_fetch($sql, '_dummy_', 'single value');
-				if ($booking_ids)
-					zzform_delete('buchungen',  $booking_ids);
-				$deleted = zzform_delete('participations', $m_person['participation_id']);
-				if ($deleted) wrap_redirect_change();
+				mf_qualification_player_unregister($participations[$m_person['participation_id']] ?? []);
+				wrap_redirect_change();
 			}
 			
 			if ($meldung['melden'] !== 'Anmelden') continue;
 			if (!$meldung_offen
-				AND !in_array($meldung_id, ['betreuer', 'mitreisende'])
-				AND !array_key_exists($meldung_id, $meldungen)) {
-				wrap_error(sprintf('Anmeldeversuch ohne gültige Meldungs-ID %d', $meldung_id), E_USER_WARNING);
+				AND !in_array($participation_id, ['betreuer', 'mitreisende'])
+				AND !array_key_exists($participation_id, $meldungen)) {
+				wrap_error(sprintf('Anmeldeversuch ohne gültige Meldungs-ID %d', $participation_id), E_USER_WARNING);
 				continue;
 			}
 			if (!$meldung['person']) {
 				$m_person['error'] = 'Name fehlt.';
 				continue;
 			}
-			if (!$meldung['date_of_birth'] AND substr($meldung_id, 0, 11) !== 'mitreisende') {
+			if (!$meldung['date_of_birth'] AND substr($participation_id, 0, 11) !== 'mitreisende') {
 				$m_person['error'] = 'Geburtsdatum fehlt.';
 				continue;
 			}
@@ -303,7 +297,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 
 			$person = my_person_suchen([$meldung['date_of_birth'], $meldung['person']]);
 			if (!$person) {
-				if (!in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+				if (!in_array($participation_id, ['betreuer', 'mitreisende'])) {
 					$m_person['error'] = 'Person nicht gefunden (Daten korrekt?)';
 					continue;
 				} else {
@@ -316,7 +310,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 					}
 				}
 			}
-			if (empty($person['player_pass_dsb']) AND !in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+			if (empty($person['player_pass_dsb']) AND !in_array($participation_id, ['betreuer', 'mitreisende'])) {
 				$m_person['error'] = 'Person gefunden, aber nicht DSB-Mitglied';
 				continue;
 			}
@@ -335,7 +329,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if ($player_pass_dsb)
 				$wertungen = mf_ratings_player_rating_dsb($player_pass_dsb);
 
-			if (!in_array($meldung_id, ['betreuer', 'mitreisende'])) {
+			if (!in_array($participation_id, ['betreuer', 'mitreisende'])) {
 				$error = my_pruefe_turnierbedinungen($turnier, $person, $wertungen);
 				if ($error) {
 					$m_person['error'] = $error;
@@ -355,20 +349,20 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				'federation_contact_id' => $lv['contact_id'],
 				'status_category_id' => wrap_category_id('participation-status/verified')
 			];
-			if ($meldung_id === 'betreuer') {
+			if ($participation_id === 'betreuer') {
 				$line['event_id'] = $data['event_id'];
 				$line['usergroup_id'] = wrap_id('usergroups', 'betreuer');
 				$line['role'] = $meldung['role'];
-			} elseif ($meldung_id === 'mitreisende') {
+			} elseif ($participation_id === 'mitreisende') {
 				$line['event_id'] = $data['event_id'];
 				$line['usergroup_id'] = wrap_id('usergroups', 'mitreisende');
 			} elseif ($meldung_offen) {
-				$line['event_id'] = $meldung_id;
+				$line['event_id'] = $participation_id;
 				$line['usergroup_id'] = wrap_id('usergroups', 'spieler');
 			} else {
-				$line['event_id'] = $meldungen[$meldung_id]['event_id'];
+				$line['event_id'] = $meldungen[$participation_id]['event_id'];
 				$line['usergroup_id'] = wrap_id('usergroups', 'spieler');
-				$line['qualification'] = $meldungen[$meldung_id]['kontingent'].' ['.$meldung_id.']';
+				$line['qualification'] = $meldungen[$participation_id]['kontingent'].' ['.$participation_id.']';
 			}
 			if (wrap_category_id('participations/registration', 'check')) {
 				$line['participations_categories_'.wrap_category_id('participations/registration')][]['category_id']
@@ -383,7 +377,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		}
 	}
 	if (!empty($data['error'])) {
-		$data[$meldung_id.'_error'] = $data['error'];
+		$data[$participation_id.'_error'] = $data['error'];
 	}
 	$data['access'] = $access ? $access : NULL;
 
@@ -392,4 +386,52 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$page['title'] = $data['landesverband'].' – '.$data['event'].' '.$data['year'];
 	$page['text'] = wrap_template('meldunglv', $data);
 	return $page;
+}
+
+/**
+ * move a player from direct or organiser quota to federation quota
+ *
+ * @param array $participation
+ * @return bool
+ */
+function mf_qualification_player_to_federation_quota($participation) {
+	if (!$participation) return false;
+	if (str_starts_with($participation['registration_path'], 'federation')) return false;
+
+	$line = [
+		'participation_category_id' => $participation['participation_category_id'],
+		'type_category_id' => wrap_category_id('participations/registration'),
+		'category_id' => wrap_category_id('participations/registration/federation-'.$participation['registration_path'])
+	];
+	zzform_update('participations_categories', $line);
+	return true;
+}
+
+/**
+ * unregister a player
+ *
+ * @param array $participation
+ * @return void
+ */
+function mf_qualification_player_unregister($participation) {
+	if (!$participation) return false;
+	
+	// only allow to unregister people who were registered here before
+	if ($participation['registration_path'] !== 'federation') return false;
+
+	// delete registration
+	$sql = 'SELECT registration_id FROM registrations WHERE participation_id = %d';
+	$sql = sprintf($sql, $participation['participation_id']);
+	$registration_id = wrap_db_fetch($sql, '', 'single value');
+	if ($registration_id)
+		zzform_delete('anmeldungen',  $registration_id);
+
+	// delete bookings
+	$sql = 'SELECT buchung_id FROM buchungen WHERE participation_id = %d';
+	$sql = sprintf($sql, $participation['participation_id']);
+	$booking_ids = wrap_db_fetch($sql, '_dummy_', 'single value');
+	if ($booking_ids)
+		zzform_delete('buchungen', $booking_ids);
+	zzform_delete('participations', $participation['participation_id']);
+	return true;
 }

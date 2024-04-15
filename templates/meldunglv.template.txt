@@ -317,6 +317,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 </thead>
 
 <tfoot>
+%%% condition unless kein_kontingent %%%
 %%% condition if access %%%
 <tr class="even noprint">
 <td><input type="text" name="%%% item event_id %%%[person]" size="32" value="%%% item name %%%">
@@ -334,6 +335,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <td class="tm"></td>
 </tr>
 %%% condition endif %%%
+%%% condition endif %%%
 <tr>
 %%% condition if access %%%
 <td colspan="6">
@@ -350,12 +352,18 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition if contact %%%
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
+%%% condition if federation | federation_direct | federation_organiser %%%
 <td>%%% item date_of_birth wrap_date %%%</td>
+%%% condition else %%%
+<td>%%% item birth_year %%%</td>
+%%% condition endif %%%
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
 %%% condition if t_elo %%%
 <br><abbr title="Elo">%%% item t_elo %%%</abbr>
 %%% condition endif %%%
 </td>
+
+%%% condition if federation | federation_direct | federation_organiser %%%
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
 %%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
@@ -363,7 +371,9 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition if access %%%
 <td class="noprint">
 <a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
+%%% condition if federation %%%
 <br><input type="submit" value="Abmelden" name="%%% item participation_id %%%[melden]">
+%%% condition endif %%%
 </td>
 %%% condition endif %%%
 <td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
@@ -371,6 +381,14 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% item buchung wrap_money %%%&nbsp;€
 %%% condition else %%%
 <em>– fehlt –</em>
+%%% condition endif %%%
+%%% condition else %%%
+<td colspan="3" style="text-align: center;">
+%%% condition if access %%%
+<input type="submit" value="Über den Landesverband verwalten" name="%%% item participation_id %%%[move]">
+%%% condition endif %%%
+</td>
+
 %%% condition endif %%%
 </td>
 %%% condition else %%%
@@ -428,7 +446,13 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="%%% loopposition uneven un %%%even">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
+%%% condition if federation | federation_direct | federation_organiser %%%
 <td>%%% item date_of_birth wrap_date %%%</td>
+%%% condition else %%%
+<td>%%% item birth_year %%%</td>
+%%% condition endif %%%
+
+%%% condition if federation | federation_direct | federation_organiser %%%
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
 %%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
@@ -441,6 +465,13 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <em>– fehlt –</em>
 %%% condition endif %%%
 </td>
+%%% condition else %%%
+<td colspan="3" style="text-align: center;">
+%%% condition if access %%%
+<input type="submit" value="Über den Landesverband verwalten" name="%%% item participation_id %%%[move]">
+%%% condition endif %%%
+
+%%% condition endif %%%
 </tr>
 %%% loop end %%%
 </tbody>
@@ -448,11 +479,9 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </form>
 </div>
 
-
 %%% condition endif %%%
 %%% loop end %%%
 %%% condition endif %%%
-
 
 <div class="noprint">
 <h2 id="summe">Zusammenfassung aller Meldungen</h2>
