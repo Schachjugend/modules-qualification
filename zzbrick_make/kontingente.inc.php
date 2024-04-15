@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2018-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2018-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -62,24 +62,14 @@ function mod_qualification_kontingente_kopieren($vars, $settings, $event) {
 			, $_POST['event_id']
 		);
 		$data = wrap_db_fetch($sql, 'kontingent_id');
-		if (!$data) {
-			$event['no_copy'] = true;
-		}
+		if (!$data) $event['no_copy'] = true;
 
 		$event['copied'] = 0;
 		foreach ($data as $id => $line) {
-			$values = [];
-			$values['action'] = 'insert';
-			$values['ids'] = ['federation_contact_id', 'event_id', 'kontingent_category_id'];
 			unset($line['kontingent_id']);
-			$values['POST'] = $line;
-			$values['POST']['kontingent_category_id'] = wrap_category_id('kontingente/lv');
-			$ops = zzform_multi('kontingente', $values);
-			if (!$ops['id']) {
-				wrap_error(sprintf('Fehler beim Kopieren von Kontingent ID %d', $id));
-			} else {
-				$event['copied'] ++;
-			}
+			$line['kontingent_category_id'] = wrap_category_id('kontingente/lv');
+			$result = zzform_insert('kontingente', $line);
+			if ($result) $event['copied']++;
 		}
 	}
 	$page['text'] = wrap_template('kontingente-kopieren', $event);
