@@ -84,7 +84,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 </td>
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint">
@@ -190,7 +190,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td>%%% item role %%%</td>
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, "%%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
@@ -266,7 +266,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
@@ -308,7 +308,8 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <thead>
 <tr><th>Vor- und Nachname</th>
 <th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
-<th>Wtg.</th> <th>Kontakt</th>
+<th>Wtg.</th>
+<th>Kontakt</th>
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
@@ -357,7 +358,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 </td>
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint">
@@ -430,7 +431,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a></td>
 <td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
