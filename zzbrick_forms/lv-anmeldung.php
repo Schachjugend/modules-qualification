@@ -106,25 +106,19 @@ $zz['fields'][19]['value'] = $teilnahme['participation_id'];
 $zz['fields'][22]['hide_in_form'] = true; // Stand
 
 // add: Buchungen dazu, abhängig von der usergroup_id und event_id
-$buchungen = false;
-$usergroup = $teilnahme['usergroup'];
-require wrap_setting('cms_dir').'/_inc/custom/zzbrick_forms/anmeldungen-kosten.php';
-if ($k_fields) {
+$product_areas = my_formkit_products($event, $teilnahme['usergroup']);
+if ($product_areas) {
 	$i = 80; // Feldnummern, fortlaufend 80, 81, 82
-	foreach ($k_fields as $field) {
+	foreach ($product_areas as $area => $products) {
+		$zz['fields'][$i] = my_formkit_products_field(array_keys($products), $area, $event);
 		// participation_id ergänzen
-		$field['fields'][17]['type'] = 'hidden';
-		$field['fields'][17]['value'] = $teilnahme['participation_id'];
-		$field['sql'] .= sprintf(' AND participation_id = %d', $teilnahme['participation_id']);
-		$zz['fields'][$i] = $field;
+		$zz['fields'][$i]['fields'][17]['type'] = 'hidden';
+		$zz['fields'][$i]['fields'][17]['value'] = $teilnahme['participation_id'];
+		$zz['fields'][$i]['sql'] .= sprintf(' AND participation_id = %d', $teilnahme['participation_id']);
 		$i++;
 	}
-	$buchungen = true;
+	$zz['hooks']['before_upload'][] = 'my_buchung';
 }
-unset ($k_fields);
-
-if ($buchungen)
-	$zz['hooks']['before_upload'] = 'my_buchung';
 unset($zz['hooks']['before_insert']); // my_anmeldung_check
 
 $zz['page']['dont_show_title_as_breadcrumb'] = true;

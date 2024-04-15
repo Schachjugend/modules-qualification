@@ -113,7 +113,7 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 		GROUP BY federation_contact_id, kosten_status
 	';
 	$sql = sprintf($sql, implode(',', $event_ids));
-	$buchungen =  wrap_db_fetch($sql, ['federation_contact_id', 'kosten_status']);
+	$buchungen = wrap_db_fetch($sql, ['federation_contact_id', 'kosten_status']);
 
 	foreach ($kontingente as $lv) {
 		foreach ($data['kontingente'] as $category_id => $category) {
