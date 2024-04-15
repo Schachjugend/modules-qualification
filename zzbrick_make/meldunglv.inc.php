@@ -64,53 +64,55 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$sql = sprintf($sql, $lv['contact_id'], implode(',', array_keys($data['turniere'])));
 	$kontingente = wrap_db_fetch($sql, ['event_id', 'kontingent_id']);
 
-	$sql = 'SELECT event_id, participation_id, person_id, contact_id
-			, IFNULL(
-				CONCAT(t_vorname, IFNULL(CONCAT(" ", t_namenszusatz), ""), " ", t_nachname), 
-				contact
-			) AS person
-			, contacts.identifier AS personenkennung
+	$sql = 'SELECT event_id, participation_id
+			, contact_id, contact, contacts.identifier AS contact_identifier
 			, t_verein
 			, t_dwz, t_elo, t_fidetitel
 			, qualification, date_of_birth
 			, IF(sex = "female", "W", IF(sex = "male", "M", "")) AS geschlecht
-			, (SELECT identification FROM contactdetails
-				WHERE contactdetails.contact_id = contacts.contact_id
-				AND provider_category_id = %d
-				LIMIT 1
-			) AS e_mail
-			, GROUP_CONCAT(DISTINCT contactdetails.identification SEPARATOR "; ") AS telefon
-			, GROUP_CONCAT(DISTINCT CONCAT(address, "; "
-				, IFNULL(CONCAT(addresses.postcode, " "), ""), addresses.place) SEPARATOR "; ") AS adresse
 			, usergroups.identifier AS group_identifier
 			, role
 			, (SELECT SUM(betrag) FROM buchungen WHERE buchungen.participation_id = participations.participation_id) AS buchung
+			, SUBSTRING_INDEX(
+				IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(registration.parameters, "&alias=", -1), "&", 1), registration.path), "/", -1
+			) AS registration_path
 		FROM participations
 		LEFT JOIN persons USING (contact_id)
 		LEFT JOIN contacts USING (contact_id)
-		LEFT JOIN addresses USING (contact_id)
 		LEFT JOIN usergroups USING (usergroup_id)
-		LEFT JOIN contactdetails USING (contact_id)
-		LEFT JOIN categories
-			ON contactdetails.provider_category_id = categories.category_id
-			AND (ISNULL(categories.parameters) OR categories.parameters LIKE "%%&type=phone%%")
+		LEFT JOIN participations_categories
+			ON participations_categories.participation_id = participations.participation_id
+			AND participations_categories.type_category_id = %d
+		LEFT JOIN categories registration
+			ON participations_categories.category_id = registration.category_id
 		WHERE federation_contact_id = %d
 		AND event_id IN (%s, %d)
-		AND usergroup_id != %d
 		AND status_category_id IN (%d, %d, %d)
-		GROUP BY participations.participation_id';
+		AND (ISNULL(usergroups.parameters) OR usergroups.parameters NOT LIKE "%%&present=0%%")';
 	$sql = sprintf($sql
-		, wrap_category_id('provider/e-mail')
+		, wrap_category_id('participations/registration')
 		, $lv['contact_id']
 		, implode(',', array_keys($data['turniere']))
 		, $data['event_id']
-		, wrap_id('usergroups', 'bewerber')
 		, wrap_category_id('participation-status/subscribed')
 		, wrap_category_id('participation-status/verified')
 		, wrap_category_id('participation-status/participant')
 	);
-	$participations = wrap_db_fetch($sql, ['event_id', 'participation_id']);
-	
+	$participations = wrap_db_fetch($sql, 'participation_id');
+	$contact_ids = [];
+	foreach ($participations as $participation) {
+		$contact_ids[] = $participation['contact_id'];
+	}
+	$addresses = mf_contacts_addresses($contact_ids);
+	$contactdetails = mf_contacts_contactdetails($contact_ids);
+
+	$p_per_event = [];
+	foreach ($participations as $participation_id => $participation) {
+		$participation['addresses'] = $addresses[$participation['contact_id']] ?? [];
+		$participation += $contactdetails[$participation['contact_id']] ?? [];
+		$p_per_event[$participation['event_id']][$participation_id] = $participation;
+	}
+
 	$data['buchungen'] = 0;
 	$data['teilnehmer'] = 0;
 	
@@ -122,9 +124,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$data['mitreisende_teilnehmer'] = 0;
 	$data['gast_teilnehmer'] = 0;
 	$data['gast_buchungen'] = 0;
-	if (!empty($participations[$data['event_id']])) {
-		foreach ($participations[$data['event_id']] as $index => $teilnahme) {
-			if ($teilnahme['group_identifier'] === 'landesverband-organisator') continue; 
+	if (!empty($p_per_event[$data['event_id']])) {
+		foreach ($p_per_event[$data['event_id']] as $index => $teilnahme) {
 			$teilnahme['access'] = $access;
 			$data[$teilnahme['group_identifier']][$index] = $teilnahme;
 			$data[$teilnahme['group_identifier'].'_teilnehmer']++;
@@ -147,13 +148,13 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			unset($data['turniere'][$event_id]);
 			if ($turnier['parameters'])
 				parse_str($turnier['parameters'], $parameter);
-			if (empty($participations[$event_id]) AND empty($parameter['lvmeldung'])) continue;
+			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
 			$data['opens'][$event_id] = $turnier;
 			$data['opens'][$event_id]['spieler'] = [];
 			$data['opens'][$event_id]['buchungen'] = 0;
 			$data['opens'][$event_id]['access'] = $access;
-			if (!empty($participations[$event_id])) {
-				foreach ($participations[$event_id] as $tn) {
+			if (!empty($p_per_event[$event_id])) {
+				foreach ($p_per_event[$event_id] as $tn) {
 					$data['opens'][$event_id][$tn['group_identifier'].'_offen'][$tn['participation_id']] = $tn;
 					$data['opens'][$event_id]['buchungen'] += $tn['buchung'];
 					$data['opens_buchungen'] += $tn['buchung'];
@@ -186,8 +187,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				];
 			}
 		}
-		if (empty($participations[$event_id])) continue;
-		foreach ($participations[$event_id] as $teilnehmer) {
+		if (empty($p_per_event[$event_id])) continue;
+		foreach ($p_per_event[$event_id] as $teilnehmer) {
 			if (!$teilnehmer['qualification']) continue;
 			$id = explode(' ', $teilnehmer['qualification']);
 			$id = array_pop($id);

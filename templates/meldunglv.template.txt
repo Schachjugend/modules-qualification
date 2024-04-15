@@ -73,8 +73,8 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% loop spieler %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td><abbr title="%%% item kontingent %%%">%%% item kontingent_abk %%%</abbr></td>
-%%% condition if person %%%
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
+%%% condition if contact %%%
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
@@ -82,9 +82,9 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 <br><abbr title="Elo">%%% item t_elo %%%</abbr>
 %%% condition endif %%%
 </td>
-<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
-%%% item telefon "Tel. %s<br>" %%%
-%%% item adresse %%%
+<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
+%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint">
@@ -184,13 +184,13 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop betreuer %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td>%%% item role %%%</td>
-<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
-%%% item telefon "Tel. %s<br>" %%%
-%%% item adresse %%%
+<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
+%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
@@ -261,12 +261,12 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop mitreisende %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
-<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
-%%% item telefon "Tel. %s<br>" %%%
-%%% item adresse %%%
+<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
+%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
@@ -346,8 +346,8 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <tbody>
 %%% loop spieler_offen %%%
 <tr class="%%% loopposition uneven un %%%even">
-%%% condition if person %%%
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
+%%% condition if contact %%%
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
@@ -355,9 +355,9 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <br><abbr title="Elo">%%% item t_elo %%%</abbr>
 %%% condition endif %%%
 </td>
-<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
-%%% item telefon "Tel. %s<br>" %%%
-%%% item adresse %%%
+<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
+%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint">
@@ -425,12 +425,12 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop mitreisende_offen %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] personenkennung "html=<a href="%s">" %%%%%% item person %%%%%% path contacts_profile[person] personenkennung html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
-<td>%%% condition if e_mail %%%<a href="mailto:%%% item e_mail %%%">%%% item e_mail %%%</a><br>%%% condition endif %%%
-%%% item telefon "Tel. %s<br>" %%%
-%%% item adresse %%%
+<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
+%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
+%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address %%%, %%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a></td>
 <td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
