@@ -94,7 +94,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
-<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br>
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% condition endif %%%
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
@@ -198,7 +198,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
-<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% condition endif %%%
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
@@ -274,7 +274,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
-<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% condition endif %%%
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
@@ -376,7 +376,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition endif %%%
 </td>
 %%% condition endif %%%
-<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
 %%% condition else %%%
@@ -458,7 +458,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a></td>
-<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
+<td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% condition if buchung %%%
 %%% item buchung wrap_money %%%&nbsp;€
 %%% condition else %%%
