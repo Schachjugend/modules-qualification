@@ -382,6 +382,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$data['access'] = $access ? $access : NULL;
 
 	$page['dont_show_h1'] = true;
+	$page['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $data['event']);
 	$page['breadcrumbs'][]['title'] = $data['landesverband'];
 	$page['title'] = $data['landesverband'].' – '.$data['event'].' '.$data['year'];
 	$page['text'] = wrap_template('meldunglv', $data);
