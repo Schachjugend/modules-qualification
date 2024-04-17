@@ -132,6 +132,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		foreach ($p_per_event[$data['event_id']] as $index => $teilnahme) {
 			$teilnahme['access'] = $access;
 			$data[$teilnahme['group_identifier']][$index] = $teilnahme;
+			if (!mf_qualification_federation_member($teilnahme)) continue;
 			$data[$teilnahme['group_identifier'].'_teilnehmer']++;
 			$data[$teilnahme['group_identifier'].'_buchungen'] += $teilnahme['buchung'];
 			$data['buchungen'] += $teilnahme['buchung'];
@@ -189,6 +190,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		$data['turniere'][$event_id]['teilnehmer'] = 0;
 		if (empty($data['turniere'][$event_id]['spieler'])) continue;
 		foreach ($data['turniere'][$event_id]['spieler'] as $spieler) {
+			if (!mf_qualification_federation_member($spieler)) continue;
 			$data['turniere'][$event_id]['teilnehmer']++;
 			if (empty($spieler['buchung'])) continue;
 			$data['turniere'][$event_id]['buchungen'] += $spieler['buchung'];
@@ -450,5 +452,17 @@ function mf_qualification_player_unregister($participation) {
 	if ($booking_ids)
 		zzform_delete('buchungen', $booking_ids);
 	zzform_delete('participations', $participation['participation_id']);
+	return true;
+}
+
+/**
+ * check if participant was registered by federation
+ *
+ * @param array $participation
+ * @return bool
+ */
+function mf_qualification_federation_member($participation) {
+	if (empty($participation['registration_path'])) return false;
+	if (!str_starts_with($participation['registration_path'], 'federation')) return false;
 	return true;
 }
