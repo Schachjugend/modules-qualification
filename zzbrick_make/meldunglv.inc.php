@@ -112,7 +112,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($participations as $participation_id => $participation) {
 		$participation['addresses'] = $addresses[$participation['contact_id']] ?? [];
 		$participation += $contactdetails[$participation['contact_id']] ?? [];
-		$participation[str_replace('-', '_', $participation['registration_path'])] = true;
+		if ($participation['registration_path']) // old participants might not have this
+			$participation[str_replace('-', '_', $participation['registration_path'])] = true;
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 	}
 
