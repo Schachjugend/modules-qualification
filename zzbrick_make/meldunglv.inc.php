@@ -117,26 +117,26 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 	}
 
-	$data['buchungen'] = 0;
-	$data['teilnehmer'] = 0;
+	$data['sum_total'] = 0;
+	$data['participants_total'] = 0;
 	
 	$data['betreuer'] = [];
-	$data['betreuer_buchungen'] = 0;
-	$data['betreuer_teilnehmer'] = 0;
+	$data['betreuer_sum'] = 0;
+	$data['betreuer_count'] = 0;
 	$data['mitreisende'] = [];
-	$data['mitreisende_buchungen'] = 0;
-	$data['mitreisende_teilnehmer'] = 0;
-	$data['gast_teilnehmer'] = 0;
-	$data['gast_buchungen'] = 0;
+	$data['mitreisende_sum'] = 0;
+	$data['mitreisende_count'] = 0;
+	$data['gast_count'] = 0;
+	$data['gast_sum'] = 0;
 	if (!empty($p_per_event[$data['event_id']])) {
 		foreach ($p_per_event[$data['event_id']] as $index => $teilnahme) {
 			$teilnahme['access'] = $access;
 			$data[$teilnahme['group_identifier']][$index] = $teilnahme;
 			if (!mf_qualification_federation_member($teilnahme)) continue;
-			$data[$teilnahme['group_identifier'].'_teilnehmer']++;
-			$data[$teilnahme['group_identifier'].'_buchungen'] += $teilnahme['buchung'];
-			$data['buchungen'] += $teilnahme['buchung'];
-			$data['teilnehmer']++;
+			$data[$teilnahme['group_identifier'].'_count']++;
+			$data[$teilnahme['group_identifier'].'_sum'] += $teilnahme['buchung'];
+			$data['sum_total'] += $teilnahme['buchung'];
+			$data['participants_total']++;
 		}
 	}
 
@@ -152,8 +152,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
 			$data['opens'][$event_id] = mf_qualification_tournament($turnier, $p_per_event[$event_id] ?? []);
 			$data['opens'][$event_id]['access'] = $access;
-			$data['buchungen'] += $data['opens'][$event_id]['sum_total'];
-			$data['teilnehmer'] += $data['opens'][$event_id]['participants_total'];
+			$data['sum_total'] += $data['opens'][$event_id]['sum_total'];
+			$data['participants_total'] += $data['opens'][$event_id]['participants_total'];
 			continue;
 		}
 		foreach ($kontingente[$event_id] AS $kontingent) {
@@ -186,17 +186,17 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		}
 	}
 	foreach ($data['turniere'] as $event_id => $turnier) {
-		$data['turniere'][$event_id]['buchungen'] = 0;
-		$data['turniere'][$event_id]['teilnehmer'] = 0;
+		$data['turniere'][$event_id]['spieler_sum'] = 0;
+		$data['turniere'][$event_id]['spieler_count'] = 0;
 		if (empty($data['turniere'][$event_id]['spieler'])) continue;
 		foreach ($data['turniere'][$event_id]['spieler'] as $spieler) {
 			if (!mf_qualification_federation_member($spieler)) continue;
-			$data['turniere'][$event_id]['teilnehmer']++;
+			$data['turniere'][$event_id]['spieler_count']++;
 			if (empty($spieler['buchung'])) continue;
-			$data['turniere'][$event_id]['buchungen'] += $spieler['buchung'];
-			$data['buchungen'] += $spieler['buchung'];
+			$data['turniere'][$event_id]['spieler_sum'] += $spieler['buchung'];
+			$data['sum_total'] += $spieler['buchung'];
 		}
-		$data['teilnehmer'] += $data['turniere'][$event_id]['teilnehmer'];
+		$data['participants_total'] += $data['turniere'][$event_id]['spieler_count'];
 	}
 
 	if (!empty($_POST) AND $access) {

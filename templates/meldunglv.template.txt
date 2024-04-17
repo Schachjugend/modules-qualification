@@ -65,8 +65,8 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% condition else %%%
 <td colspan="6">
 %%% condition endif %%%
-%%% item teilnehmer "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
-<td class="number">%%% item buchungen wrap_money %%%&nbsp;€</td>
+%%% item spieler_count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
+<td class="number">%%% item spieler_sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -177,8 +177,8 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <td colspan="5">
 %%% condition endif %%%
-%%% item betreuer_teilnehmer %%% Betreuer</td>
-<td class="number">%%% item betreuer_buchungen wrap_money %%%&nbsp;€</td>
+%%% item betreuer_count %%% Betreuer</td>
+<td class="number">%%% item betreuer_sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -254,8 +254,8 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <td colspan="4">
 %%% condition endif %%%
-%%% item mitreisende_teilnehmer %%% Mitreisende</td>
-<td class="number">%%% item mitreisende_buchungen wrap_money %%%&nbsp;€</td>
+%%% item mitreisende_count %%% Mitreisende</td>
+<td class="number">%%% item mitreisende_sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -495,32 +495,32 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </thead>
 <tfoot>
 <tr>
-<td class="number">%%% item teilnehmer %%%</td>
+<td class="number">%%% item participants_total %%%</td>
 <td>Teilnehmer gesamt</td>
-<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item sum_total wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 </tfoot>
 <tbody>
 %%% loop turniere %%%
 <tr class="even">
-<td class="number">%%% item teilnehmer %%%</td>
+<td class="number">%%% item spieler_count %%%</td>
 <td>Spieler %%% item event %%%</td>
-<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item spieler_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% loop end %%%
 </tbody>
 <tbody>
 <tr class="uneven">
-<td class="number">%%% item betreuer_teilnehmer %%%</td>
+<td class="number">%%% item betreuer_count %%%</td>
 <td>Betreuer</td>
-<td class="number">%%% item betreuer_buchungen wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item betreuer_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 </tbody>
 <tbody>
 <tr class="even">
-<td class="number">%%% item mitreisende_teilnehmer %%%</td>
+<td class="number">%%% item mitreisende_count %%%</td>
 <td>Mitreisende</td>
-<td class="number">%%% item mitreisende_buchungen wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 </tbody>
 <tbody>
@@ -536,7 +536,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% loop opens %%%
 <tr class="uneven">
 <td class="number">%%% item mitreisende_count %%%</td>
-<td>Betreuer %%% item event %%%</td>
+<td>Mitreisende %%% item event %%%</td>
 <td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% loop end %%%
