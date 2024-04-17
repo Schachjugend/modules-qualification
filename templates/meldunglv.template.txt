@@ -299,7 +299,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 Übersicht.</p>
 
 %%% loop opens %%%
-%%% condition if spieler_offen %%%
+%%% condition if spieler %%%
 <h3 id="%%% item identifier_short %%%">%%% item event %%%</h3>
 
 <div class="results">
@@ -342,12 +342,12 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition else %%%
 <td colspan="5">
 %%% condition endif %%%
-%%% item teilnehmer "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
-<td class="number">%%% item buchungen wrap_money %%%&nbsp;€</td>
+%%% item spieler_count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
+<td class="number">%%% item spieler_sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
-%%% loop spieler_offen %%%
+%%% loop spieler %%%
 <tr class="%%% loopposition uneven un %%%even">
 %%% condition if contact %%%
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
@@ -421,7 +421,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% loop end %%%
 
 %%% loop opens %%%
-%%% condition if mitreisende_offen %%%
+%%% condition if mitreisende %%%
 
 <h3 id="%%% item identifier_short %%%_mitreisende">%%% item event %%% Mitreisende</h3>
 
@@ -437,12 +437,12 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </thead>
 <tfoot>
 <tr>
-<td colspan="5">%%% item mitreisende_teilnehmer %%% Mitreisende</td>
-<td class="number">%%% item mitreisende_buchungen wrap_money %%%&nbsp;€</td>
+<td colspan="5">%%% item mitreisende_count %%% Mitreisende</td>
+<td class="number">%%% item mitreisende_sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
-%%% loop mitreisende_offen %%%
+%%% loop mitreisende %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
@@ -526,9 +526,18 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop opens %%%
 <tr class="uneven">
-<td class="number">%%% item teilnehmer %%%</td>
+<td class="number">%%% item spieler_count %%%</td>
 <td>Spieler %%% item event %%%</td>
-<td class="number">%%% item buchungen wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item spieler_sum wrap_money "%s&nbsp;€" %%%</td>
+</tr>
+%%% loop end %%%
+</tbody>
+<tbody>
+%%% loop opens %%%
+<tr class="uneven">
+<td class="number">%%% item mitreisende_count %%%</td>
+<td>Betreuer %%% item event %%%</td>
+<td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% loop end %%%
 </tbody>
