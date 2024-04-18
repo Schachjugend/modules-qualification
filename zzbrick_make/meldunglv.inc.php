@@ -335,34 +335,32 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 }
 
 /**
- * calculate a tournament
+ * calculate an event
  *
- * @param array $tournament
+ * @param array $event
  * @return array
  */
-function mf_qualification_tournament($tournament, $participants) {
-	// data and sums per usergroups
-	$tournament['spieler'] = [];
-	$tournament['spieler_count'] = 0;
-	$tournament['spieler_sum'] = 0;
-	$tournament['mitreisende'] = [];
-	$tournament['mitreisende_count'] = 0;
-	$tournament['mitreisende_sum'] = 0;
-
+function mf_qualification_tournament($event, $participants) {
 	// total sums
-	$tournament['participants_total'] = 0;
-	$tournament['sum_total'] = 0;
+	$event['participants_total'] = 0;
+	$event['sum_total'] = 0;
 
 	foreach ($participants as $participation_id => $pt) {
-		$tournament[$pt['group_identifier']][$participation_id] = $pt;
+		$event[$pt['group_identifier']][$participation_id] = $pt;
 		if (!mf_qualification_federation_member($pt)) continue;
-		$tournament[$pt['group_identifier'].'_sum'] += $pt['buchung'];
-		$tournament['sum_total'] += $pt['buchung'];
-		$tournament[$pt['group_identifier'].'_count']++;
-		$tournament['participants_total']++;
+		$group_sum = sprintf('%s_sum', $pt['group_identifier']);
+		$group_count = sprintf('%s_count', $pt['group_identifier']);
+		if (!array_key_exists($group_sum, $event)) {
+			$event[$group_sum] = 0;
+			$event[$group_count] = 0;
+		}
+		$event[$group_sum] += $pt['buchung'];
+		$event['sum_total'] += $pt['buchung'];
+		$event[$group_count]++;
+		$event['participants_total']++;
 	}
 
-	return $tournament;
+	return $event;
 }
 
 /**

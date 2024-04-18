@@ -538,11 +538,13 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tbody>
 <tbody>
 %%% loop opens %%%
+%%% condition if mitreisende_count %%%
 <tr class="uneven">
 <td class="number">%%% item mitreisende_count %%%</td>
 <td>Mitreisende %%% item event %%%</td>
 <td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
+%%% condition endif %%%
 %%% loop end %%%
 </tbody>
 </table>
