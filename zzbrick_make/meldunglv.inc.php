@@ -23,16 +23,22 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	wrap_include_files('zzform/editing', 'ratings');
 	wrap_include_files('zzform/batch', 'contacts');
 
-	// Zugriffsrechte
+	// access rights
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
 	// @todo Nach Meldeschluss: nur noch Ansicht der Daten
 	
-	// Landesverband
+	// federation or direct or organisation
 	wrap_include_files('functions', 'clubs');
-	$lv = mf_clubs_federation($vars[2]);
-	if (!$lv) return false;
-	$data['landesverband'] = $lv['federation_short'];
-	$data['landesverband_kennung'] = $lv['federation_identifier'];
+	$federation = mf_clubs_federation($vars[2]);
+	if ($federation) {
+		$data['landesverband'] = $federation['federation_short'];
+		$data['landesverband_kennung'] = $federation['federation_identifier'];
+	} else {
+		$category = mf_qualification_registration_category($vars[2]);
+		if (!$category) return false;
+		$data += $category;
+		$federation = NULL;
+	}
 
 	// Turniere
 	$sql = 'SELECT event_id, event, alter_min, alter_max, geschlecht
@@ -53,69 +59,17 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	$data['turniere'] = wrap_db_fetch($sql, 'event_id');
 	if (!$data['turniere']) return false;
 	
-	$sql = 'SELECT event_id, kontingent_id
-			, kontingent, anmerkung, category, category_short
-		FROM kontingente
-		LEFT JOIN categories
-			ON kontingente.kontingent_category_id = categories.category_id
-		WHERE federation_contact_id = %d
-		AND event_id IN (%s)
-		ORDER BY event_id, categories.sequence';
-	$sql = sprintf($sql, $lv['contact_id'], implode(',', array_keys($data['turniere'])));
-	$kontingente = wrap_db_fetch($sql, ['event_id', 'kontingent_id']);
+	if ($federation)
+		$kontingente = mf_qualification_quotas($federation['contact_id'], array_keys($data['turniere']));
 
-	$sql = 'SELECT event_id, participations.participation_id
-			, contact_id, contact, contacts.identifier AS contact_identifier
-			, t_verein
-			, t_dwz, t_elo, t_fidetitel
-			, qualification, date_of_birth
-			, YEAR(date_of_birth) AS birth_year
-			, IF(sex = "female", "W", IF(sex = "male", "M", "")) AS geschlecht
-			, usergroups.identifier AS group_identifier
-			, role
-			, (SELECT SUM(betrag) FROM buchungen WHERE buchungen.participation_id = participations.participation_id) AS buchung
-			, participations_categories.participation_category_id
-			, SUBSTRING_INDEX(
-				IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(registration.parameters, "&alias=", -1), "&", 1), registration.path), "/", -1
-			) AS registration_path
-		FROM participations
-		LEFT JOIN persons USING (contact_id)
-		LEFT JOIN contacts USING (contact_id)
-		LEFT JOIN usergroups USING (usergroup_id)
-		LEFT JOIN participations_categories
-			ON participations_categories.participation_id = participations.participation_id
-			AND participations_categories.type_category_id = %d
-		LEFT JOIN categories registration
-			ON participations_categories.category_id = registration.category_id
-		WHERE federation_contact_id = %d
-		AND event_id IN (%s, %d)
-		AND status_category_id IN (%d, %d, %d)
-		AND (ISNULL(usergroups.parameters) OR usergroups.parameters NOT LIKE "%%&present=0%%")';
-	$sql = sprintf($sql
-		, wrap_category_id('participations/registration')
-		, $lv['contact_id']
-		, implode(',', array_keys($data['turniere']))
-		, $data['event_id']
-		, wrap_category_id('participation-status/subscribed')
-		, wrap_category_id('participation-status/verified')
-		, wrap_category_id('participation-status/participant')
-	);
-	$participations = wrap_db_fetch($sql, 'participation_id');
-	$contact_ids = [];
-	foreach ($participations as $participation) {
-		$contact_ids[] = $participation['contact_id'];
-	}
-	$addresses = mf_contacts_addresses($contact_ids);
-	$contactdetails = mf_contacts_contactdetails($contact_ids);
-
+	if ($federation)
+		$where = sprintf('federation_contact_id = %d', $federation['contact_id']);
+	else
+		$where = sprintf('participations_categories.category_id = %d', $category['category_id']);
+	$participations = mf_qualification_participants($where, $data['event_id'], array_keys($data['turniere']));
 	$p_per_event = [];
-	foreach ($participations as $participation_id => $participation) {
-		$participation['addresses'] = $addresses[$participation['contact_id']] ?? [];
-		$participation += $contactdetails[$participation['contact_id']] ?? [];
-		if ($participation['registration_path']) // old participants might not have this
-			$participation[str_replace('-', '_', $participation['registration_path'])] = true;
+	foreach ($participations as $participation_id => $participation)
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
-	}
 
 	$data['sum_total'] = 0;
 	$data['participants_total'] = 0;
@@ -333,7 +287,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				't_elo' => $wertungen['t_elo'] ?? NULL,
 				't_fidetitel' => $wertungen['t_fidetitel'] ?? NULL,
 				'club_contact_id' => $verein ? $verein['contact_id'] : '',
-				'federation_contact_id' => $lv['contact_id'],
+				'federation_contact_id' => $federation['contact_id'],
 				'status_category_id' => wrap_category_id('participation-status/verified')
 			];
 			if ($participation_id === 'betreuer') {
@@ -370,8 +324,12 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 
 	$page['dont_show_h1'] = true;
 	$page['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $data['event']);
-	$page['breadcrumbs'][]['title'] = $data['landesverband'];
-	$page['title'] = $data['landesverband'].' – '.$data['event'].' '.$data['year'];
+	$page['breadcrumbs'][]['title'] = $federation['federation_short'] ?? $category['category'];
+	$page['title'] = sprintf('%s – %s %d',
+		$federation['federation_short'] ?? $category['category'],
+		$data['event'],
+		$data['year']
+	);
 	$page['text'] = wrap_template('meldunglv', $data);
 	return $page;
 }

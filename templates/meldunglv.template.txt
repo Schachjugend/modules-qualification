@@ -8,7 +8,11 @@
 # @copyright Copyright © 2017-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
-<h1>Landesverband %%% item landesverband %%%
+<h1>%%% condition if landesverband %%%
+Landesverband %%% item landesverband %%%
+%%% condition else %%%
+%%% item category %%% – %%% item description %%%
+%%% condition endif %%%
 <br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item place %%%</em></h1>
 
 <div class="noprint">
