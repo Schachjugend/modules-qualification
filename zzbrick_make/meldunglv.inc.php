@@ -71,28 +71,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($participations as $participation_id => $participation)
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 
-	$data['sum_total'] = 0;
-	$data['participants_total'] = 0;
-	
-	$data['betreuer'] = [];
-	$data['betreuer_sum'] = 0;
-	$data['betreuer_count'] = 0;
-	$data['mitreisende'] = [];
-	$data['mitreisende_sum'] = 0;
-	$data['mitreisende_count'] = 0;
-	$data['gast_count'] = 0;
-	$data['gast_sum'] = 0;
-	if (!empty($p_per_event[$data['event_id']])) {
-		foreach ($p_per_event[$data['event_id']] as $index => $teilnahme) {
-			$teilnahme['access'] = $access;
-			$data[$teilnahme['group_identifier']][$index] = $teilnahme;
-			if (!mf_qualification_federation_member($teilnahme)) continue;
-			$data[$teilnahme['group_identifier'].'_count']++;
-			$data[$teilnahme['group_identifier'].'_sum'] += $teilnahme['buchung'];
-			$data['sum_total'] += $teilnahme['buchung'];
-			$data['participants_total']++;
-		}
-	}
+	$data += mf_qualification_event($data, $p_per_event[$data['event_id']], $access);
 
 	$meldungen = [];
 	foreach ($data['turniere'] as $event_id => $turnier) {
@@ -104,7 +83,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if ($turnier['parameters'])
 				parse_str($turnier['parameters'], $parameter);
 			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
-			$data['opens'][$event_id] = mf_qualification_tournament($turnier, $p_per_event[$event_id] ?? []);
+			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $access);
 			$data['opens'][$event_id]['access'] = $access;
 			$data['sum_total'] += $data['opens'][$event_id]['sum_total'];
 			$data['participants_total'] += $data['opens'][$event_id]['participants_total'];
@@ -338,14 +317,17 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
  * calculate an event
  *
  * @param array $event
+ * @param array $participants
+ * @param string $access
  * @return array
  */
-function mf_qualification_tournament($event, $participants) {
+function mf_qualification_event($event, $participants, $access) {
 	// total sums
 	$event['participants_total'] = 0;
 	$event['sum_total'] = 0;
 
 	foreach ($participants as $participation_id => $pt) {
+		$pt['access'] = $access;
 		$event[$pt['group_identifier']][$participation_id] = $pt;
 		if (!mf_qualification_federation_member($pt)) continue;
 		$group_sum = sprintf('%s_sum', $pt['group_identifier']);
