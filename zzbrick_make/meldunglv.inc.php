@@ -71,7 +71,21 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($participations as $participation_id => $participation)
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 
-	$data += mf_qualification_event($data, $p_per_event[$data['event_id']], $access);
+	$groups = [
+		'spieler' => [
+			'title' => 'Spieler',
+			'index' => 0
+		],
+		'betreuer' => [
+			'title' => 'Offizielle Betreuer',
+			'index' => 1
+		],
+		'mitreisende' => [
+			'title' => 'Mitreisende',
+			'index' => 2
+		],
+	];
+	$data += mf_qualification_event($data, $p_per_event[$data['event_id']], $groups, $access);
 
 	$meldungen = [];
 	foreach ($data['turniere'] as $event_id => $turnier) {
@@ -83,7 +97,9 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if ($turnier['parameters'])
 				parse_str($turnier['parameters'], $parameter);
 			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
-			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $access);
+			$open_groups = $groups;
+			unset($open_groups['betreuer']);
+			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $open_groups, $access);
 			$data['opens'][$event_id]['access'] = $access;
 			$data['sum_total'] += $data['opens'][$event_id]['sum_total'];
 			$data['participants_total'] += $data['opens'][$event_id]['participants_total'];
@@ -150,20 +166,19 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			// Übernahme der Daten
 			if (in_array($participation_id, ['betreuer', 'mitreisende'])) {
 				foreach ($meldung as $key => $value) {
-					$data[$participation_id.'_'.$key] = $value; // für Formular
-					if ($key === 'geschlecht') {
-						$data[$participation_id.'_'.$key.'_'.$value] = true;
-					}
+					$data['groups'][$groups[$participation_id]['index']]['form_'.$key] = $value; // for form
+					if ($key === 'geschlecht')
+						$data['groups'][$groups[$participation_id]['index']]['form_'.$key.'_'.$value] = true;
 				}
 				$m_person = &$data;
 			} elseif (substr($participation_id, 0, 8) === 'betreuer') {
 				$m_person['participation_id'] = substr($participation_id, 9);
-				if (!in_array($m_person['participation_id'], array_keys($data['betreuer']))) {
+				if (!array_key_exists($m_person['participation_id'], $participations)) {
 					$m_person['participation_id'] = false;
 				}
 			} elseif (substr($participation_id, 0, 11) === 'mitreisende') {
 				$m_person['participation_id'] = substr($participation_id, 12);
-				if (!in_array($m_person['participation_id'], array_keys($data['mitreisende']))) {
+				if (!array_key_exists($m_person['participation_id'], $participations)) {
 					$m_person['participation_id'] = false;
 				} 
 			} else {
@@ -297,10 +312,15 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		}
 	}
 	if (!empty($data['error'])) {
-		$data[$participation_id.'_error'] = $data['error'];
+		if (in_array($participation_id, ['betreuer', 'mitreisende'])) {
+			$data['groups'][$groups[$participation_id]['index']]['form_error'] = $data['error'];
+		} else {
+			$data[$participation_id.'_error'] = $data['error'];
+		}
 	}
-	$data['access'] = $access ? $access : NULL;
-
+	$data['access'] = $access ?? NULL;
+	unset($data['groups'][0]); // players
+	
 	$page['dont_show_h1'] = true;
 	$page['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $data['event']);
 	$page['breadcrumbs'][]['title'] = $federation['federation_short'] ?? $category['category'];
@@ -318,27 +338,38 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
  *
  * @param array $event
  * @param array $participants
+ * @param array $groups
  * @param string $access
  * @return array
  */
-function mf_qualification_event($event, $participants, $access) {
+function mf_qualification_event($event, $participants, $groups, $access) {
 	// total sums
 	$event['participants_total'] = 0;
 	$event['sum_total'] = 0;
+	foreach ($groups as $index => $group) {
+		$event['groups'][$group['index']] = [
+			$index => true,
+			'identifier' => $index,
+			'title' => $group['title'],
+			'sum' => 0,
+			'count' => 0,
+			'access' => $access,
+			'participants' => [],
+			'has_participants' => false
+		];
+		if ($index === 'betreuer')
+			$event['groups'][$group['index']]['role'] = true;
+	}
 
 	foreach ($participants as $participation_id => $pt) {
 		$pt['access'] = $access;
-		$event[$pt['group_identifier']][$participation_id] = $pt;
+		$index = $groups[$pt['group_identifier']]['index'];
+		$event['groups'][$index]['participants'][$participation_id] = $pt;
+		$event['groups'][$index]['has_participants'] = true;
 		if (!mf_qualification_federation_member($pt)) continue;
-		$group_sum = sprintf('%s_sum', $pt['group_identifier']);
-		$group_count = sprintf('%s_count', $pt['group_identifier']);
-		if (!array_key_exists($group_sum, $event)) {
-			$event[$group_sum] = 0;
-			$event[$group_count] = 0;
-		}
-		$event[$group_sum] += $pt['buchung'];
+		$event['groups'][$index]['sum'] += $pt['buchung'];
 		$event['sum_total'] += $pt['buchung'];
-		$event[$group_count]++;
+		$event['groups'][$index]['count']++;
 		$event['participants_total']++;
 	}
 

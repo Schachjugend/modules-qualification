@@ -140,95 +140,26 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 
 <h2>Meldungen: Betreuer und Mitreisende</h2>
 
-<h3 id="betreuer">Offizielle Betreuer</h3>
+%%% loop groups %%%
+<h3 id="%%% item identifier %%%">%%% item title %%%</h3>
 
+%%% condition if betreuer %%%
 <p class="noprint">Falls <strong>Delegationsleiter</strong> bitte unter »Rolle« eintragen.</p>
+%%% condition elseif mitreisende %%%
+<p class="noprint">Bei Mitreisenden müssen keine Kontaktdetails angegeben werden. Falls Daten bereits bei uns vorhanden sind, werden sie aber angezeigt.</p> 
+%%% condition endif %%%
 
 <div class="results">
-<form method="POST" action="./#betreuer">
+<form method="POST" action="./#%%% item identifier %%%">
 <table class="anmeldung">
 <thead>
 <tr>
 <th>Vor- und Nachname</th>
 <th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
+%%% condition if role %%%
 <th>Rolle</th>
+%%% condition endif %%%
 <th>Kontakt</th>
-%%% condition if access %%%
-<th class="noprint">Aktion</th>
-%%% condition endif %%%
-<th><abbr title="Anmeldung?">Mldg.</abbr></th></tr>
-</thead>
-<tfoot>
-%%% condition if access %%%
-<tr class="even noprint">
-<td><input type="text" name="betreuer[person]" size="32" value="%%% item betreuer_person %%%">
-%%% item betreuer_error "<p class='error'>%s</p>" %%%</td>
-<td>
-<select name="betreuer[geschlecht]">
-<option value="m"%%% item betreuer_geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item betreuer_geschlecht_w " selected='selected'"%%%>W</option>
-</select>
-</td>
-<td><input type="text" name="betreuer[date_of_birth]" size="8" value="%%% item betreuer_date_of_birth %%%"></td>
-<td><input type="text" name="betreuer[role]" size="16" value="%%% item betreuer_role %%%"></td>
-<td><input type="submit" value="Anmelden" name="betreuer[melden]"></td>
-<td colspan="2" class="tm"></td>
-</tr>
-%%% condition endif %%%
-<tr>
-%%% condition if access %%%
-<td colspan="6">
-%%% condition else %%%
-<td colspan="5">
-%%% condition endif %%%
-%%% item betreuer_count %%% Betreuer</td>
-<td class="number">%%% item betreuer_sum wrap_money %%%&nbsp;€</td>
-</tr>
-</tfoot>
-<tbody>
-%%% loop betreuer %%%
-<tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
-<td>%%% item geschlecht %%%</td>
-<td>%%% item date_of_birth wrap_date %%%</td>
-<td>%%% item role %%%</td>
-<td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
-%%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
-%%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, "%%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
-</td>
-%%% condition if access %%%
-<td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
-<br><input type="submit" value="Abmelden" name="betreuer_%%% item participation_id %%%[melden]"></td>
-%%% condition endif %%%
-<td class="number">
-%%% condition if access %%%
-<a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
-%%% condition endif %%%
-%%% condition if buchung %%%
-%%% item buchung wrap_money %%%&nbsp;€
-%%% condition else %%%
-<em>– fehlt –</em>
-%%% condition endif %%%
-</td>
-</tr>
-%%% loop end %%%
-</tbody>
-</table>
-</form>
-</div>
-
-<h3 id="mitreisende">Mitreisende</h3>
-
-%%% comment <p class="noprint">Bei Mitreisenden müssen keine Kontaktdetails angegeben werden. Falls Daten bereits bei uns vorhanden sind, werden sie aber angezeigt.</p> %%%
-
-<div class="results">
-<form method="POST" action="./#mitreisende">
-<table class="anmeldung">
-<thead>
-<tr>
-<th>Vor- und Nachname</th>
-<th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
-<th>Kontakt</th> 
 %%% condition if access %%%
 <th class="noprint">Aktion</th>
 %%% condition endif %%%
@@ -238,43 +169,52 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tfoot>
 %%% condition if access %%%
 <tr class="even noprint">
-<td><input type="text" name="mitreisende[person]" size="32" value="%%% item mitreisende_person %%%">
-%%% item mitreisende_error "<p class='error'>%s</p>" %%%</td>
+<td><input type="text" name="%%% item identifier %%%[person]" size="32" value="%%% item form_person %%%">
+%%% item form_error "<p class='error'>%s</p>" %%%</td>
 <td>
-<select name="mitreisende[geschlecht]">
-<option value="m"%%% item mitreisende_geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item mitreisende_geschlecht_w " selected='selected'"%%%>W</option>
+<select name="%%% item identifier %%%[geschlecht]">
+<option value="m"%%% item form_geschlecht_m " selected='selected'"%%%>M</option>
+<option value="w"%%% item form_geschlecht_w " selected='selected'"%%%>W</option>
 </select>
 </td>
-<td><input type="text" name="mitreisende[date_of_birth]" size="8" value="%%% item mitreisende_date_of_birth %%%"></td>
+<td><input type="text" name="%%% item identifier %%%[date_of_birth]" size="8" value="%%% item form_date_of_birth %%%"></td>
+%%% condition if role %%%
+<td><input type="text" name="%%% item identifier %%%[role]" size="16" value="%%% item form_role %%%"></td>
+%%% condition else %%%
 <td class="tm"></td>
-<td><input type="submit" value="Anmelden" name="mitreisende[melden]"></td>
-<td class="tm"></td>
+%%% condition endif %%%
+<td><input type="submit" value="Anmelden" name="%%% item identifier %%%[melden]"></td>
+<td %%% condition if role %%%colspan="2" %%% condition endif %%%class="tm"></td>
 </tr>
 %%% condition endif %%%
 <tr>
-%%% condition if access %%%
+%%% condition if role & access %%%
+<td colspan="6">
+%%% condition elseif role | access %%%
 <td colspan="5">
 %%% condition else %%%
 <td colspan="4">
 %%% condition endif %%%
-%%% item mitreisende_count %%% Mitreisende</td>
-<td class="number">%%% item mitreisende_sum wrap_money %%%&nbsp;€</td>
+%%% item count %%% %%% item title %%%</td>
+<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
-%%% loop mitreisende %%%
+%%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
+%%% condition if role %%%
+<td>%%% item role %%%</td>
+%%% condition endif %%%
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
 %%% condition if phone %%%Tel. %%% loop phone 1 %%%%%% item identification %%%%%% loop end %%%<br>%%% condition endif %%%
 %%% condition if addresses %%%%%% loop addresses 1 %%%%%% item address "%s, " %%%%%% item postcode %%% %%% item place %%%%%% loop end %%%%%% condition endif %%%
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
-<br><input type="submit" value="Abmelden" name="mitreisende_%%% item participation_id %%%[melden]"></td>
+<br><input type="submit" value="Abmelden" name="%%% item identifier %%%_%%% item participation_id %%%[melden]"></td>
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
@@ -292,6 +232,8 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </table>
 </form>
 </div>
+
+%%% loop end %%%
 
 %%% condition if opens %%%
 <h2 id="opens">Meldungen zu den offenen Turnieren</h2>
@@ -303,6 +245,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 Übersicht.</p>
 
 %%% loop opens %%%
+%%% loop groups %%%
 %%% condition if spieler %%%
 <h3 id="%%% item identifier_short %%%">%%% item event %%%</h3>
 
@@ -346,12 +289,12 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition else %%%
 <td colspan="5">
 %%% condition endif %%%
-%%% item spieler_count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
-<td class="number">%%% item spieler_sum wrap_money %%%&nbsp;€</td>
+%%% item count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
+<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
-%%% loop spieler %%%
+%%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 %%% condition if contact %%%
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
@@ -423,9 +366,11 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 
 %%% condition endif %%%
 %%% loop end %%%
+%%% loop end %%%
 
 %%% loop opens %%%
-%%% condition if mitreisende %%%
+%%% loop groups %%%
+%%% condition if mitreisende & has_participants %%%
 
 <h3 id="%%% item identifier_short %%%_mitreisende">%%% item event %%% Mitreisende</h3>
 
@@ -441,12 +386,12 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </thead>
 <tfoot>
 <tr>
-<td colspan="5">%%% item mitreisende_count %%% Mitreisende</td>
-<td class="number">%%% item mitreisende_sum wrap_money %%%&nbsp;€</td>
+<td colspan="5">%%% item count %%% Mitreisende</td>
+<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
-%%% loop mitreisende %%%
+%%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
@@ -485,6 +430,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 
 %%% condition endif %%%
 %%% loop end %%%
+%%% loop end %%%
 %%% condition endif %%%
 
 <div class="noprint">
@@ -513,38 +459,41 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tr>
 %%% loop end %%%
 </tbody>
+%%% loop groups %%%
 <tbody>
-<tr class="uneven">
-<td class="number">%%% item betreuer_count %%%</td>
-<td>Betreuer</td>
-<td class="number">%%% item betreuer_sum wrap_money "%s&nbsp;€" %%%</td>
+<tr class="%%% loopposition uneven un %%%even">
+<td class="number">%%% item count %%%</td>
+<td>%%% item title %%%</td>
+<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 </tbody>
-<tbody>
-<tr class="even">
-<td class="number">%%% item mitreisende_count %%%</td>
-<td>Mitreisende</td>
-<td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
-</tr>
-</tbody>
+%%% loop end %%%
 <tbody>
 %%% loop opens %%%
-<tr class="uneven">
-<td class="number">%%% item spieler_count %%%</td>
-<td>Spieler %%% item event %%%</td>
-<td class="number">%%% item spieler_sum wrap_money "%s&nbsp;€" %%%</td>
+%%% loop groups %%%
+%%% condition if spieler %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td class="number">%%% item count %%%</td>
+<td>%%% item title %%% %%% item event %%%</td>
+<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
+%%% condition endif %%%
+%%% loop end %%%
 %%% loop end %%%
 </tbody>
 <tbody>
 %%% loop opens %%%
-%%% condition if mitreisende_count %%%
-<tr class="uneven">
-<td class="number">%%% item mitreisende_count %%%</td>
-<td>Mitreisende %%% item event %%%</td>
-<td class="number">%%% item mitreisende_sum wrap_money "%s&nbsp;€" %%%</td>
+%%% loop groups %%%
+%%% condition unless spieler %%%
+%%% condition if has_participants %%%
+<tr class="%%% loopposition uneven un %%%even">
+<td class="number">%%% item count %%%</td>
+<td>%%% item title %%% %%% item event %%%</td>
+<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% condition endif %%%
+%%% condition endif %%%
+%%% loop end %%%
 %%% loop end %%%
 </tbody>
 </table>
