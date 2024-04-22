@@ -153,12 +153,18 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		wrap_include_files('zzform/batch', 'contacts');
 		zz_initialize();
 
-		foreach ($_POST AS $participation_id => $meldung) {
-			if (isset($meldung['move'])) {
-				mf_qualification_player_to_federation_quota($participations[$participation_id] ?? []);
-				wrap_redirect_change();
-			}
+		if (isset($_POST['unregister'])) {
+			$participation_id = key($_POST['unregister']);
+			mf_qualification_unregister($participations[$participation_id] ?? []);
+			wrap_redirect_change();
+		}
+		if (isset($_POST['move'])) {
+			$participation_id = key($_POST['move']);
+			mf_qualification_move_to_federation_quota($participations[$participation_id] ?? []);
+			wrap_redirect_change();
+		}
 
+		foreach ($_POST AS $participation_id => $meldung) {
 			// remove whitespace
 			foreach ($meldung as $key => $value)
 				$meldung[$key] = trim($value);
@@ -171,16 +177,6 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 						$data['groups'][$groups[$participation_id]['index']]['form_'.$key.'_'.$value] = true;
 				}
 				$m_person = &$data;
-			} elseif (substr($participation_id, 0, 8) === 'betreuer') {
-				$m_person['participation_id'] = substr($participation_id, 9);
-				if (!array_key_exists($m_person['participation_id'], $participations)) {
-					$m_person['participation_id'] = false;
-				}
-			} elseif (substr($participation_id, 0, 11) === 'mitreisende') {
-				$m_person['participation_id'] = substr($participation_id, 12);
-				if (!array_key_exists($m_person['participation_id'], $participations)) {
-					$m_person['participation_id'] = false;
-				} 
 			} else {
 				if (!empty($data['opens']) AND array_key_exists($participation_id, $data['opens'])) {
 					$turnier = &$data['opens'][$participation_id];
@@ -205,10 +201,6 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				}
 			}
 			if (empty($meldung['melden'])) continue;
-			if ($meldung['melden'] === 'Abmelden') {
-				mf_qualification_player_unregister($participations[$m_person['participation_id']] ?? []);
-				wrap_redirect_change();
-			}
 			
 			if ($meldung['melden'] !== 'Anmelden') continue;
 			if (!$meldung_offen
@@ -358,7 +350,7 @@ function mf_qualification_event($event, $participants, $groups, $access) {
 			'has_participants' => false
 		];
 		if ($index === 'betreuer')
-			$event['groups'][$group['index']]['role'] = true;
+			$event['groups'][$group['index']]['has_role'] = true;
 	}
 
 	foreach ($participants as $participation_id => $pt) {
@@ -377,12 +369,12 @@ function mf_qualification_event($event, $participants, $groups, $access) {
 }
 
 /**
- * move a player from direct or organiser quota to federation quota
+ * move a participant from direct or organiser quota to federation quota
  *
  * @param array $participation
  * @return bool
  */
-function mf_qualification_player_to_federation_quota($participation) {
+function mf_qualification_move_to_federation_quota($participation) {
 	if (!$participation) return false;
 	if (str_starts_with($participation['registration_path'], 'federation')) return false;
 
@@ -396,12 +388,12 @@ function mf_qualification_player_to_federation_quota($participation) {
 }
 
 /**
- * unregister a player
+ * unregister a participant
  *
  * @param array $participation
  * @return void
  */
-function mf_qualification_player_unregister($participation) {
+function mf_qualification_unregister($participation) {
 	if (!$participation) return false;
 	
 	// only allow to unregister people who were registered here before

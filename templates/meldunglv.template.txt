@@ -93,7 +93,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% condition if access %%%
 <td class="noprint">
 <a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
-<br><input type="submit" value="Abmelden" name="%%% item id %%%[melden]">
+<br><input type="submit" value="Abmelden" name="unregister[%%% item participation_id %%%]">
 </td>
 %%% condition endif %%%
 <td class="number">
@@ -156,7 +156,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr>
 <th>Vor- und Nachname</th>
 <th><abbr title="Geschlecht">G.</abbr></th> <th><abbr title="Geburtsdatum">Geb.</abbr></th>
-%%% condition if role %%%
+%%% condition if has_role %%%
 <th>Rolle</th>
 %%% condition endif %%%
 <th>Kontakt</th>
@@ -178,19 +178,19 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </select>
 </td>
 <td><input type="text" name="%%% item identifier %%%[date_of_birth]" size="8" value="%%% item form_date_of_birth %%%"></td>
-%%% condition if role %%%
+%%% condition if has_role %%%
 <td><input type="text" name="%%% item identifier %%%[role]" size="16" value="%%% item form_role %%%"></td>
 %%% condition else %%%
 <td class="tm"></td>
 %%% condition endif %%%
 <td><input type="submit" value="Anmelden" name="%%% item identifier %%%[melden]"></td>
-<td %%% condition if role %%%colspan="2" %%% condition endif %%%class="tm"></td>
+<td %%% condition if has_role %%%colspan="2" %%% condition endif %%%class="tm"></td>
 </tr>
 %%% condition endif %%%
 <tr>
-%%% condition if role & access %%%
+%%% condition if has_role & access %%%
 <td colspan="6">
-%%% condition elseif role | access %%%
+%%% condition elseif has_role | access %%%
 <td colspan="5">
 %%% condition else %%%
 <td colspan="4">
@@ -205,7 +205,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth wrap_date %%%</td>
-%%% condition if role %%%
+%%% condition if has_role %%%
 <td>%%% item role %%%</td>
 %%% condition endif %%%
 <td>%%% condition if mail %%%%%% loop mail 1 %%%%%% item mailto %%%<br>%%% loop end %%%%%% condition endif %%%
@@ -214,7 +214,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </td>
 %%% condition if access %%%
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
-<br><input type="submit" value="Abmelden" name="%%% item identifier %%%_%%% item participation_id %%%[melden]"></td>
+<br><input type="submit" value="Abmelden" name="unregister[%%% item participation_id %%%]"></td>
 %%% condition endif %%%
 <td class="number">
 %%% condition if access %%%
@@ -319,7 +319,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <td class="noprint">
 <a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a>
 %%% condition if federation %%%
-<br><input type="submit" value="Abmelden" name="%%% item participation_id %%%[melden]">
+<br><input type="submit" value="Abmelden" name="unregister[%%% item participation_id %%%]">
 %%% condition endif %%%
 </td>
 %%% condition endif %%%
@@ -332,7 +332,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% condition else %%%
 <td colspan="3" style="text-align: center;">
 %%% condition if access %%%
-<input type="submit" value="Über den Landesverband verwalten" name="%%% item participation_id %%%[move]">
+<input type="submit" value="Über den Landesverband verwalten" name="move[%%% item participation_id %%%]">
 %%% condition endif %%%
 </td>
 
@@ -417,7 +417,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <td colspan="3" style="text-align: center;">
 %%% condition if access %%%
-<input type="submit" value="Über den Landesverband verwalten" name="%%% item participation_id %%%[move]">
+<input type="submit" value="Über den Landesverband verwalten" name="move[%%% item participation_id %%%]">
 %%% condition endif %%%
 
 %%% condition endif %%%
