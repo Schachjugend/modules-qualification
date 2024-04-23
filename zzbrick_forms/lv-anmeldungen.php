@@ -11,8 +11,8 @@ if (count($brick['vars']) === 1 AND strstr($brick['vars'][0], '/'))
 	$brick['vars'] = explode('/', $brick['vars'][0]);
 
 wrap_include_files('functions', 'clubs');
-$lv = mf_clubs_federation($brick['vars'][2]);
-if (!$lv) wrap_quit(404);
+$federation = mf_clubs_federation($brick['vars'][2]);
+if (!$federation) wrap_quit(404);
 
 wrap_include_files('anmeldung', 'custom');
 my_pruefe_meldunglv_rechte($brick['vars'][0].'/'.$brick['vars'][1], $brick['vars'][2]);
@@ -33,7 +33,7 @@ $sql = sprintf($sql
 	, $brick['vars'][0]
 	, $brick['data']['series_category_id']
 	, $brick['data']['series_category_id']
-	, $lv['contact_id']
+	, $federation['contact_id']
 	, wrap_id('usergroups', 'landesverband-organisator')
 	, wrap_id('usergroups', 'bewerber')
 );
@@ -113,10 +113,10 @@ $zz['details'][0]['link'] = [
 	'string1' => '/'
 ];
 
-$zz['page']['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $lv['federation_short']);
+$zz['page']['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $federation['federation_short']);
 $zz['page']['breadcrumbs'][]['title'] = 'Anmeldungen';
 
-$zz['title'] = '<a href="../">Landesverband '.$lv['federation_short'].'</a>: Anmeldungen
+$zz['title'] = '<a href="../">Landesverband '.$federation['federation_short'].'</a>: Anmeldungen
 	<br><a href="../../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['place'].'</em>';
 
 $zz['page']['referer'] = '../';
