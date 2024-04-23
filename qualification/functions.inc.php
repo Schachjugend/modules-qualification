@@ -121,10 +121,18 @@ function mf_qualification_participants($where, $event_id, $event_ids) {
 function mf_qualification_list($identifier) {
 	wrap_include_files('functions', 'clubs');
 	$federation = mf_clubs_federation($identifier);
-	if ($federation) return [$federation, NULL];
+	if ($federation) {
+		$federation['title'] = sprintf('Landesverband %s', $federation['federation_short']);
+		$federation['breadcrumb'] = $federation['federation_short'];
+		return [$federation, NULL];
+	}
 
 	$category = mf_qualification_registration_category($identifier);
-	if ($category) return [NULL, $category];
+	if ($category) {
+		$category['title'] = sprintf('%s – %s', $category['category'], $category['description']);
+		$category['breadcrumb'] = $category['category'];
+		return [NULL, $category];
+	}
 	
 	wrap_quit(404);
 }
