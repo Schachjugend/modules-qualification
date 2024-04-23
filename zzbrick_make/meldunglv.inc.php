@@ -78,7 +78,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		],
 		'betreuer' => [
 			'title' => 'Offizielle Betreuer',
-			'index' => 1
+			'index' => 1,
+			'has_role' => 1
 		],
 		'mitreisende' => [
 			'title' => 'Mitreisende',
@@ -349,7 +350,7 @@ function mf_qualification_event($event, $participants, $groups, $access) {
 			'participants' => [],
 			'has_participants' => false
 		];
-		if ($index === 'betreuer')
+		if (!empty($group['has_role']))
 			$event['groups'][$group['index']]['has_role'] = true;
 	}
 
