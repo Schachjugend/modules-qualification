@@ -256,7 +256,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 
 %%% loop opens %%%
 %%% loop groups %%%
-%%% condition if spieler %%%
+%%% condition if spieler & has_participants %%%
 <h3 id="%%% item identifier_short %%%">%%% item event %%%</h3>
 
 <div class="results">
@@ -380,9 +380,10 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 
 %%% loop opens %%%
 %%% loop groups %%%
-%%% condition if mitreisende & has_participants %%%
+%%% condition unless spieler %%%
+%%% condition if has_participants %%%
 
-<h3 id="%%% item identifier_short %%%_mitreisende">%%% item event %%% Mitreisende</h3>
+<h3 id="%%% item identifier_short %%%_mitreisende">%%% item event %%% %%% item usergroup %%%</h3>
 
 <div class="results">
 <form method="POST" action="./#mitreisende-offen">
@@ -396,7 +397,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </thead>
 <tfoot>
 <tr>
-<td colspan="5">%%% item count %%% Mitreisende</td>
+<td colspan="5">%%% item count %%% Meldungen %%% item usergroup %%%</td>
 <td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
@@ -438,6 +439,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </form>
 </div>
 
+%%% condition endif %%%
 %%% condition endif %%%
 %%% loop end %%%
 %%% loop end %%%
@@ -485,7 +487,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop opens %%%
 %%% loop groups %%%
-%%% condition if spieler %%%
+%%% condition if spieler & has_participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
 <td>%%% item usergroup %%% %%% item event %%%</td>
