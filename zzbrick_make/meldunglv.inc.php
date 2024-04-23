@@ -86,7 +86,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			'index' => 2
 		],
 	];
-	$data += mf_qualification_event($data, $p_per_event[$data['event_id']], $groups, $access);
+	$data += mf_qualification_event($data, $p_per_event[$data['event_id']] ?? [], $groups, $access, $federation);
 
 	$meldungen = [];
 	foreach ($data['turniere'] as $event_id => $turnier) {
@@ -100,7 +100,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
 			$open_groups = $groups;
 			unset($open_groups['betreuer']);
-			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $open_groups, $access);
+			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $open_groups, $access, $federation);
 			$data['opens'][$event_id]['access'] = $access;
 			$data['sum_total'] += $data['opens'][$event_id]['sum_total'];
 			$data['participants_total'] += $data['opens'][$event_id]['participants_total'];
@@ -140,7 +140,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		$data['turniere'][$event_id]['spieler_count'] = 0;
 		if (empty($data['turniere'][$event_id]['spieler'])) continue;
 		foreach ($data['turniere'][$event_id]['spieler'] as $spieler) {
-			if (!mf_qualification_federation_member($spieler)) continue;
+			if ($federation AND !mf_qualification_federation_member($spieler)) continue;
 			$data['turniere'][$event_id]['spieler_count']++;
 			if (empty($spieler['buchung'])) continue;
 			$data['turniere'][$event_id]['spieler_sum'] += $spieler['buchung'];
@@ -335,7 +335,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
  * @param string $access
  * @return array
  */
-function mf_qualification_event($event, $participants, $groups, $access) {
+function mf_qualification_event($event, $participants, $groups, $access, $federation) {
 	// total sums
 	$event['participants_total'] = 0;
 	$event['sum_total'] = 0;
@@ -359,7 +359,7 @@ function mf_qualification_event($event, $participants, $groups, $access) {
 		$index = $groups[$pt['group_identifier']]['index'];
 		$event['groups'][$index]['participants'][$participation_id] = $pt;
 		$event['groups'][$index]['has_participants'] = true;
-		if (!mf_qualification_federation_member($pt)) continue;
+		if ($federation AND !mf_qualification_federation_member($pt)) continue;
 		$event['groups'][$index]['sum'] += $pt['buchung'];
 		$event['sum_total'] += $pt['buchung'];
 		$event['groups'][$index]['count']++;
