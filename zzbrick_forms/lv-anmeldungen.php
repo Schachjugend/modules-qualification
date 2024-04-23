@@ -10,32 +10,40 @@
 if (count($brick['vars']) === 1 AND strstr($brick['vars'][0], '/'))
 	$brick['vars'] = explode('/', $brick['vars'][0]);
 
-wrap_include_files('functions', 'clubs');
-$federation = mf_clubs_federation($brick['vars'][2]);
-if (!$federation) wrap_quit(404);
+wrap_include_files('functions', 'qualification');
+list($federation, $category) = mf_qualification_list($brick['vars'][2]);
+if ($federation) {
+	$where = sprintf('participations.federation_contact_id = %d', $federation['contact_id']);
+} elseif ($category) {
+	$where = sprintf('participations_categories.category_id = %d', $category['category_id']);
+} else {
+	wrap_quit(404);
+}
 
 wrap_include_files('anmeldung', 'custom');
 my_pruefe_meldunglv_rechte($brick['vars'][0].'/'.$brick['vars'][1], $brick['vars'][2]);
 
-$sql = 'SELECT participation_id
+$sql = 'SELECT participations.participation_id
 	FROM participations
 	JOIN events USING (event_id)
 	LEFT JOIN categories series
 		ON events.series_category_id = series.category_id
+	LEFT JOIN usergroups USING (usergroup_id)
+	LEFT JOIN participations_categories
+		ON participations_categories.participation_id = participations.participation_id
+		AND participations_categories.type_category_id = /*_ID CATEGORIES participations/registration _*/
 	WHERE IFNULL(events.event_year, YEAR(events.date_begin)) = %d
 	AND (series.main_category_id = %d OR series.category_id = %d)
-	AND participations.federation_contact_id = %d
 	AND events.offen = "nein"
-	AND usergroup_id NOT IN (%d, %d)
+	AND (ISNULL(usergroups.parameters) OR usergroups.parameters NOT LIKE "%%&present=0%%")
+	AND %s
 	ORDER BY series.sequence';
 
 $sql = sprintf($sql
 	, $brick['vars'][0]
 	, $brick['data']['series_category_id']
 	, $brick['data']['series_category_id']
-	, $federation['contact_id']
-	, wrap_id('usergroups', 'landesverband-organisator')
-	, wrap_id('usergroups', 'bewerber')
+	, $where
 );
 $participation_ids = wrap_db_fetch($sql, '_dummy_', 'single value');
 
@@ -113,10 +121,11 @@ $zz['details'][0]['link'] = [
 	'string1' => '/'
 ];
 
-$zz['page']['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $federation['federation_short']);
+$zz['page']['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $federation['breadcrumb'] ?? $category['category']);
 $zz['page']['breadcrumbs'][]['title'] = 'Anmeldungen';
 
-$zz['title'] = '<a href="../">Landesverband '.$federation['federation_short'].'</a>: Anmeldungen
+$title = $federation['title'] ?? $category['title'];
+$zz['title'] = '<a href="../">'.$title.'</a>: Anmeldungen
 	<br><a href="../../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['place'].'</em>';
 
 $zz['page']['referer'] = '../';
