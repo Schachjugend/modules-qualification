@@ -33,11 +33,14 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	if ($federation) {
 		$data['landesverband'] = $federation['federation_short'];
 		$data['landesverband_kennung'] = $federation['federation_identifier'];
+		$data['federation'] = true;
 	} else {
 		$category = mf_qualification_registration_category($vars[2]);
 		if (!$category) return false;
 		$data += $category;
 		$federation = NULL;
+		$data['federation'] = false;
+		$access = false;
 	}
 
 	// Turniere
@@ -62,7 +65,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	if ($federation)
 		$kontingente = mf_qualification_quotas($federation['contact_id'], array_keys($data['turniere']));
 
-	if ($federation)
+	if ($data['federation'])
 		$where = sprintf('federation_contact_id = %d', $federation['contact_id']);
 	else
 		$where = sprintf('participations_categories.category_id = %d', $category['category_id']);
@@ -71,21 +74,37 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	foreach ($participations as $participation_id => $participation)
 		$p_per_event[$participation['event_id']][$participation_id] = $participation;
 
-	$groups = [
-		'spieler' => [
-			'title' => 'Spieler',
-			'index' => 0
-		],
-		'betreuer' => [
-			'title' => 'Offizielle Betreuer',
-			'index' => 1,
-			'has_role' => 1
-		],
-		'mitreisende' => [
-			'title' => 'Mitreisende',
-			'index' => 2
-		],
-	];
+	if ($data['federation']) {
+		$groups = [
+			'spieler' => [
+				'usergroup' => 'Spieler',
+				'index' => 0
+			],
+			'betreuer' => [
+				'usergroup' => 'Offizielle Betreuer',
+				'index' => 1,
+				'has_role' => 1
+			],
+			'mitreisende' => [
+				'usergroup' => 'Mitreisende',
+				'index' => 2
+			],
+		];
+	} else {
+		$sql = 'SELECT identifier, usergroup
+			FROM usergroups
+			WHERE usergroup_category_id IN (%d, %d, %d)
+			ORDER BY sequence, identifier';
+		$sql = sprintf($sql
+			, wrap_category_id('usergroups/teilnehmer')
+			, wrap_category_id('usergroups/organisatoren')
+			, wrap_category_id('usergroups/ad-hoc')
+		);
+		$groups = wrap_db_fetch($sql, 'identifier');
+		$i = 0;
+		foreach ($groups as $identifier => $group)
+			$groups[$identifier]['index'] = $i++;
+	}
 	$data += mf_qualification_event($data, $p_per_event[$data['event_id']] ?? [], $groups, $access, $federation);
 
 	$meldungen = [];
@@ -343,7 +362,7 @@ function mf_qualification_event($event, $participants, $groups, $access, $federa
 		$event['groups'][$group['index']] = [
 			$index => true,
 			'identifier' => $index,
-			'title' => $group['title'],
+			'usergroup' => $group['usergroup'],
 			'sum' => 0,
 			'count' => 0,
 			'access' => $access,

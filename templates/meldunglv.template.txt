@@ -27,8 +27,12 @@ Landesverband %%% item landesverband %%%
 <p>Übersicht:</p>
 
 <ul>
+%%% condition if federation %%%
 <li><a href="#spieler">Meldungen: Spieler der geschlossenen Meisterschaften</a></li>
 <li><a href="#betreuer">Meldungen: Betreuer und Mitreisende</a></li>
+%%% condition else %%%
+<li><a href="#betreuer">Meldungen: Organisationsteam und andere</a></li>
+%%% condition endif %%%
 %%% condition if opens %%%
 <li><a href="#opens">Meldungen zu den offenen Turnieren</a></li>
 %%% condition endif %%%
@@ -39,6 +43,7 @@ Landesverband %%% item landesverband %%%
 </ul>
 </div>
 
+%%% condition if federation %%%
 <h2 id="spieler">Meldungen: Spieler der geschlossenen Meisterschaften</h2>
 
 <p class="noprint">Hier könnt Ihr alle Spielerinnen und Spieler für Euren Landesverband anmelden.
@@ -137,11 +142,13 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition endif %%%
 </div>
 %%% loop end %%%
+%%% condition endif %%%
 
 <h2>Meldungen: Betreuer und Mitreisende</h2>
 
 %%% loop groups %%%
-<h3 id="%%% item identifier %%%">%%% item title %%%</h3>
+%%% condition if access | has_participants %%%
+<h3 id="%%% item identifier %%%">%%% item usergroup %%%</h3>
 
 %%% condition if betreuer %%%
 <p class="noprint">Falls <strong>Delegationsleiter</strong> bitte unter »Rolle« eintragen.</p>
@@ -195,7 +202,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <td colspan="4">
 %%% condition endif %%%
-%%% item count %%% %%% item title %%%</td>
+%%% item count %%% %%% item usergroup %%%</td>
 <td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
 </tr>
 </tfoot>
@@ -233,6 +240,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </form>
 </div>
 
+%%% condition endif %%%
 %%% loop end %%%
 
 %%% condition if opens %%%
@@ -450,6 +458,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td class="number">%%% item sum_total wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 </tfoot>
+%%% condition if turniere %%%
 <tbody>
 %%% loop turniere %%%
 <tr class="even">
@@ -459,22 +468,25 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tr>
 %%% loop end %%%
 </tbody>
-%%% loop groups %%%
+%%% condition endif %%%
 <tbody>
+%%% loop groups %%%
+%%% condition if has_participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
-<td>%%% item title %%%</td>
+<td>%%% item usergroup %%%</td>
 <td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
-</tbody>
+%%% condition endif %%%
 %%% loop end %%%
+</tbody>
 <tbody>
 %%% loop opens %%%
 %%% loop groups %%%
 %%% condition if spieler %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
-<td>%%% item title %%% %%% item event %%%</td>
+<td>%%% item usergroup %%% %%% item event %%%</td>
 <td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% condition endif %%%
@@ -488,7 +500,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition if has_participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
-<td>%%% item title %%% %%% item event %%%</td>
+<td>%%% item usergroup %%% %%% item event %%%</td>
 <td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
 </tr>
 %%% condition endif %%%
