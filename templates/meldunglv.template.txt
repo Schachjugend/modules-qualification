@@ -39,7 +39,9 @@ Landesverband %%% item landesverband %%%
 <li><a href="#summe">Zusammenfassung aller Meldungen</a></li>
 <li><a href="belegung/">Belegung der Zimmer</a></li>
 <li><a href="buchungen/">Buchungen und Zahlungen</a></li>
+%%% condition if federation %%%
 <li><a href="../bewerber/%%% item landesverband_kennung %%%/">Freiplatzanträge der 2. Runde</a></li>
+%%% condition endif %%%
 </ul>
 </div>
 
