@@ -28,19 +28,18 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	// @todo Nach Meldeschluss: nur noch Ansicht der Daten
 	
 	// federation or direct or organisation
-	wrap_include_files('functions', 'clubs');
-	$federation = mf_clubs_federation($vars[2]);
+	list($federation, $category) = mf_qualification_list($vars[2]);
 	if ($federation) {
 		$data['landesverband'] = $federation['federation_short'];
 		$data['landesverband_kennung'] = $federation['federation_identifier'];
 		$data['federation'] = true;
-	} else {
-		$category = mf_qualification_registration_category($vars[2]);
-		if (!$category) return false;
+	} elseif ($category) {
 		$data += $category;
 		$federation = NULL;
 		$data['federation'] = false;
 		$access = false;
+	} else {
+		return false;
 	}
 
 	// Turniere
