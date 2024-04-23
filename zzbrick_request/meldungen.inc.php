@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2017-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -366,6 +366,14 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 	foreach ($data['spielberechtigungen'] as $id => $sp) {
 		if (!$sp['anzahl'])
 			$data['spielberechtigungen'][$id]['anzahl'] = ''; 
+	}
+	
+	$data['categories'] = mf_qualification_registration_categories();
+	$first_federation = reset($data['landesverbaende']);
+	foreach (array_keys($data['categories']) AS $category_id) {
+		$data['categories'][$category_id]['columns_quota'] = count($first_federation['kontingente']);
+		$data['categories'][$category_id]['columns_booking'] = count($first_federation['buchungen']);
+		$data['categories'][$category_id]['columns_participations'] = count($first_federation['participations']);
 	}
 
 	$page['dont_show_h1'] = true;

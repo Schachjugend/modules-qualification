@@ -14,6 +14,24 @@
 
 
 /**
+ * get all categories for registration type participation
+ *
+ * @param string $identifier
+ * @return array
+ */
+function mf_qualification_registration_categories() {
+	$sql = 'SELECT category_id, category, description, parameters
+	    FROM categories
+	    WHERE parameters LIKE "%&url_path=%"';
+	$categories = wrap_db_fetch($sql, 'category_id');
+	foreach ($categories as $category_id => $category) {
+		parse_str($category['parameters'], $category['parameters']);
+		$categories[$category_id] += $category['parameters'];
+	}
+	return $categories;
+}
+
+/**
  * get data for registration type participation
  *
  * @param string $identifier
