@@ -94,6 +94,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 		$sql = 'SELECT identifier, usergroup
 			FROM usergroups
 			WHERE usergroup_category_id IN (%d, %d, %d)
+			AND (ISNULL(parameters) OR parameters NOT LIKE "%%&present=0%%")
 			ORDER BY sequence, identifier';
 		$sql = sprintf($sql
 			, wrap_category_id('usergroups/teilnehmer')
