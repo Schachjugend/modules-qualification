@@ -74,7 +74,7 @@
 <td colspan="%%% item columns_quota %%%"></td>
 <td colspan="%%% item columns_booking %%%"></td>
 <td colspan="%%% item columns_participations %%%"></td>
-<td class="bx"><a href="../%%% item url_path %%%/anmeldungen/">Buchungen</a> &middot; <a href="../%%% item url_path %%%/adressen/">Adressen</a></td>
+<td class="bx"><a href="../%%% item url_path %%%/anmeldungen/">Buchungen</a></td>
 </tr>
 %%% loop end %%%
 </tbody>
