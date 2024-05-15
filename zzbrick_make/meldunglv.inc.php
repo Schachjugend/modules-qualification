@@ -88,6 +88,10 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				'usergroup' => 'Mitreisende',
 				'index' => 2
 			],
+			'gast' => [
+				'usergroup' => 'Gast',
+				'index' => 3
+			]
 		];
 	} else {
 		$sql = 'SELECT identifier, usergroup
