@@ -10,7 +10,7 @@
 if (count($brick['vars']) === 1 AND strstr($brick['vars'][0], '/'))
 	$brick['vars'] = explode('/', $brick['vars'][0]);
 
-wrap_include_files('functions', 'qualification');
+wrap_include('functions', 'qualification');
 list($federation, $category) = mf_qualification_list($brick['vars'][2]);
 if ($federation) {
 	$where = sprintf('participations.federation_contact_id = %d', $federation['contact_id']);
@@ -20,7 +20,7 @@ if ($federation) {
 	wrap_quit(404);
 }
 
-wrap_include_files('anmeldung', 'custom');
+wrap_include('anmeldung', 'custom');
 my_pruefe_meldunglv_rechte($brick['vars'][0].'/'.$brick['vars'][1], $brick['vars'][2]);
 
 $sql = 'SELECT participations.participation_id

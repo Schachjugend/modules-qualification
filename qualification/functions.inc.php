@@ -137,7 +137,7 @@ function mf_qualification_participants($where, $event_id, $event_ids) {
  * @return array
  */
 function mf_qualification_list($identifier) {
-	wrap_include_files('functions', 'clubs');
+	wrap_include('functions', 'clubs');
 	$federation = mf_clubs_federation($identifier);
 	if ($federation) {
 		$federation['title'] = sprintf('Landesverband %s', $federation['federation_short']);

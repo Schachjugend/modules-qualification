@@ -18,10 +18,10 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	wrap_package_activate('tournaments');
 
 	// Turnierbedinungen prüfen
-	wrap_include_files('anmeldung', 'custom');
-	wrap_include_files('persons', 'custom');
-	wrap_include_files('zzform/editing', 'ratings');
-	wrap_include_files('zzform/batch', 'contacts');
+	wrap_include('anmeldung', 'custom');
+	wrap_include('persons', 'custom');
+	wrap_include('zzform/editing', 'ratings');
+	wrap_include('zzform/batch', 'contacts');
 
 	// access rights
 	$access = my_pruefe_meldunglv_rechte($vars[0].'/'.$vars[1], $vars[2]);
@@ -173,8 +173,8 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	}
 
 	if (!empty($_POST) AND $access) {
-		wrap_include_files('zzform.php', 'zzform');
-		wrap_include_files('zzform/batch', 'contacts');
+		wrap_include('zzform.php', 'zzform');
+		wrap_include('zzform/batch', 'contacts');
 		zz_initialize();
 
 		if (isset($_POST['unregister'])) {
@@ -322,7 +322,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			zzform_insert('participations', $line);
 			
 			// ggf. Geburtsdatum aktualisieren
-			wrap_include_files('batch', 'zzform');
+			wrap_include('batch', 'zzform');
 			zzform_update_date($person, 'persons', 'contact_id', 'date_of_birth');
 			wrap_redirect_change();
 		}

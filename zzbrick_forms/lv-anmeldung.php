@@ -9,11 +9,11 @@
 if (count($brick['vars']) === 1 AND strstr($brick['vars'][0], '/'))
 	$brick['vars'] = explode('/', $brick['vars'][0]);
 
-wrap_include_files('functions', 'clubs');
+wrap_include('functions', 'clubs');
 $lv = mf_clubs_federation($brick['vars'][2]);
 if (!$lv) wrap_quit(404);
 
-wrap_include_files('anmeldung', 'custom');
+wrap_include('anmeldung', 'custom');
 $access = my_pruefe_meldunglv_rechte($brick['vars'][0].'/'.$brick['vars'][1], $brick['vars'][2]);
 
 $sql = 'SELECT participation_id
