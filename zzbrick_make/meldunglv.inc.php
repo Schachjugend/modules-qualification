@@ -338,7 +338,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	unset($data['groups'][0]); // players
 	
 	$page['dont_show_h1'] = true;
-	$page['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $data['event']);
+	$page['breadcrumbs'][] = ['title' => $data['event'], 'url_path' => '../'];
 	$page['breadcrumbs'][]['title'] = $federation['federation_short'] ?? $category['category'];
 	$page['title'] = sprintf('%s – %s %d',
 		$federation['federation_short'] ?? $category['category'],

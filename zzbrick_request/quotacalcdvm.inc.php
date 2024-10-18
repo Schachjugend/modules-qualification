@@ -274,7 +274,7 @@ function cms_kontingent_mannschaft($data, $events) {
 	$data['verbaende'] = array_values($data['verbaende']);
 	
 	$page['text'] = wrap_template('quota-calculation-dvm', $data);
-//	$page['breadcrumbs'][] = '<a href="../">'.$data['series_short'].' '.$data['year'].'</a>';
+//	$page['breadcrumbs'][] = ['title' => $data['series_short'].' '.$data['year'], 'url_path' => '../'];
 	$page['breadcrumbs'][]['title'] = 'Kontingent';
 	$page['dont_show_h1'] = true;
 	$page['title'] = $data['series_short'].' '.$data['year'].', Kontingent';
