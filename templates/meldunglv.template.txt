@@ -123,8 +123,8 @@ W<input type="hidden" name="%%% item id %%%[geschlecht]" value="w">
 M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <select name="%%% item id %%%[geschlecht]">
-<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+<option value="m"%%% item geschlecht_m " selected"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected"%%%>W</option>
 </select>
 %%% condition endif %%%
 </td>
@@ -182,8 +182,8 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% item form_error "<p class='error'>%s</p>" %%%</td>
 <td>
 <select name="%%% item identifier %%%[geschlecht]">
-<option value="m"%%% item form_geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item form_geschlecht_w " selected='selected'"%%%>W</option>
+<option value="m"%%% item form_geschlecht_m " selected"%%%>M</option>
+<option value="w"%%% item form_geschlecht_w " selected"%%%>W</option>
 </select>
 </td>
 <td><input type="text" name="%%% item identifier %%%[date_of_birth]" size="8" value="%%% item form_date_of_birth %%%"></td>
@@ -281,8 +281,8 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% item error "<p class='error'>%s</p>" %%%</td>
 <td>
 <select name="%%% item event_id %%%[geschlecht]">
-<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+<option value="m"%%% item geschlecht_m " selected"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected"%%%>W</option>
 </select>
 </td>
 <td><input type="text" name="%%% item event_id %%%[date_of_birth]" size="8" value="%%% item date_of_birth %%%"></td>
@@ -358,8 +358,8 @@ W<input type="hidden" name="%%% item id %%%[geschlecht]" value="w">
 M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 %%% condition else %%%
 <select name="%%% item id %%%[geschlecht]">
-<option value="m"%%% item geschlecht_m " selected='selected'"%%%>M</option>
-<option value="w"%%% item geschlecht_w " selected='selected'"%%%>W</option>
+<option value="m"%%% item geschlecht_m " selected"%%%>M</option>
+<option value="w"%%% item geschlecht_w " selected"%%%>W</option>
 </select>
 %%% condition endif %%%
 </td>
