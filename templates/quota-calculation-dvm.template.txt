@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/qualification
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2013, 2016-2017, 2020, 2023 Gustaf Mossakowski
+# @copyright Copyright © 2013, 2016-2017, 2020, 2023-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>Übersicht Kontingent
@@ -18,9 +18,9 @@
 <th>Turnier/Verband</th>
 <th>Jahr</th>
 %%% loop verbaende %%%
-<th colspan="2">%%% condition if verband %%%<abbr title="%%% item verband %%%">%%% condition endif %%%
+<th colspan="2">%%% if verband %%%<abbr title="%%% item verband %%%">%%% endif %%%
 %%% item verband_kurz %%%
-%%% condition if verband %%%</abbr>%%% condition endif %%%</th>
+%%% if verband %%%</abbr>%%% endif %%%</th>
 %%% loop end %%%
 <th class="number">Teams</th>
 </tr>
@@ -38,10 +38,10 @@
 </tfoot>
 <tbody>
 %%% loop turniere %%%
-%%% condition if separator %%%
+%%% if separator %%%
 </tbody>
 <tbody>
-%%% condition endif %%%
+%%% endif %%%
 <tr class="%%% loopposition uneven un %%%even">
 <td><a href="%%% setting events_path %%%/%%% item turnier_kennung %%%/">%%% item turnier %%%</a></td>
 <td>%%% item year %%%</th>

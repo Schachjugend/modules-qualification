@@ -5,23 +5,23 @@
 # https://www.zugzwang.org/modules/qualification
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2018, 2020, 2023 Gustaf Mossakowski
+# @copyright Copyright © 2018, 2020, 2023-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>Kontingente kopieren
 <br><a href="../">%%% item event %%% (%%% item series_short %%%) %%% item year %%%</a></h1>
 
-%%% condition if no_data %%%
+%%% if no_data %%%
 <p>Keine Daten vorhanden, keine Kopie möglich.</p>
 
-%%% condition elseif no_copy %%%
+%%% elseif no_copy %%%
 <p>Keine Daten vorhanden, keine Kopie möglich. Evtl. fehlen die aktuellen Turniere?</p>
 
-%%% condition elseif copied %%%
+%%% elseif copied %%%
 <p>Es wurden %%% item copied %%% Einträge für Kontingente kopiert.</p>
 <p><a href="../kontingente/">Zur Übersicht der Kontingente</a></p>
 
-%%% condition else %%%
+%%% else %%%
 <div>
 <form method="POST" action="%%% page url_path %%%">
 <p>Kopie der Kontingente vom Termin:</p>
@@ -34,4 +34,4 @@
 </form>
 </div>
 
-%%% condition endif %%%
+%%% endif %%%
