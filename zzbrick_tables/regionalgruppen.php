@@ -29,7 +29,6 @@ $zz['fields'][4]['sql'] = 'SELECT category_id, category_short, path
 	AND NOT ISNULL(category_short)
 	ORDER BY category_short';
 $zz['fields'][4]['sql_ignore'] = ['path'];
-$zz['fields'][4]['key_field_name'] = 'category_id';
 $zz['fields'][4]['display_field'] = 'category_short';
 $zz['fields'][4]['search'] = 'category_short';
 
@@ -46,7 +45,6 @@ $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id, contact
 		AND contacts_identifiers.current = "yes"
 	LEFT JOIN contacts_contacts
 		ON contacts_contacts.contact_id = contacts.contact_id
-$zz['fields'][3]['id_field_name'] = 'contacts.contact_id';
 		AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
 	WHERE main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
 	AND contact_category_id = /*_ID categories contact/federation _*/

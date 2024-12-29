@@ -31,7 +31,6 @@ $zz['fields'][4]['display_field'] = 'event';
 $zz['fields'][3]['title'] = 'Verband';
 $zz['fields'][3]['field_name'] = 'federation_contact_id';
 $zz['fields'][3]['type'] = 'select';
-$zz['fields'][3]['id_field_name'] = 'contacts.contact_id';
 $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
 		, IFNULL(contact_short, contact) AS contact
 		, contacts_identifiers.identifier AS zps_code
