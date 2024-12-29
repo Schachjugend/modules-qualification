@@ -260,8 +260,7 @@ function calc($tournaments, $sex) {
 	 * Alle Teilnehmenden der gleichen Altersklasse des Vorjahrs und des
      * Vorvorjahres.
      */
-	$query1 = '
-		SELECT
+	$query1 = 'SELECT
 			tabellenstaende.event_id,
 			persons.first_name,
 			persons.last_name,
@@ -274,36 +273,28 @@ function calc($tournaments, $sex) {
 		LEFT JOIN tournaments USING (event_id)
 		INNER JOIN tabellenstaende_wertungen
 			ON tabellenstaende_wertungen.tabellenstand_id = tabellenstaende.tabellenstand_id
-			AND tabellenstaende_wertungen.wertung_category_id = %d
+			AND tabellenstaende_wertungen.wertung_category_id = /*_ID categories turnierwertungen/pkt _*/
 			AND tabellenstaende.runde_no = tournaments.runden
 		INNER JOIN persons
 			ON persons.person_id = tabellenstaende.person_id
-			AND IF(IFNULL(events.event_year, YEAR(events.date_begin)) < 2016 AND series_category_id IN (%d, %d), persons.sex = "%s", 1 = 1)
+			AND IF(IFNULL(events.event_year, YEAR(events.date_begin)) < 2016 AND series_category_id IN (/*_ID categories reihen/dem/dem-u10 _*/, /*_ID categories reihen/dem/dem-u12 _*/), persons.sex = "%s", 1 = 1)
 		LEFT JOIN participations
 			ON participations.event_id = tabellenstaende.event_id
 			AND participations.contact_id = persons.contact_id
-			AND participations.usergroup_id = %d
+			AND participations.usergroup_id = /*_ID usergroups spieler _*/
 		LEFT JOIN contacts_identifiers
 			ON contacts_identifiers.contact_id = participations.club_contact_id
 			AND contacts_identifiers.current = "yes"
 		WHERE tabellenstaende.event_id IN (%s)
 		ORDER BY lv ASC, wertung DESC
 	';
-	$query1 = sprintf($query1
-		, wrap_category_id('turnierwertungen/pkt')
-		, wrap_category_id('reihen/dem/dem-u10')
-		, wrap_category_id('reihen/dem/dem-u12')
-		, $sex
-		, wrap_id('usergroups', 'spieler')
-		, implode(',', $event_ids)
-	);
+	$query1 = sprintf($query1, $sex, implode(',', $event_ids));
 
 	/**
 	 * Jahreswertungspunkte JWP: Durchschnittspunktzahlen
 	 * der Teilnehmenden je Landesverband.
 	 */
-	$query2 = '
-		SELECT
+	$query2 = 'SELECT
 			event_id,
 			lv,
 			(SUM(wertung) / COUNT(wertung)) AS jdp,

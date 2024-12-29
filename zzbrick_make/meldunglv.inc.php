@@ -96,14 +96,13 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	} else {
 		$sql = 'SELECT identifier, usergroup
 			FROM usergroups
-			WHERE usergroup_category_id IN (%d, %d, %d)
-			AND (ISNULL(parameters) OR parameters NOT LIKE "%%&present=0%%")
+			WHERE usergroup_category_id IN (
+				/*_ID categories usergroups/teilnehmer _*/,
+				/*_ID categories usergroups/organisatoren _*/,
+				/*_ID categories usergroups/ad-hoc _*/
+			)
+			AND (ISNULL(parameters) OR parameters NOT LIKE "%&present=0%")
 			ORDER BY sequence, identifier';
-		$sql = sprintf($sql
-			, wrap_category_id('usergroups/teilnehmer')
-			, wrap_category_id('usergroups/organisatoren')
-			, wrap_category_id('usergroups/ad-hoc')
-		);
 		$groups = wrap_db_fetch($sql, 'identifier');
 		$i = 0;
 		foreach ($groups as $identifier => $group)

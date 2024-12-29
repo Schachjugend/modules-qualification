@@ -63,7 +63,7 @@ function cms_kontingent_termine($data) {
 				FROM events_contacts
 				JOIN contacts
 					ON events_contacts.contact_id = contacts.contact_id
-					AND events_contacts.role_category_id = %d
+					AND events_contacts.role_category_id = /*_ID categories rollen/ausrichter _*/
 				LEFT JOIN contacts_identifiers ok
 					ON contacts.contact_id = ok.contact_id
 				LEFT JOIN contacts_identifiers lvk
@@ -72,7 +72,7 @@ function cms_kontingent_termine($data) {
 					ON landesverbaende.contact_id = lvk.contact_id
 				LEFT JOIN contacts_contacts federation_contacts
 					ON federation_contacts.contact_id = contacts.contact_id
-					AND federation_contacts.relation_category_id = %d
+					AND federation_contacts.relation_category_id = /*_ID categories relation/member _*/
 				LEFT JOIN contacts mutterverbaende
 					ON federation_contacts.main_contact_id = mutterverbaende.contact_id
 				WHERE events_contacts.event_id = events.event_id
@@ -93,8 +93,6 @@ function cms_kontingent_termine($data) {
 		HAVING veroeffentlicht > 0
 		ORDER BY series.sequence, IFNULL(event_year, YEAR(date_begin))';
 	$sql = sprintf($sql
-		, wrap_category_id('rollen/ausrichter')
-		, wrap_category_id('relation/member')
 		, $data['category_id'], $data['category_id'], $data['year']
 	);
 	return wrap_db_fetch($sql, 'event_id');
@@ -110,17 +108,12 @@ function cms_kontingent_mannschaft($data, $events) {
 		LEFT JOIN regionalgruppen
 			ON regionalgruppen.federation_contact_id = contacts.contact_id
 			AND series_category_id = %d
-		WHERE contacts_contacts.main_contact_id = %d
-		AND contacts_contacts.relation_category_id = %d
-		AND contact_category_id = %d
+		WHERE contacts_contacts.main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
+		AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
+		AND contact_category_id = /*_ID categories contact/federation _*/
 		AND ok.current = "yes"
 		ORDER BY country';
-	$sql = sprintf($sql
-		, $data['category_id']
-		, wrap_setting('clubs_confederation_contact_id')
-		, wrap_category_id('relation/member')
-		, wrap_category_id('contact/federation')
-	);
+	$sql = sprintf($sql, $data['category_id']);
 	$lv = wrap_db_fetch($sql, 'contact_id');
 	$regionalgruppe = reset($lv);
 	$regionalgruppe = !empty($regionalgruppe['regionalgruppe']) ? true : false;
@@ -141,7 +134,7 @@ function cms_kontingent_mannschaft($data, $events) {
 			AND tabellenstaende.runde_no = tournaments.runden
 		LEFT JOIN tabellenstaende_wertungen tsw
 			ON tabellenstaende.tabellenstand_id = tsw.tabellenstand_id
-			AND tsw.wertung_category_id = %d
+			AND tsw.wertung_category_id = /*_ID categories turnierwertungen/mp _*/
 		LEFT JOIN contacts_identifiers ok
 			ON teams.club_contact_id = ok.contact_id
 		LEFT JOIN contacts_identifiers lvk
@@ -154,10 +147,7 @@ function cms_kontingent_mannschaft($data, $events) {
 		AND lvk.current = "yes"
 		GROUP BY event_id, landesverbaende.contact_id
 	';
-	$sql = sprintf($sql
-		, wrap_category_id('turnierwertungen/mp')
-		, implode(',', array_keys($events))
-	);
+	$sql = sprintf($sql, implode(',', array_keys($events)));
 	$teams = wrap_db_fetch($sql, ['event_id', 'federation_contact_id']);
 	if (count($teams) !== count($events)) return false; // noch keine Teams
 	

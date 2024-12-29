@@ -54,11 +54,10 @@ function mod_qualification_make_kontingente_kopieren($vars, $settings, $event) {
 			LEFT JOIN events new_events
 				ON new_events.series_category_id = series.category_id
 				AND YEAR(new_events.date_begin) = %d
-			WHERE kontingent_category_id = %d
+			WHERE kontingent_category_id = /*_ID categories kontingente/lv _*/
 			AND main_events.event_id = %d';
 		$sql = sprintf($sql
 			, $vars[0]
-			, wrap_category_id('kontingente/lv')
 			, $_POST['event_id']
 		);
 		$data = wrap_db_fetch($sql, 'kontingent_id');

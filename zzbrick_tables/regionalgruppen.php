@@ -23,11 +23,11 @@ $zz['fields'][1]['type'] = 'id';
 $zz['fields'][4]['title'] = 'Reihe';
 $zz['fields'][4]['field_name'] = 'series_category_id';
 $zz['fields'][4]['type'] = 'select';
-$zz['fields'][4]['sql'] = sprintf('SELECT category_id, category_short, path
+$zz['fields'][4]['sql'] = 'SELECT category_id, category_short, path
 	FROM categories
-	WHERE main_category_id = %d
+	WHERE main_category_id = /*_ID categories reihen _*/
 	AND NOT ISNULL(category_short)
-	ORDER BY category_short', wrap_category_id('reihen'));
+	ORDER BY category_short';
 $zz['fields'][4]['sql_ignore'] = ['path'];
 $zz['fields'][4]['key_field_name'] = 'category_id';
 $zz['fields'][4]['display_field'] = 'category_short';
@@ -38,7 +38,7 @@ $zz['fields'][2]['field_name'] = 'regionalgruppe';
 $zz['fields'][3]['title'] = 'Landesverband';
 $zz['fields'][3]['field_name'] = 'federation_contact_id';
 $zz['fields'][3]['type'] = 'select';
-$zz['fields'][3]['sql'] = sprintf('SELECT contacts.contact_id, contact
+$zz['fields'][3]['sql'] = 'SELECT contacts.contact_id, contact
 		, contacts_identifiers.identifier AS zps_code
 	FROM contacts
 	LEFT JOIN contacts_identifiers
@@ -46,15 +46,11 @@ $zz['fields'][3]['sql'] = sprintf('SELECT contacts.contact_id, contact
 		AND contacts_identifiers.current = "yes"
 	LEFT JOIN contacts_contacts
 		ON contacts_contacts.contact_id = contacts.contact_id
-		AND contacts_contacts.relation_category_id = %d
-	WHERE main_contact_id = %d
-	AND contact_category_id = %d
-	ORDER BY contacts_identifiers.identifier'
-	, wrap_category_id('relation/member')
-	, wrap_setting('clubs_confederation_contact_id')
-	, wrap_category_id('contact/federation')
-);
 $zz['fields'][3]['id_field_name'] = 'contacts.contact_id';
+		AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
+	WHERE main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
+	AND contact_category_id = /*_ID categories contact/federation _*/
+	ORDER BY contacts_identifiers.identifier';
 $zz['fields'][3]['display_field'] = 'contact';
 $zz['fields'][3]['sql_fieldnames_ignore'] = ['contacts.contact_id'];
 

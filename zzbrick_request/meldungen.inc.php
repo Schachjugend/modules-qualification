@@ -83,10 +83,9 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 			, identifier
 		FROM usergroups
 		LEFT JOIN usergroups_categories USING (usergroup_id)
-		WHERE category_id = %d
-		AND parameters LIKE "%%&reihenfolge=%%"
+		WHERE category_id = /*_ID categories verknuepfungen/teilnahmestatus _*/
+		AND parameters LIKE "%&reihenfolge=%"
 		ORDER BY reihenfolge';
-	$sql = sprintf($sql, wrap_category_id('verknuepfungen/teilnahmestatus'));
 	$usergroups = wrap_db_fetch($sql, 'usergroup_id');
 
 	$event_ids[] = $data['event_id'];

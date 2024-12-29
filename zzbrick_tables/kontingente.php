@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017, 2019-2021, 2023 Gustaf Mossakowski
+ * @copyright Copyright © 2017, 2019-2021, 2023-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -32,18 +32,16 @@ $zz['fields'][3]['title'] = 'Verband';
 $zz['fields'][3]['field_name'] = 'federation_contact_id';
 $zz['fields'][3]['type'] = 'select';
 $zz['fields'][3]['id_field_name'] = 'contacts.contact_id';
-$zz['fields'][3]['sql'] = sprintf('SELECT contacts.contact_id
+$zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
 		, IFNULL(contact_short, contact) AS contact
 		, contacts_identifiers.identifier AS zps_code
 	FROM contacts
 	LEFT JOIN contacts_identifiers
 		ON contacts_identifiers.contact_id = contacts.contact_id
 		AND contacts_identifiers.current = "yes"
-	WHERE contacts.contact_category_id = %d
+	WHERE contacts.contact_category_id = /*_ID categories contact/federation _*/
 	AND SUBSTRING(contacts_identifiers.identifier, -2) = "00"
-	ORDER BY contacts_identifiers.identifier, contact_abbr'
-	, wrap_category_id('contact/federation')
-);
+	ORDER BY contacts_identifiers.identifier, contact_abbr';
 $zz['fields'][3]['search'] = 'contact_short';
 $zz['fields'][3]['display_field'] = 'contact';
 
