@@ -123,7 +123,7 @@ unset($zz['hooks']['before_insert']); // my_anmeldung_check
 
 $zz['page']['dont_show_title_as_breadcrumb'] = true;
 
-$zz['page']['breadcrumbs'][] = sprintf('<a href="../../">%s</a>', $lv['federation_short']);
+$zz['page']['breadcrumbs'][] = ['url_path' => '../../', 'title' => $lv['federation_short']];
 $zz['page']['breadcrumbs'][]['title'] = 'Buchung';
 
 $zz['title'] = '<a href="../../">Landesverband '.$lv['federation_short'].'</a>: Anmeldung

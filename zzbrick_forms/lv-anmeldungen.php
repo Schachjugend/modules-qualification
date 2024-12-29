@@ -121,7 +121,7 @@ $zz['details'][0]['link'] = [
 	'string1' => '/'
 ];
 
-$zz['page']['breadcrumbs'][] = sprintf('<a href="../">%s</a>', $federation['breadcrumb'] ?? $category['category']);
+$zz['page']['breadcrumbs'][] = ['url_path' => '../', 'title' => $federation['breadcrumb'] ?? $category['category']];
 $zz['page']['breadcrumbs'][]['title'] = 'Anmeldungen';
 
 $title = $federation['title'] ?? $category['title'];
