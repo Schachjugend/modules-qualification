@@ -264,6 +264,10 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				$m_person['error'] = 'Person gefunden, aber nicht DSB-Mitglied';
 				continue;
 			}
+			if (!empty($person['too_many_matches'])) {
+				$m_person['error'] = 'Zuviele Personen gefunden, die auf diese Daten passen';
+				continue;
+			}
 
 			// Verein
 			if (!empty($person['verein'])) {
