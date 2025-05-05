@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2017-2025 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -211,6 +211,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 				} else {
 					// delete open participant
 					foreach ($data['opens'] as $open_id => $open) {
+						if (!array_key_exists('spieler_offen', $open)) continue;
 						if (!array_key_exists($participation_id, $open['spieler_offen'])) continue;
 						$m_person = &$data['opens'][$open_id]['spieler_offen'][$participation_id];
 					}
