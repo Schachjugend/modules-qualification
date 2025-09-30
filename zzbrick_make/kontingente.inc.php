@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2018-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2018-2025 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -28,11 +28,10 @@ function mod_qualification_make_kontingente_kopieren($vars, $settings, $event) {
 	$sql = 'SELECT main_events.event_id, main_events.identifier
 		FROM kontingente
 		JOIN events USING (event_id)
+		LEFT JOIN events main_events
+			ON events.main_event_id = main_events.event_id
 		LEFT JOIN categories
 			ON events.series_category_id = categories.category_id
-		LEFT JOIN events main_events
-			ON main_events.series_category_id = categories.main_category_id
-			AND IFNULL(events.event_year, YEAR(events.date_begin)) = IFNULL(main_events.event_year, YEAR(main_events.date_begin))
 		WHERE categories.main_category_id = %d
 		ORDER BY main_events.date_begin DESC';
 	$sql = sprintf($sql, $event['series_category_id']);
@@ -47,8 +46,7 @@ function mod_qualification_make_kontingente_kopieren($vars, $settings, $event) {
 			LEFT JOIN categories series
 				ON events.series_category_id = series.category_id
 			LEFT JOIN events main_events
-				ON main_events.series_category_id = series.main_category_id
-				AND IFNULL(events.event_year, YEAR(events.date_begin)) = IFNULL(main_events.event_year, YEAR(main_events.date_begin))
+				ON events.main_event_id = main_events.event_id
 			LEFT JOIN categories main_series
 				ON series.main_category_id = main_series.category_id
 			LEFT JOIN events new_events
