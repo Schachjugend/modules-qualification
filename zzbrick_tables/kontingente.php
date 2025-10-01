@@ -81,7 +81,7 @@ $zz['sqlorder'] = ' ORDER BY kontingent_id';
 
 $zz['list']['tfoot'] = true;
 
-$zz['subtitle']['event_id']['sql'] = 'SELECT event
+$zz['subtitle']['event_id']['sql'] = 'SELECT event_id, event
 	, CONCAT(events.date_begin, IFNULL(CONCAT("/", events.date_end), "")) AS duration
 	FROM events';
 $zz['subtitle']['event_id']['var'] = ['event', 'duration'];
