@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017, 2019-2021, 2023-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2017, 2019-2021, 2023-2025 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -24,7 +24,7 @@ $zz['fields'][4]['field_name'] = 'event_id';
 $zz['fields'][4]['type'] = 'select';
 $zz['fields'][4]['sql'] = 'SELECT event_id, event, IFNULL(event_year, YEAR(date_begin))
 	FROM events
-	WHERE ISNULL(events.main_event_id)
+	WHERE event_category_id = /*_ID categories event/event _*/
 	ORDER BY event';
 $zz['fields'][4]['display_field'] = 'event';
 
