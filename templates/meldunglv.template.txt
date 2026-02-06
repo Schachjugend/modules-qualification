@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/qualification
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2017-2024 Gustaf Mossakowski
+# @copyright Copyright © 2017-2024, 2026 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>%%% if landesverband %%%
@@ -13,7 +13,7 @@ Landesverband %%% item landesverband %%%
 %%% else %%%
 %%% item category %%% – %%% item description %%%
 %%% endif %%%
-<br><a href="../">%%% item event %%% %%% item duration wrap_date %%%</a> <em>in %%% item place %%%</em></h1>
+<br><a href="../">%%% item event %%% %%% item duration format=date %%%</a> <em>in %%% item place %%%</em></h1>
 
 <div class="noprint">
 <p>Die Meldung erfolgt in drei Schritten:</p>
@@ -77,7 +77,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 <td colspan="6">
 %%% endif %%%
 %%% item spieler_count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
-<td class="number">%%% item spieler_sum wrap_money %%%&nbsp;€</td>
+<td class="number">%%% item spieler_sum format=money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -87,7 +87,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 %%% if contact %%%
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
-<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% item date_of_birth format=date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
 %%% if t_elo %%%
 <br><abbr title="Elo">%%% item t_elo %%%</abbr>
@@ -108,7 +108,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 <a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% endif %%%
 %%% if buchung %%%
-%%% item buchung wrap_money %%%&nbsp;€
+%%% item buchung format=money %%%&nbsp;€
 %%% else %%%
 <em>– fehlt –</em>
 %%% endif %%%
@@ -205,7 +205,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td colspan="4">
 %%% endif %%%
 %%% item count %%% %%% item usergroup %%%</td>
-<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
+<td class="number">%%% item sum format=money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -213,7 +213,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="%%% loopposition uneven un %%%even">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
-<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% item date_of_birth format=date %%%</td>
 %%% if has_role %%%
 <td>%%% item role %%%</td>
 %%% endif %%%
@@ -230,7 +230,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% endif %%%
 %%% if buchung %%%
-%%% item buchung wrap_money %%%&nbsp;€
+%%% item buchung format=money %%%&nbsp;€
 %%% else %%%
 <em>– fehlt –</em>
 %%% endif %%%
@@ -300,7 +300,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <td colspan="5">
 %%% endif %%%
 %%% item count "%s Meldungen " | 0 "keine Meldungen" | 1 "1 Meldung" %%% %%% item event %%%</td>
-<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
+<td class="number">%%% item sum format=money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -310,7 +310,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 %%% if federation | federation_direct | federation_organiser %%%
-<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% item date_of_birth format=date %%%</td>
 %%% else %%%
 <td>%%% item birth_year %%%</td>
 %%% endif %%%
@@ -335,7 +335,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% endif %%%
 <td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% if buchung %%%
-%%% item buchung wrap_money %%%&nbsp;€
+%%% item buchung format=money %%%&nbsp;€
 %%% else %%%
 <em>– fehlt –</em>
 %%% endif %%%
@@ -398,7 +398,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tfoot>
 <tr>
 <td colspan="5">%%% item count %%% Meldungen %%% item usergroup %%%</td>
-<td class="number">%%% item sum wrap_money %%%&nbsp;€</td>
+<td class="number">%%% item sum format=money %%%&nbsp;€</td>
 </tr>
 </tfoot>
 <tbody>
@@ -407,7 +407,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 %%% if federation | federation_direct | federation_organiser %%%
-<td>%%% item date_of_birth wrap_date %%%</td>
+<td>%%% item date_of_birth format=date %%%</td>
 %%% else %%%
 <td>%%% item birth_year %%%</td>
 %%% endif %%%
@@ -420,7 +420,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <td class="noprint"><a href="adressen/?edit=%%% item contact_id %%%">Kontaktdaten</a></td>
 <td class="number"><a href="anmeldungen/%%% item participation_id %%%/" class="noprint">Anmeldung</a><br><a href="buchungen/%%% item participation_id %%%/" class="noprint">Buchung</a><br>
 %%% if buchung %%%
-%%% item buchung wrap_money %%%&nbsp;€
+%%% item buchung format=money %%%&nbsp;€
 %%% else %%%
 <em>– fehlt –</em>
 %%% endif %%%
@@ -459,7 +459,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr>
 <td class="number">%%% item participants_total %%%</td>
 <td>Teilnehmer gesamt</td>
-<td class="number">%%% item sum_total wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item sum_total format=money "%s&nbsp;€" %%%</td>
 </tr>
 </tfoot>
 %%% if turniere %%%
@@ -468,7 +468,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="even">
 <td class="number">%%% item spieler_count %%%</td>
 <td>Spieler %%% item event %%%</td>
-<td class="number">%%% item spieler_sum wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item spieler_sum format=money "%s&nbsp;€" %%%</td>
 </tr>
 %%% loop end %%%
 </tbody>
@@ -479,7 +479,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
 <td>%%% item usergroup %%%</td>
-<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item sum format=money "%s&nbsp;€" %%%</td>
 </tr>
 %%% endif %%%
 %%% loop end %%%
@@ -491,7 +491,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
 <td>%%% item usergroup %%% %%% item event %%%</td>
-<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item sum format=money "%s&nbsp;€" %%%</td>
 </tr>
 %%% endif %%%
 %%% loop end %%%
@@ -505,7 +505,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tr class="%%% loopposition uneven un %%%even">
 <td class="number">%%% item count %%%</td>
 <td>%%% item usergroup %%% %%% item event %%%</td>
-<td class="number">%%% item sum wrap_money "%s&nbsp;€" %%%</td>
+<td class="number">%%% item sum format=money "%s&nbsp;€" %%%</td>
 </tr>
 %%% endif %%%
 %%% endif %%%

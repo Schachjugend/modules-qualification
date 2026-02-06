@@ -6,7 +6,7 @@
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
 # @author Falco Nogatz <fnogatz@gmail.com>
-# @copyright Copyright © 2018, 2020, 2022-2024 Gustaf Mossakowski
+# @copyright Copyright © 2018, 2020, 2022-2024, 2026 Gustaf Mossakowski
 # @copyright Copyright © 2016 Falco Nogatz
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
@@ -38,11 +38,11 @@
 <tr>
 <td><abbr title="%%% item landesverband_lang %%%">%%% item landesverband %%%</abbr></td>
 <td class="number">%%% item plaetze %%%</td>
-<td class="number">%%% item gesamtpunkte wrap_number %%%</td>
-<td class="number">%%% item jahrespunkte wrap_number %%%</td>
-<td>%%% if jahrespunkte_vorjahr | jahrespunkte_vorjahr %%%<small>= %%% item jahrespunkte_vorjahr wrap_number "2 × %s" %%% %%% if jahrespunkte_vorjahr & jahrespunkte_vorvorjahr %%%+%%% endif %%% %%% item jahrespunkte_vorvorjahr wrap_number "1 × %s" %%%</small>%%% endif %%%</td>
-<td class="number">%%% item bonuspunkte wrap_number %%%</td>
-<td>%%% if bonuspunkte_rechnung %%%<small>= %%% loop bonuspunkte_rechnung %%%%%% item bp wrap_number %%%%%% loopposition first|middle "+" %%%%%% loop end %%%</small>%%% endif %%%</td>
+<td class="number">%%% item gesamtpunkte format=number %%%</td>
+<td class="number">%%% item jahrespunkte format=number %%%</td>
+<td>%%% if jahrespunkte_vorjahr | jahrespunkte_vorjahr %%%<small>= %%% item jahrespunkte_vorjahr format=number "2 × %s" %%% %%% if jahrespunkte_vorjahr & jahrespunkte_vorvorjahr %%%+%%% endif %%% %%% item jahrespunkte_vorvorjahr format=number "1 × %s" %%%</small>%%% endif %%%</td>
+<td class="number">%%% item bonuspunkte format=number %%%</td>
+<td>%%% if bonuspunkte_rechnung %%%<small>= %%% loop bonuspunkte_rechnung %%%%%% item bp format=number %%%%%% loopposition first|middle "+" %%%%%% loop end %%%</small>%%% endif %%%</td>
 <td class="number">%%% item bester_platz %d. %%%</td>
 </tr>
 %%% loop end %%%
