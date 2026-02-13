@@ -85,7 +85,7 @@ DSB-DWZ-Datenbank) direkt übernommen.</p>
 <tr class="%%% loopposition uneven un %%%even">
 <td><abbr title="%%% item kontingent %%%">%%% item kontingent_abk %%%</abbr></td>
 %%% if contact %%%
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier html="<a href='%s'>" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth format=date %%%</td>
 <td><abbr title="DWZ">%%% item t_dwz %%%</abbr>
@@ -211,7 +211,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier html="<a href='%s'>" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 <td>%%% item date_of_birth format=date %%%</td>
 %%% if has_role %%%
@@ -307,7 +307,7 @@ werden. Sie erscheinen bei Angabe eines Landesverbands aber hier in der
 %%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
 %%% if contact %%%
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier html="<a href='%s'>" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 %%% if federation | federation_direct | federation_organiser %%%
 <td>%%% item date_of_birth format=date %%%</td>
@@ -404,7 +404,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 <tbody>
 %%% loop participants %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier "html=<a href="%s">" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
+<td>%%% item t_fidetitel %%% %%% path contacts_profile[person] contact_identifier html="<a href='%s'>" %%%%%% item contact %%%%%% path contacts_profile[person] contact_identifier html=</a> %%%<br>%%% item t_verein %%%</td>
 <td>%%% item geschlecht %%%</td>
 %%% if federation | federation_direct | federation_organiser %%%
 <td>%%% item date_of_birth format=date %%%</td>
