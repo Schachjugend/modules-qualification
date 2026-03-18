@@ -15,7 +15,7 @@
 
 %%% if distribution_missing %%%
 <p class="error">Bitte gib eine Verteilung der Plätze bei der Altersklasse an! (Parameter distribution=[1, 2, 3, …])</p>
-<p><a href="%%% setting events_internal_path %%%/reihen/">Veranstaltungsreihen</a></p>
+<p><a href="%%% path custom_event_series %%%">Veranstaltungsreihen</a></p>
 
 %%% elseif no_data %%%
 <p>Es liegen nicht genügend Daten aus den beiden Vorjahren vor.</p>
