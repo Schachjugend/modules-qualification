@@ -60,4 +60,4 @@
 </table>
 </div>
 
-<p><a href="%%% setting qualification_regional_groups_path %%%">Zuordnung der Landesverbände zu den Regionalgruppen</a></p>
+<p><a href="%%% path qualification_regional_groups %%%">Zuordnung der Landesverbände zu den Regionalgruppen</a></p>
