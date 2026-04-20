@@ -137,20 +137,31 @@ function mf_qualification_participants($where, $event_id, $event_ids) {
  * @return array
  */
 function mf_qualification_list($identifier) {
-	wrap_include('functions', 'clubs');
-	$federation = mf_clubs_federation($identifier);
-	if ($federation) {
-		$federation['title'] = sprintf('Landesverband %s', $federation['federation_short']);
-		$federation['breadcrumb'] = $federation['federation_short'];
-		return [$federation, NULL];
-	}
+	$federation = mf_qualification_list_federation($identifier);
+	if ($federation) return [$federation, NULL];
 
-	$category = mf_qualification_registration_category($identifier);
-	if ($category) {
-		$category['title'] = sprintf('%s – %s', $category['category'], $category['description']);
-		$category['breadcrumb'] = $category['category'];
-		return [NULL, $category];
-	}
+	$category = mf_qualification_list_category($identifier);
+	if ($category) return [NULL, $category];
 	
 	wrap_quit(404);
+}
+
+function mf_qualification_list_federation($identifier) {
+	wrap_include('functions', 'clubs');
+	$federation = mf_clubs_federation($identifier);
+	if (!$federation) return $federation;
+	
+	$federation['title'] = sprintf('Landesverband %s', $federation['federation_short']);
+	$federation['breadcrumb'] = $federation['federation_short'];
+	$federation['federation_rights'] = sprintf('federation_contact_id:%d', $federation['contact_id']);
+	return $federation;
+}
+
+function mf_qualification_list_category($identifier) {
+	$category = mf_qualification_registration_category($identifier);
+	if (!$category) return $category;
+
+	$category['title'] = sprintf('%s – %s', $category['category'], $category['description']);
+	$category['breadcrumb'] = $category['category'];
+	return $category;
 }
