@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017, 2019-2021, 2023-2025 Gustaf Mossakowski
+ * @copyright Copyright © 2017, 2019-2021, 2023-2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -38,6 +38,7 @@ $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
 	LEFT JOIN contacts_identifiers
 		ON contacts_identifiers.contact_id = contacts.contact_id
 		AND contacts_identifiers.current = "yes"
+		AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 	WHERE contacts.contact_category_id = /*_ID categories contact/federation _*/
 	AND SUBSTRING(contacts_identifiers.identifier, -2) = "00"
 	ORDER BY contacts_identifiers.identifier, contact_abbr';

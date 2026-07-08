@@ -9,7 +9,7 @@
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
  * @author Falco Nogatz <fnogatz@gmail.com>
- * @copyright Copyright © 2013, 2016-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2013, 2016-2026 Gustaf Mossakowski
  * @copyright Copyright © 2016 Falco Nogatz
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
@@ -66,8 +66,12 @@ function cms_kontingent_termine($data) {
 					AND events_contacts.role_category_id = /*_ID categories rollen/ausrichter _*/
 				LEFT JOIN contacts_identifiers ok
 					ON contacts.contact_id = ok.contact_id
+					AND ok.current = "yes"
+					AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 				LEFT JOIN contacts_identifiers lvk
 					ON CONCAT(SUBSTRING(ok.identifier, 1, 1), "00") = lvk.identifier
+					AND lvk.current = "yes"
+					AND lvk.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 				LEFT JOIN contacts landesverbaende
 					ON landesverbaende.contact_id = lvk.contact_id
 				LEFT JOIN contacts_contacts federation_contacts
@@ -102,7 +106,10 @@ function cms_kontingent_mannschaft($data, $events) {
 	$sql = 'SELECT contact_id, contact, country
 			, contact_abbr, regionalgruppe
 		FROM contacts
-		JOIN contacts_identifiers ok USING (contact_id)
+		JOIN contacts_identifiers ok
+			ON ok.contact_id = contacts.contact_id
+			AND ok.current = "yes"
+			AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 		JOIN countries USING (country_id)
 		LEFT JOIN contacts_contacts USING (contact_id)
 		LEFT JOIN regionalgruppen
@@ -111,7 +118,6 @@ function cms_kontingent_mannschaft($data, $events) {
 		WHERE contacts_contacts.main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
 		AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
 		AND contact_category_id = /*_ID categories contact/federation _*/
-		AND ok.current = "yes"
 		ORDER BY country';
 	$sql = sprintf($sql, $data['category_id']);
 	$lv = wrap_db_fetch($sql, 'contact_id');
@@ -137,8 +143,12 @@ function cms_kontingent_mannschaft($data, $events) {
 			AND tsw.wertung_category_id = /*_ID categories turnierwertungen/mp _*/
 		LEFT JOIN contacts_identifiers ok
 			ON teams.club_contact_id = ok.contact_id
+			AND ok.current = "yes"
+			AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 		LEFT JOIN contacts_identifiers lvk
 			ON CONCAT(SUBSTRING(ok.identifier, 1, 1), "00") = lvk.identifier
+			AND lvk.current = "yes"
+			AND lvk.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
 		LEFT JOIN contacts landesverbaende
 			ON landesverbaende.contact_id = lvk.contact_id
 		WHERE teams.event_id IN (%s)
