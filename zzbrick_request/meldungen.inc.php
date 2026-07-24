@@ -375,6 +375,8 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 		$data['categories'][$category_id]['columns_participations'] = count($first_federation['participations']);
 	}
 
+	$data['internal'] = $settings['internal'] ?? false; // for subtitle
+
 	$page['dont_show_h1'] = true;
 	$page['text'] = wrap_template('meldungen', $data);
 	$page['breadcrumbs'][]['title'] = 'Meldungsübersicht';

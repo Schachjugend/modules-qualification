@@ -13,7 +13,7 @@ Landesverband %%% item landesverband %%%
 %%% else %%%
 %%% item category %%% – %%% item description %%%
 %%% endif %%%
-<br><a href="../">%%% item event %%% %%% item duration format=date %%%</a> <em>in %%% item place %%%</em></h1>
+<br>%%% include event-subtitle %%%</h1>
 
 <div class="noprint">
 <p>Die Meldung erfolgt in drei Schritten:</p>

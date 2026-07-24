@@ -2,7 +2,7 @@
 
 // Zugzwang Project
 // deutsche-schachjugend.de
-// Copyright (c) 2017-2020, 2022-2024 Gustaf Mossakowski <gustaf@koenige.org>
+// Copyright (c) 2017-2020, 2022-2024, 2026 Gustaf Mossakowski <gustaf@koenige.org>
 // Übersicht der Anmeldungen eines Landesverbandes
 // Hinzufügen von Buchungen nicht möglich, Bearbeiten über lv-anmeldung.php
 
@@ -125,7 +125,7 @@ $zz['page']['breadcrumbs'][] = ['url_path' => '../', 'title' => $federation['bre
 $zz['page']['breadcrumbs'][]['title'] = 'Anmeldungen';
 
 $title = $federation['title'] ?? $category['title'];
-$zz['title'] = '<a href="../">'.$title.'</a>: Anmeldungen
-	<br><a href="../../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['place'].'</em>';
+$zz['title'] = '<a href="../">'.$title.'</a>: Anmeldungen';
+$zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);
 
 $zz['page']['referer'] = '../';

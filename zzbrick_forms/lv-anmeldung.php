@@ -2,7 +2,7 @@
 
 // Zugzwang Project
 // deutsche-schachjugend.de
-// Copyright (c) 2017, 2019-2024 Gustaf Mossakowski <gustaf@koenige.org>
+// Copyright (c) 2017, 2019-2024, 2026 Gustaf Mossakowski <gustaf@koenige.org>
 // Skript: Kontaktdaten einer Person eines Teams eines Turniers
 
 
@@ -126,7 +126,7 @@ $zz['page']['dont_show_title_as_breadcrumb'] = true;
 $zz['page']['breadcrumbs'][] = ['url_path' => '../../', 'title' => $lv['federation_short']];
 $zz['page']['breadcrumbs'][]['title'] = 'Buchung';
 
-$zz['title'] = '<a href="../../">Landesverband '.$lv['federation_short'].'</a>: Anmeldung
-	<br><a href="../../../">'.$brick['data']['event'].' '.wrap_date($brick['data']['duration']).'</a> <em>in '.$brick['data']['place'].'</em>';
+$zz['title'] = '<a href="../../">Landesverband '.$lv['federation_short'].'</a>: Anmeldung';
+$zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);
 
 $zz['page']['referer'] = '../../';

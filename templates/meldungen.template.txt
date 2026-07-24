@@ -9,7 +9,7 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <h1>Meldungen
-<br><a href="../">%%% item event %%% %%% item duration format=date %%%</a> <em>in %%% item place %%%</em></h1>
+<br>%%% include event-subtitle %%%</h1>
 
 <h2>Nach Landesverband</h2>
 

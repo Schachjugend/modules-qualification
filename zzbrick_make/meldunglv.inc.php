@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017-2025 Gustaf Mossakowski
+ * @copyright Copyright © 2017-2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -340,6 +340,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 	}
 	$data['access'] = $access ?? NULL;
 	unset($data['groups'][0]); // players
+	$data['internal'] = $settings['internal'] ?? false; // for subtitle
 	
 	$page['dont_show_h1'] = true;
 	$page['breadcrumbs'][] = ['title' => $data['event'], 'url_path' => '../'];
