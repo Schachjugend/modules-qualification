@@ -13,7 +13,7 @@
  */
 
 
-$zz['title'] = 'Kontingente';
+$zz['title'] = 'Quotas';
 $zz['table'] = 'kontingente';
 
 $zz['fields'][1]['title'] = 'ID';
@@ -28,7 +28,7 @@ $zz['fields'][4]['sql'] = 'SELECT event_id, event, IFNULL(event_year, YEAR(date_
 	ORDER BY event';
 $zz['fields'][4]['display_field'] = 'event';
 
-$zz['fields'][3]['title'] = 'Verband';
+$zz['fields'][3]['title'] = 'Federation';
 $zz['fields'][3]['field_name'] = 'federation_contact_id';
 $zz['fields'][3]['type'] = 'select';
 $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
@@ -45,7 +45,7 @@ $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
 $zz['fields'][3]['search'] = 'contact_short';
 $zz['fields'][3]['display_field'] = 'contact';
 
-$zz['fields'][5]['title'] = 'Kategorie';
+$zz['fields'][5]['title'] = 'Category';
 $zz['fields'][5]['field_name'] = 'kontingent_category_id';
 $zz['fields'][5]['type'] = 'select';
 $zz['fields'][5]['sql'] = 'SELECT category_id, category, main_category_id
@@ -55,11 +55,13 @@ $zz['fields'][5]['display_field'] = 'category';
 $zz['fields'][5]['show_hierarchy'] = 'main_category_id';
 $zz['fields'][5]['show_hierarchy_subtree'] = wrap_category_id('kontingente');
 
-$zz['fields'][2]['title_tab'] = 'K.';
+$zz['fields'][2]['title_tab'] = ['Q.', ['context' => 'Quota']];
+$zz['fields'][2]['title'] = 'Quota';
 $zz['fields'][2]['field_name'] = 'kontingent';
 $zz['fields'][2]['sum'] = true;
 $zz['fields'][2]['default'] = 1;
 
+$zz['fields'][6]['title'] = 'Remarks';
 $zz['fields'][6]['field_name'] = 'anmerkung';
 $zz['fields'][6]['hide_in_list_if_empty'] = true;
 

@@ -1,0 +1,85 @@
+# qualification module
+# Translations, admin
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zugzwang Project -- qualification module\n"
+"POT-Creation-Date: 2026-07-24 18:19+0000\n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: configuration/access.cfg:19
+msgid "Overview of quota for the DVM team tournament with regional groups"
+msgstr ""
+
+#: configuration/access.cfg:26
+msgid "Overview of quota for the DEM single tournament per federation"
+msgstr ""
+
+#: configuration/access.cfg:33
+msgid "View assigned quotas for tournaments"
+msgstr ""
+
+#: configuration/access.cfg:39
+msgid "Edit and copy quotas from same tournament series, last year"
+msgstr ""
+
+#: configuration/access.cfg:46
+msgid "Edit list of regional groups for DVM"
+msgstr ""
+
+#: configuration/access.cfg:50
+msgid "View overview of registration per federation and per single tournament of tournament series"
+msgstr ""
+
+#: configuration/routes.cfg:12
+msgid "Regional groups for DVM"
+msgstr ""
+
+#: configuration/routes.cfg:19
+msgid "Copy quota from a past tournament"
+msgstr ""
+
+#: configuration/settings.cfg:21
+msgid "Series identifier of alternative tournament (split of open and female tournaments)"
+msgstr ""
+
+#: configuration/settings.cfg:26
+msgid "Distribution of places"
+msgstr ""
+
+#: configuration/settings.cfg:32
+msgid "Assign quotas for federations to tournament"
+msgstr ""
+
+#: configuration/settings.cfg:37
+msgid "Allow federations to register players for this tournament series"
+msgstr ""
+
+#: configuration/settings.cfg:42
+msgid "Calculate quota for DEM tournaments"
+msgstr ""
+
+#: configuration/settings.cfg:47
+msgid "Calculate quota for DVM tournaments"
+msgstr ""
+
+#: configuration/settings.cfg:52
+msgid "Series identifier of next younger tournament"
+msgstr ""
+
+#: configuration/settings.cfg:57
+msgid "Series identifier of next younger tournament if there is an alternative (split of open and female tournaments)"
+msgstr ""
+
+#: zzbrick_make/meldunglv.inc.php:234
+msgid "Registration attempt without valid participation ID %d"
+msgstr ""

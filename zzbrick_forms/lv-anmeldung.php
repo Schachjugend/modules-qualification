@@ -122,11 +122,12 @@ if ($product_areas) {
 unset($zz['hooks']['before_insert']); // my_anmeldung_check
 
 $zz['page']['dont_show_title_as_breadcrumb'] = true;
-
 $zz['page']['breadcrumbs'][] = ['url_path' => '../../', 'title' => $lv['federation_short']];
 $zz['page']['breadcrumbs'][]['title'] = 'Buchung';
-
-$zz['title'] = '<a href="../../">Landesverband '.$lv['federation_short'].'</a>: Anmeldung';
-$zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);
-
 $zz['page']['referer'] = '../../';
+
+$zz['title'] = [
+	'<a href="%s">Federation %s</a>: Registration',
+	['values' => [$zz['page']['referer'], $lv['federation_short']]]
+];
+$zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);

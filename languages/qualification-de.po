@@ -1,0 +1,84 @@
+# qualification module
+# Translations
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/qualification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zugzwang Project -- qualification module\n"
+"POT-Creation-Date: 2026-07-24 18:19+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#: zzbrick_forms/kontingente.php:85
+msgid "Allocation of quotas"
+msgstr "Vergabe von Kontingenten"
+
+#: zzbrick_forms/lv-anmeldung.php:130
+msgid "<a href=\"%s\">Federation %s</a>: Registration"
+msgstr "<a href=\"%s\">Landesverband %s</a>: Anmeldung"
+
+#: zzbrick_forms/lv-anmeldungen.php:100
+msgid "Total"
+msgstr "Summe"
+
+#: zzbrick_forms/lv-anmeldungen.php:130
+msgid "<a href=\"%s\">%s</a>: Registrations"
+msgstr "<a href=\"%s\">%s</a>: Anmeldungen"
+
+#: zzbrick_tables/kontingente.php:16
+msgid "Quotas"
+msgstr "Kontingente"
+
+#: zzbrick_tables/kontingente.php:19 zzbrick_tables/regionalgruppen.php:19
+msgid "ID"
+msgstr "ID"
+
+#: zzbrick_tables/kontingente.php:23
+msgid "Event"
+msgstr "Veranstaltung"
+
+#: zzbrick_tables/kontingente.php:31 zzbrick_tables/regionalgruppen.php:38
+msgid "Federation"
+msgstr "Landesverband"
+
+#: zzbrick_tables/kontingente.php:48
+msgid "Category"
+msgstr "Kategorie"
+
+#: zzbrick_tables/kontingente.php:58
+msgctxt "Quota"
+msgid "Q."
+msgstr "K."
+
+#: zzbrick_tables/kontingente.php:59
+msgid "Quota"
+msgstr "Kontingent"
+
+#: zzbrick_tables/kontingente.php:64
+msgid "Remarks"
+msgstr "Anmerkungen"
+
+#: zzbrick_tables/kontingente.php:68 zzbrick_tables/regionalgruppen.php:57
+msgid "Last update"
+msgstr "Stand"
+
+#: zzbrick_tables/regionalgruppen.php:16
+msgid "Regional groups for DVM qualification tournaments"
+msgstr "Regionalgruppen für die Qualifikationsturniere zur DVM"
+
+#: zzbrick_tables/regionalgruppen.php:23
+msgid "Series"
+msgstr "Reihen"
+
+#: zzbrick_tables/regionalgruppen.php:35
+msgid "Regional group"
+msgstr "Regionalgruppe"

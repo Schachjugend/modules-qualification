@@ -97,6 +97,7 @@ $zz['fields'][80]['subselect']['sql'] = 'SELECT registration_id, buchung, betrag
 	FROM buchungen';
 
 $zz['fields'][81]['type'] = 'display';
+$zz['fields'][81]['title'] = 'Total';
 $zz['fields'][81]['field_name'] = 'summe';
 $zz['fields'][81]['type_detail'] = 'number';
 $zz['fields'][81]['number_type'] = 'currency';
@@ -123,9 +124,11 @@ $zz['details'][0]['link'] = [
 
 $zz['page']['breadcrumbs'][] = ['url_path' => '../', 'title' => $federation['breadcrumb'] ?? $category['category']];
 $zz['page']['breadcrumbs'][]['title'] = 'Anmeldungen';
+$zz['page']['referer'] = '../';
 
-$title = $federation['title'] ?? $category['title'];
-$zz['title'] = '<a href="../">'.$title.'</a>: Anmeldungen';
+$zz['title'] = [
+	'<a href="%s">%s</a>: Registrations',
+	['values' => [$zz['page']['referer'], $federation['title'] ?? $category['title']]]
+];
 $zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);
 
-$zz['page']['referer'] = '../';

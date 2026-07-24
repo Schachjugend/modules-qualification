@@ -82,7 +82,7 @@ $zz['filter'][3]['sql'] = sprintf('SELECT federation_contact_id
 $zz['page']['dont_show_title_as_breadcrumb'] = true;
 $zz['page']['breadcrumbs'][] = ['title' => $zz['title']];
 
-$zz['title'] = 'Vergabe von Kontingenten';
+$zz['title'] = 'Allocation of quotas';
 $zz['subtitle']['text'] = wrap_template('event-subtitle', $brick['data'] + ['internal' => 1]);
 $zz['explanation'] = '<p>Hinweis zur 2. Freiplatzrunde: erst hier Kontingent eintragen mit Namen, dann können Bewerberinnen und Bewerber in Spielerinnen und Spieler geändert werden.</p>';
 

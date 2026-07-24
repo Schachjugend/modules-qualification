@@ -13,14 +13,14 @@
  */
 
 
-$zz['title'] = 'Regionalgruppen für DVM-Qualifikationsturniere';
+$zz['title'] = 'Regional groups for DVM qualification tournaments';
 $zz['table'] = 'regionalgruppen';
 
 $zz['fields'][1]['title'] = 'ID';
 $zz['fields'][1]['field_name'] = 'regionalgruppe_id';
 $zz['fields'][1]['type'] = 'id';
 
-$zz['fields'][4]['title'] = 'Reihe';
+$zz['fields'][4]['title'] = 'Series';
 $zz['fields'][4]['field_name'] = 'series_category_id';
 $zz['fields'][4]['type'] = 'select';
 $zz['fields'][4]['sql'] = 'SELECT category_id, category_short, path
@@ -32,9 +32,10 @@ $zz['fields'][4]['sql_ignore'] = ['path'];
 $zz['fields'][4]['display_field'] = 'category_short';
 $zz['fields'][4]['search'] = 'category_short';
 
+$zz['fields'][2]['title'] = 'Regional group';
 $zz['fields'][2]['field_name'] = 'regionalgruppe';
 
-$zz['fields'][3]['title'] = 'Landesverband';
+$zz['fields'][3]['title'] = 'Federation';
 $zz['fields'][3]['field_name'] = 'federation_contact_id';
 $zz['fields'][3]['type'] = 'select';
 $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id, contact

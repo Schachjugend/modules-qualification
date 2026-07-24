@@ -230,7 +230,10 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			if (!$meldung_offen
 				AND !in_array($participation_id, ['betreuer', 'mitreisende'])
 				AND !array_key_exists($participation_id, $meldungen)) {
-				wrap_error(sprintf('Anmeldeversuch ohne gültige Meldungs-ID %d', $participation_id), E_USER_WARNING);
+				wrap_error([
+					'Registration attempt without valid participation ID %d',
+					['values' => [$participation_id], 'data' => $_POST]
+				], E_USER_WARNING);
 				continue;
 			}
 			if (!$meldung['person']) {
