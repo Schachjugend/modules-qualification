@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2017-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2017-2024, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -79,13 +79,11 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 	$sql = 'SELECT usergroup_id, usergroup
 			, SUBSTRING(usergroup, 1, 1) AS gruppe_abk
 			, 0 AS participations
-			, SUBSTRING_INDEX(SUBSTRING_INDEX(parameters, "reihenfolge=", -1), "&", 1) AS reihenfolge
 			, identifier
 		FROM usergroups
 		LEFT JOIN usergroups_categories USING (usergroup_id)
 		WHERE category_id = /*_ID categories verknuepfungen/teilnahmestatus _*/
-		AND parameters LIKE "%&reihenfolge=%"
-		ORDER BY reihenfolge';
+		ORDER BY IF(usergroups.identifier = "spieler", NULL, 1), sequence, identifier';
 	$usergroups = wrap_db_fetch($sql, 'usergroup_id');
 
 	$event_ids[] = $data['event_id'];
@@ -139,7 +137,6 @@ function mod_qualification_meldungen($vars, $settings, $data) {
 		'usergroup' => 'Summe Meldungen',
 		'gruppe_abk' => '∑',
 		'participations' => 0,
-		'reihenfolge' => 5
 	];
 
 	foreach (array_keys($data['landesverbaende']) as $federation_contact_id) {
