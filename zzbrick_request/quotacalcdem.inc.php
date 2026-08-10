@@ -63,7 +63,11 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 
 	$landesverbaende = mf_tournaments_federations('code');
 
-	$parameters = ['qualification_younger_series', 'qualification_alternate_series', 'qualification_younger_series_alternate'];
+	$parameters = [
+		'qualification_younger_series',
+		'qualification_alternate_series',
+		'qualification_younger_series_alternate'
+	];
 	$series = [];
 	foreach ($parameters as $type) {
 		if (!array_key_exists($type, $data))
