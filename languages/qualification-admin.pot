@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- qualification module\n"
-"POT-Creation-Date: 2026-08-10 15:56+0000\n"
+"POT-Creation-Date: 2026-08-10 16:09+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -49,39 +49,39 @@ msgid "Copy quota from a past tournament"
 msgstr ""
 
 #: configuration/settings.cfg:21
-msgid "Series identifier of alternative tournament (split of open and female tournaments)"
+msgid "Series path of the alternative tournament (split of open and female tournaments)"
 msgstr ""
 
-#: configuration/settings.cfg:27
-msgid "Allow federations to register players for this tournament series"
+#: configuration/settings.cfg:30
+msgid "Allow federations to register players without assigned quota"
 msgstr ""
 
-#: configuration/settings.cfg:33
-msgid "Distribution of places"
+#: configuration/settings.cfg:36
+msgid "Distribution of federation quota places"
 msgstr ""
 
-#: configuration/settings.cfg:40
-msgid "Assign quotas for federations to tournament"
+#: configuration/settings.cfg:44
+msgid "Assign federation quotas to this tournament series"
 msgstr ""
 
-#: configuration/settings.cfg:46
-msgid "Calculate quota for DEM tournaments"
+#: configuration/settings.cfg:50
+msgid "DEM single-tournament quota"
 msgstr ""
 
-#: configuration/settings.cfg:52
-msgid "Calculate quota for DVM tournaments"
+#: configuration/settings.cfg:56
+msgid "DVM team-tournament quota"
 msgstr ""
 
-#: configuration/settings.cfg:58
+#: configuration/settings.cfg:62
 msgid "Federation contact participates in DVM regional groups"
 msgstr ""
 
-#: configuration/settings.cfg:63
-msgid "Series identifier of next younger tournament"
+#: configuration/settings.cfg:67
+msgid "Series path of the next younger age group"
 msgstr ""
 
-#: configuration/settings.cfg:69
-msgid "Series identifier of next younger tournament if there is an alternative (split of open and female tournaments)"
+#: configuration/settings.cfg:76
+msgid "Series path of the next younger age group when open and female tournaments are split"
 msgstr ""
 
 #: zzbrick_make/meldunglv.inc.php:234
