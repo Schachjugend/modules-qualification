@@ -25,3 +25,4 @@
 /* 2026-08-10-10 */	UPDATE categories SET parameters = REPLACE(parameters, '&kontingent=', '&qualification_quota=') WHERE parameters LIKE '%&kontingent=%';
 /* 2026-08-10-11 */	UPDATE categories SET parameters = REPLACE(parameters, '&quotadem=', '&qualification_quota_dem=') WHERE parameters LIKE '%&quotadem=%';
 /* 2026-08-10-12 */	UPDATE categories SET parameters = REPLACE(parameters, '&quotadvm=', '&qualification_quota_dvm=') WHERE parameters LIKE '%&quotadvm=%';
+/* 2026-08-10-13 */	UPDATE contacts SET parameters = REPLACE(parameters, '&regional_groups=', '&qualification_regional_groups=') WHERE parameters LIKE '%&regional_groups=%';
