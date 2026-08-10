@@ -11,7 +11,7 @@
  */
 
 
--- qualification_quotacalc_dvm_event_id --
+-- qualification_quota_dvm_event_id --
 SELECT IF((
 SELECT COUNT(*) FROM regionalgruppen
 WHERE regionalgruppen.series_category_id = events.series_category_id), (
@@ -30,7 +30,7 @@ AND (ISNULL(team_id) OR teams.meldung = "teiloffen" OR teams.meldung = "komplett
 FROM events
 WHERE event_id = %d
 
--- qualification_quotacalc_dvm_event --
+-- qualification_quota_dvm_event --
 SELECT IF((
 SELECT COUNT(*) FROM regionalgruppen
 WHERE regionalgruppen.series_category_id = events.series_category_id), (
