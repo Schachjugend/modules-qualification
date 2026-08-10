@@ -14,7 +14,7 @@
 <br>%%% if tournament %%%<a href="../">%%% endif %%%%%% item series %%% (%%% item series_short %%%) %%% item year %%%%%% if tournament %%%</a>%%% endif %%%</h1>
 
 %%% if distribution_missing %%%
-<p class="error">Bitte gib eine Verteilung der Plätze bei der Altersklasse an! (Parameter distribution=[1, 2, 3, …])</p>
+<p class="error">Bitte gib eine Verteilung der Plätze bei der Altersklasse an! (Parameter qualification_place_distribution=[1, 2, 3, …])</p>
 <p><a href="%%% path custom_event_series %%%">Veranstaltungsreihen</a></p>
 
 %%% elseif no_data %%%

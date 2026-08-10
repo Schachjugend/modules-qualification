@@ -92,7 +92,7 @@ function cms_kontingent_termine($data) {
 			ON events.series_category_id = series.category_id
 		WHERE (series.main_category_id = %d OR series.category_id = %d)
 		AND IFNULL(event_year, YEAR(date_begin)) IN (%s)
-		AND series.parameters LIKE "%%&quotadvm=1%%"
+		AND series.parameters LIKE "%%&qualification_quota_dvm=1%%"
 		AND NOT ISNULL(tournament_id)
 		HAVING veroeffentlicht > 0
 		ORDER BY series.sequence, IFNULL(event_year, YEAR(date_begin))';

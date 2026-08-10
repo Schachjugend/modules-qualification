@@ -119,7 +119,7 @@ function mod_qualification_make_meldunglv($vars, $settings, $data) {
 			unset($data['turniere'][$event_id]);
 			if ($turnier['parameters'])
 				parse_str($turnier['parameters'], $parameter);
-			if (empty($p_per_event[$event_id]) AND empty($parameter['lvmeldung'])) continue;
+			if (empty($p_per_event[$event_id]) AND empty($parameter['qualification_federation_registration'])) continue;
 			$open_groups = $groups;
 			unset($open_groups['betreuer']);
 			$data['opens'][$event_id] = mf_qualification_event($turnier, $p_per_event[$event_id] ?? [], $open_groups, $access, $federation);

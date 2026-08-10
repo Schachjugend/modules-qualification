@@ -17,3 +17,11 @@
 /* 2026-08-10-2 */	UPDATE usergroups SET parameters = REPLACE(parameters, '&reihenfolge=2', '') WHERE parameters LIKE '%&reihenfolge=2%';
 /* 2026-08-10-3 */	UPDATE usergroups SET parameters = REPLACE(parameters, '&reihenfolge=3', '') WHERE parameters LIKE '%&reihenfolge=3%';
 /* 2026-08-10-4 */	UPDATE usergroups SET parameters = REPLACE(parameters, '&reihenfolge=4', '') WHERE parameters LIKE '%&reihenfolge=4%';
+/* 2026-08-10-5 */	UPDATE categories SET parameters = REPLACE(parameters, '&alternate=', '&qualification_alternate_series=') WHERE parameters LIKE '%&alternate=%';
+/* 2026-08-10-6 */	UPDATE categories SET parameters = REPLACE(parameters, '&younger_alternate=', '&qualification_younger_series_alternate=') WHERE parameters LIKE '%&younger_alternate=%';
+/* 2026-08-10-7 */	UPDATE categories SET parameters = REPLACE(parameters, '&younger=', '&qualification_younger_series=') WHERE parameters LIKE '%&younger=%';
+/* 2026-08-10-8 */	UPDATE categories SET parameters = REPLACE(parameters, '&lvmeldung=', '&qualification_federation_registration=') WHERE parameters LIKE '%&lvmeldung=%';
+/* 2026-08-10-9 */	UPDATE categories SET parameters = REPLACE(parameters, '&distribution=', '&qualification_place_distribution=') WHERE parameters LIKE '%&distribution=%';
+/* 2026-08-10-10 */	UPDATE categories SET parameters = REPLACE(parameters, '&kontingent=', '&qualification_quota=') WHERE parameters LIKE '%&kontingent=%';
+/* 2026-08-10-11 */	UPDATE categories SET parameters = REPLACE(parameters, '&quotadem=', '&qualification_quota_dem=') WHERE parameters LIKE '%&quotadem=%';
+/* 2026-08-10-12 */	UPDATE categories SET parameters = REPLACE(parameters, '&quotadvm=', '&qualification_quota_dvm=') WHERE parameters LIKE '%&quotadvm=%';

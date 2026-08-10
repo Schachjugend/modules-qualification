@@ -63,7 +63,7 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 
 	$landesverbaende = mf_tournaments_federations('code');
 
-	$parameters = ['younger', 'alternate', 'younger_alternate'];
+	$parameters = ['qualification_younger_series', 'qualification_alternate_series', 'qualification_younger_series_alternate'];
 	$series = [];
 	foreach ($parameters as $type) {
 		if (!array_key_exists($type, $data))
@@ -112,14 +112,14 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 	';
 	$sql = sprintf($sql
 		, $data['category_id'], $data['year']
-		, $series['alternate'], $data['year']
+		, $series['qualification_alternate_series'], $data['year']
 		, $data['category_id'], $data['year']
-		, $series['alternate'], $data['year']
-		, $series['younger'], $data['year']
-		, $series['younger_alternate'], $data['year']
+		, $series['qualification_alternate_series'], $data['year']
+		, $series['qualification_younger_series'], $data['year']
+		, $series['qualification_younger_series_alternate'], $data['year']
 	);
 	$tournaments = wrap_db_fetch($sql, 'type');
-	if (empty($series['younger'])) {
+	if (empty($series['qualification_younger_series'])) {
 		if (count($tournaments) !== 2) {
 			$data['no_data'] = true;
 			$page['text'] = wrap_template('quota-calculation-dem', $data);
@@ -136,12 +136,12 @@ function mod_qualification_quotacalcdem($vars, $settings, $event) {
 	$sex = substr($data['altersklasse'], -1) === 'w' ? 'female' : 'male';
 
 	$lvs = calc($tournaments, $sex);
-	if (empty($data['distribution'])) {
+	if (empty($data['qualification_place_distribution'])) {
 		$data['distribution_missing'] = true;
 		$page['text'] = wrap_template('quota-calculation-dem', $data);
 		return $page;
 	}
-	$distribution = wrap_setting_list($data['distribution']);
+	$distribution = wrap_setting_list($data['qualification_place_distribution']);
 
 	// enough data?
 	$first_lv = reset($lvs);
