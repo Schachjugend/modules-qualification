@@ -30,3 +30,4 @@
 /* 2026-08-10-15 */	UPDATE webpages SET parameters = REPLACE(parameters, '&access=qualification_quotacalc_dvm', '&access=qualification_quota_dvm') WHERE parameters LIKE '%&access=qualification_quotacalc_dvm%';
 /* 2026-08-16-1 */	UPDATE categories SET parameters = REPLACE(parameters, '&url_path=', '&qualification_url_path=') WHERE parameters LIKE '%&url_path=%' AND path LIKE 'participations/%';
 /* 2026-08-16-2 */	UPDATE categories SET parameters = REPLACE(parameters, '&federation=1', '&qualification_federation=1') WHERE parameters LIKE '%&federation=1%' AND path LIKE 'participations/%';
+/* 2026-08-16-3 */	UPDATE categories SET parameters = REPLACE(parameters, 'sql_query=custom_federation_selection', 'sql_query=qualification_federation_selection') WHERE parameters LIKE '%sql_query=custom_federation_selection%';

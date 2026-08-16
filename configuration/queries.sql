@@ -6,7 +6,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2023 Gustaf Mossakowski
+ * @copyright Copyright © 2023, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -48,3 +48,13 @@ AND (ISNULL(team_id) OR teams.meldung = "teiloffen" OR teams.meldung = "komplett
 ), NULL) AS quota
 FROM events
 WHERE identifier = '%s'
+
+-- qualification_federation_selection --
+SELECT contact_id, country
+FROM contacts
+JOIN contacts_contacts USING (contact_id)
+JOIN countries USING (country_id)
+WHERE contact_category_id = /*_ID categories contact/federation _*/
+AND contacts_contacts.main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
+AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
+ORDER BY country
