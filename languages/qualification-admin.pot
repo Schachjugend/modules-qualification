@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- qualification module\n"
-"POT-Creation-Date: 2026-08-16 10:57+0000\n"
+"POT-Creation-Date: 2026-08-16 15:47+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -53,38 +53,42 @@ msgid "Series path of the alternative tournament (split of open and female tourn
 msgstr ""
 
 #: configuration/settings.cfg:30
-msgid "Allow federations to register players without assigned quota"
+msgid "Mark registration-type participation category for federation booking filters"
 msgstr ""
 
 #: configuration/settings.cfg:36
+msgid "Allow federations to register players without assigned quota"
+msgstr ""
+
+#: configuration/settings.cfg:42
 msgid "Distribution of federation quota places"
 msgstr ""
 
-#: configuration/settings.cfg:44
+#: configuration/settings.cfg:50
 msgid "Assign federation quotas to this tournament series"
 msgstr ""
 
-#: configuration/settings.cfg:50
+#: configuration/settings.cfg:56
 msgid "DEM single-tournament quota"
 msgstr ""
 
-#: configuration/settings.cfg:56
+#: configuration/settings.cfg:62
 msgid "DVM team-tournament quota"
 msgstr ""
 
-#: configuration/settings.cfg:62
+#: configuration/settings.cfg:68
 msgid "Federation contact participates in DVM regional groups"
 msgstr ""
 
-#: configuration/settings.cfg:67
+#: configuration/settings.cfg:73
 msgid "URL slug segment for registration-type participation categories"
 msgstr ""
 
-#: configuration/settings.cfg:74
+#: configuration/settings.cfg:80
 msgid "Series path of the next younger age group"
 msgstr ""
 
-#: configuration/settings.cfg:83
+#: configuration/settings.cfg:89
 msgid "Series path of the next younger age group when open and female tournaments are split"
 msgstr ""
 
