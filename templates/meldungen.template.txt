@@ -70,11 +70,11 @@
 <tbody>
 %%% loop categories %%%
 <tr class="%%% loopposition uneven un %%%even">
-<td><a href="../%%% item url_path %%%/">%%% item category %%%</a></td>
+<td><a href="../%%% item qualification_url_path %%%/">%%% item category %%%</a></td>
 <td colspan="%%% item columns_quota %%%"></td>
 <td colspan="%%% item columns_booking %%%"></td>
 <td colspan="%%% item columns_participations %%%"></td>
-<td class="bx"><a href="../%%% item url_path %%%/anmeldungen/">Buchungen</a></td>
+<td class="bx"><a href="../%%% item qualification_url_path %%%/anmeldungen/">Buchungen</a></td>
 </tr>
 %%% loop end %%%
 </tbody>

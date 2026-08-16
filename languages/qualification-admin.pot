@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- qualification module\n"
-"POT-Creation-Date: 2026-08-10 16:09+0000\n"
+"POT-Creation-Date: 2026-08-16 10:57+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -77,10 +77,14 @@ msgid "Federation contact participates in DVM regional groups"
 msgstr ""
 
 #: configuration/settings.cfg:67
+msgid "URL slug segment for registration-type participation categories"
+msgstr ""
+
+#: configuration/settings.cfg:74
 msgid "Series path of the next younger age group"
 msgstr ""
 
-#: configuration/settings.cfg:76
+#: configuration/settings.cfg:83
 msgid "Series path of the next younger age group when open and female tournaments are split"
 msgstr ""
 

@@ -28,3 +28,4 @@
 /* 2026-08-10-13 */	UPDATE contacts SET parameters = REPLACE(parameters, '&regional_groups=', '&qualification_regional_groups=') WHERE parameters LIKE '%&regional_groups=%';
 /* 2026-08-10-14 */	UPDATE webpages SET parameters = REPLACE(parameters, '&access=qualification_quotacalc_dem', '&access=qualification_quota_dem') WHERE parameters LIKE '%&access=qualification_quotacalc_dem%';
 /* 2026-08-10-15 */	UPDATE webpages SET parameters = REPLACE(parameters, '&access=qualification_quotacalc_dvm', '&access=qualification_quota_dvm') WHERE parameters LIKE '%&access=qualification_quotacalc_dvm%';
+/* 2026-08-16-1 */	UPDATE categories SET parameters = REPLACE(parameters, '&url_path=', '&qualification_url_path=') WHERE parameters LIKE '%&url_path=%' AND path LIKE 'participations/%';

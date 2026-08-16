@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/qualification
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2024 Gustaf Mossakowski
+ * @copyright Copyright © 2024-2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -22,7 +22,7 @@
 function mf_qualification_registration_categories() {
 	$sql = 'SELECT category_id, category, description, parameters
 	    FROM categories
-	    WHERE parameters LIKE "%&url_path=%"';
+	    WHERE parameters LIKE "%&qualification_url_path=%"';
 	$categories = wrap_db_fetch($sql, 'category_id');
 	foreach ($categories as $category_id => $category) {
 		parse_str($category['parameters'], $category['parameters']);
@@ -40,7 +40,7 @@ function mf_qualification_registration_categories() {
 function mf_qualification_registration_category($identifier) {
 	$sql = 'SELECT category_id, category, description
 	    FROM categories
-	    WHERE parameters LIKE "%%&url_path=%s%%"';
+	    WHERE parameters LIKE "%%&qualification_url_path=%s%%"';
 	$sql = sprintf($sql, wrap_db_escape($identifier));
 	$category = wrap_db_fetch($sql);
 	return $category;
