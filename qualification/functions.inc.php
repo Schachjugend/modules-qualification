@@ -117,8 +117,8 @@ function mf_qualification_participants($where, $event_id, $event_ids) {
 	foreach ($participations as $participation) {
 		$contact_ids[] = $participation['contact_id'];
 	}
-	$addresses = mf_contacts_addresses($contact_ids);
-	$contactdetails = mf_contacts_contactdetails($contact_ids);
+	$addresses = mf_contacts_addresses($contact_ids, ['published' => 1]);
+	$contactdetails = mf_contacts_contactdetails($contact_ids, ['published' => 1]);
 
 	foreach ($participations as $participation_id => &$participation) {
 		$participation['addresses'] = $addresses[$participation['contact_id']] ?? [];
