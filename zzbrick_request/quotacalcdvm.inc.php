@@ -67,11 +67,11 @@ function cms_kontingent_termine($data) {
 				LEFT JOIN contacts_identifiers ok
 					ON contacts.contact_id = ok.contact_id
 					AND ok.current = "yes"
-					AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+					AND ok.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 				LEFT JOIN contacts_identifiers lvk
 					ON CONCAT(SUBSTRING(ok.identifier, 1, 1), "00") = lvk.identifier
 					AND lvk.current = "yes"
-					AND lvk.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+					AND lvk.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 				LEFT JOIN contacts landesverbaende
 					ON landesverbaende.contact_id = lvk.contact_id
 				LEFT JOIN contacts_contacts federation_contacts
@@ -109,7 +109,7 @@ function cms_kontingent_mannschaft($data, $events) {
 		JOIN contacts_identifiers ok
 			ON ok.contact_id = contacts.contact_id
 			AND ok.current = "yes"
-			AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+			AND ok.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 		JOIN countries USING (country_id)
 		LEFT JOIN contacts_contacts USING (contact_id)
 		LEFT JOIN regionalgruppen
@@ -144,11 +144,11 @@ function cms_kontingent_mannschaft($data, $events) {
 		LEFT JOIN contacts_identifiers ok
 			ON teams.club_contact_id = ok.contact_id
 			AND ok.current = "yes"
-			AND ok.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+			AND ok.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 		LEFT JOIN contacts_identifiers lvk
 			ON CONCAT(SUBSTRING(ok.identifier, 1, 1), "00") = lvk.identifier
 			AND lvk.current = "yes"
-			AND lvk.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+			AND lvk.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 		LEFT JOIN contacts landesverbaende
 			ON landesverbaende.contact_id = lvk.contact_id
 		WHERE teams.event_id IN (%s)

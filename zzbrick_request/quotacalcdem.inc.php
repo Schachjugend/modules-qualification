@@ -289,7 +289,7 @@ function calc($tournaments, $sex) {
 		LEFT JOIN contacts_identifiers
 			ON contacts_identifiers.contact_id = participations.club_contact_id
 			AND contacts_identifiers.current = "yes"
-			AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+			AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 		WHERE tabellenstaende.event_id IN (%s)
 		ORDER BY lv ASC, wertung DESC
 	';

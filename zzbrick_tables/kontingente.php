@@ -38,7 +38,7 @@ $zz['fields'][3]['sql'] = 'SELECT contacts.contact_id
 	LEFT JOIN contacts_identifiers
 		ON contacts_identifiers.contact_id = contacts.contact_id
 		AND contacts_identifiers.current = "yes"
-		AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass_dsb _*/
+		AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 	WHERE contacts.contact_category_id = /*_ID categories contact/federation _*/
 	AND SUBSTRING(contacts_identifiers.identifier, -2) = "00"
 	ORDER BY contacts_identifiers.identifier, contact_abbr';
