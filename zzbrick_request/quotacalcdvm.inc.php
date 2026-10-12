@@ -103,7 +103,7 @@ function cms_kontingent_termine($data) {
 }
 
 function cms_kontingent_mannschaft($data, $events) {
-	$sql = 'SELECT contact_id, contact, country
+	$sql = 'SELECT contacts.contact_id, contact, country
 			, contact_abbr, regionalgruppe
 		FROM contacts
 		JOIN contacts_identifiers ok
@@ -111,13 +111,14 @@ function cms_kontingent_mannschaft($data, $events) {
 			AND ok.current = "yes"
 			AND ok.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
 		JOIN countries USING (country_id)
-		LEFT JOIN contacts_contacts USING (contact_id)
+		LEFT JOIN contacts_contacts
+			ON contacts_contacts.contact_id = contacts.contact_id
 		LEFT JOIN regionalgruppen
 			ON regionalgruppen.federation_contact_id = contacts.contact_id
-			AND series_category_id = %d
+			AND regionalgruppen.series_category_id = %d
 		WHERE contacts_contacts.main_contact_id = /*_SETTING clubs_confederation_contact_id _*/
 		AND contacts_contacts.relation_category_id = /*_ID categories relation/member _*/
-		AND contact_category_id = /*_ID categories contact/federation _*/
+		AND contacts.contact_category_id = /*_ID categories contact/federation _*/
 		ORDER BY country';
 	$sql = sprintf($sql, $data['category_id']);
 	$lv = wrap_db_fetch($sql, 'contact_id');
@@ -131,16 +132,16 @@ function cms_kontingent_mannschaft($data, $events) {
 	
 	$sql = 'SELECT teams.event_id, landesverbaende.contact_id AS federation_contact_id
 			, COUNT(teams.team_id) AS teams
-			, GROUP_CONCAT(teams.team_id ORDER BY wertung DESC, teams.team_id SEPARATOR ",") AS team_ids
-			, GROUP_CONCAT(ROUND(wertung, 1) ORDER BY wertung DESC, teams.team_id SEPARATOR ",") AS wertungen
+			, GROUP_CONCAT(teams.team_id ORDER BY tsw.score DESC, teams.team_id SEPARATOR ",") AS team_ids
+			, GROUP_CONCAT(ROUND(tsw.score, 1) ORDER BY tsw.score DESC, teams.team_id SEPARATOR ",") AS wertungen
 		FROM teams
 		LEFT JOIN tournaments USING (event_id)
-		LEFT JOIN tabellenstaende
-			ON tabellenstaende.team_id = teams.team_id
-			AND tabellenstaende.runde_no = tournaments.runden
-		LEFT JOIN tabellenstaende_wertungen tsw
-			ON tabellenstaende.tabellenstand_id = tsw.tabellenstand_id
-			AND tsw.wertung_category_id = /*_ID categories turnierwertungen/mp _*/
+		LEFT JOIN standings
+			ON standings.team_id = teams.team_id
+			AND standings.runde_no = tournaments.runden
+		LEFT JOIN standings_scores tsw
+			ON standings.standing_id = tsw.standing_id
+			AND tsw.score_category_id = /*_ID categories turnierwertungen/mp _*/
 		LEFT JOIN contacts_identifiers ok
 			ON teams.club_contact_id = ok.contact_id
 			AND ok.current = "yes"

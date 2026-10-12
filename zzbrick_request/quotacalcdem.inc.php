@@ -265,32 +265,32 @@ function calc($tournaments, $sex) {
      * Vorvorjahres.
      */
 	$query1 = 'SELECT
-			tabellenstaende.event_id,
+			standings.event_id,
 			persons.first_name,
 			persons.last_name,
 			LEFT(contacts_identifiers.identifier, 1) AS lv,
 			YEAR(persons.date_of_birth) AS geburtsjahr,
-			tabellenstaende_wertungen.wertung,
-			tabellenstaende.platz_no
-		FROM tabellenstaende 
+			standings_scores.score AS wertung,
+			standings.rank_no AS platz_no
+		FROM standings
 		LEFT JOIN events USING (event_id)
 		LEFT JOIN tournaments USING (event_id)
-		INNER JOIN tabellenstaende_wertungen
-			ON tabellenstaende_wertungen.tabellenstand_id = tabellenstaende.tabellenstand_id
-			AND tabellenstaende_wertungen.wertung_category_id = /*_ID categories turnierwertungen/pkt _*/
-			AND tabellenstaende.runde_no = tournaments.runden
+		INNER JOIN standings_scores
+			ON standings_scores.standing_id = standings.standing_id
+			AND standings_scores.score_category_id = /*_ID categories turnierwertungen/pkt _*/
+			AND standings.runde_no = tournaments.runden
 		INNER JOIN persons
-			ON persons.person_id = tabellenstaende.person_id
+			ON persons.person_id = standings.person_id
 			AND IF(IFNULL(events.event_year, YEAR(events.date_begin)) < 2016 AND series_category_id IN (/*_ID categories reihen/dem/dem-u10 _*/, /*_ID categories reihen/dem/dem-u12 _*/), persons.sex = "%s", 1 = 1)
 		LEFT JOIN participations
-			ON participations.event_id = tabellenstaende.event_id
+			ON participations.event_id = standings.event_id
 			AND participations.contact_id = persons.contact_id
 			AND participations.usergroup_id = /*_ID usergroups spieler _*/
 		LEFT JOIN contacts_identifiers
 			ON contacts_identifiers.contact_id = participations.club_contact_id
 			AND contacts_identifiers.current = "yes"
 			AND contacts_identifiers.identifier_category_id = /*_ID categories identifiers/pass-dsb _*/
-		WHERE tabellenstaende.event_id IN (%s)
+		WHERE standings.event_id IN (%s)
 		ORDER BY lv ASC, wertung DESC
 	';
 	$query1 = sprintf($query1, $sex, implode(',', $event_ids));
