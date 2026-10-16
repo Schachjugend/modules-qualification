@@ -137,6 +137,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tbody>
 </table>
 </form>
+%%% script default/form-submit-once.js %%%
 
 %%% elseif kein_kontingent %%%
 <p>Für dieses Turnier hat der Landesverband kein Kontingent.</p>
@@ -240,6 +241,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tbody>
 </table>
 </form>
+%%% script default/form-submit-once.js %%%
 </div>
 
 %%% endif %%%
@@ -372,6 +374,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tbody>
 </table>
 </form>
+%%% script default/form-submit-once.js %%%
 </div>
 
 %%% endif %%%
@@ -437,6 +440,7 @@ M<input type="hidden" name="%%% item id %%%[geschlecht]" value="m">
 </tbody>
 </table>
 </form>
+%%% script default/form-submit-once.js %%%
 </div>
 
 %%% endif %%%

@@ -32,6 +32,7 @@
 </select>
 <p><input type="submit" value="Kopieren"></p>
 </form>
+%%% script default/form-submit-once.js %%%
 </div>
 
 %%% endif %%%
